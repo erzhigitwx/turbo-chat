@@ -1,0 +1,43 @@
+<mxfile host="app.diagrams.net" modified="2024-01-27T16:05:06.264Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="uaSp5OuXfdJPyHdn3P4F" version="23.0.2" type="device">
+  <diagram name="Страница — 1" id="aXuR1Lri6iC4AW6WQTkK">
+    <mxGraphModel dx="1050" dy="530" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="DVWXmJ7Ms7o0uQ0QpJPT-1" value="user" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="20" y="10" width="200" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="DVWXmJ7Ms7o0uQ0QpJPT-2" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;userData;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;chats;&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="DVWXmJ7Ms7o0uQ0QpJPT-1">
+          <mxGeometry y="30" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DVWXmJ7Ms7o0uQ0QpJPT-3" value="userData" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="10" width="200" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="DVWXmJ7Ms7o0uQ0QpJPT-4" value="id;&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;nickname;&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;login;&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;token;&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;phone?;&lt;br&gt;createdAt;&lt;br&gt;avatar;&lt;br&gt;bio;&lt;br&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="DVWXmJ7Ms7o0uQ0QpJPT-3">
+          <mxGeometry x="10" y="35" width="80" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="DVWXmJ7Ms7o0uQ0QpJPT-5" value="chat" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="20" y="230" width="200" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="DVWXmJ7Ms7o0uQ0QpJPT-6" value="&lt;div style=&quot;text-align: left;&quot;&gt;creatorId;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;opponentId;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;messages;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;deletedChatFor&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;theme?;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;bio;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="DVWXmJ7Ms7o0uQ0QpJPT-5">
+          <mxGeometry y="25" width="110" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="DVWXmJ7Ms7o0uQ0QpJPT-7" value="group" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="230" width="200" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="DVWXmJ7Ms7o0uQ0QpJPT-8" value="&lt;div style=&quot;text-align: left;&quot;&gt;creatorId;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;admins: [];&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;members: [];&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;messages;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;bio;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;link;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;theme?;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="DVWXmJ7Ms7o0uQ0QpJPT-7">
+          <mxGeometry x="10" y="30" width="90" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="DVWXmJ7Ms7o0uQ0QpJPT-9" value="message" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="460" y="10" width="240" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="DVWXmJ7Ms7o0uQ0QpJPT-10" value="&lt;div style=&quot;text-align: left;&quot;&gt;creatorId;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;messageId;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;type: [&quot;file&quot;, &quot;media&quot;, &quot;voice&quot;, &quot;text&quot;]&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;reactions: [];&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;deletedFor;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;createdAt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;isForwarded;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;reply: messageId&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;content: data;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="DVWXmJ7Ms7o0uQ0QpJPT-9">
+          <mxGeometry y="30" width="210" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="DVWXmJ7Ms7o0uQ0QpJPT-11" value="React&lt;br&gt;TypeScript&lt;br&gt;module scss&lt;br&gt;effector&lt;br&gt;JWT&lt;br&gt;firebase&lt;br&gt;node.js&lt;br&gt;socket.io&lt;br&gt;react router dom&lt;br&gt;&lt;br&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="480" y="250" width="110" height="160" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
