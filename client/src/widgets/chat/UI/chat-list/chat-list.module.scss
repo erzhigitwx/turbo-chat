@@ -1,0 +1,43 @@
+.chatList {
+  background-color: var(--block-bg);
+  padding: 20px;
+  border-radius: 8px 0 0 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  &Header {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    > div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+
+      span {
+        display: flex;
+        align-items: flex-end;
+        gap: 4px;
+
+        h3 {
+          color: var(--primary);
+        }
+      }
+
+      ul {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+
+  &Body {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 290px);
+    overflow-y: auto;
+  }
+}

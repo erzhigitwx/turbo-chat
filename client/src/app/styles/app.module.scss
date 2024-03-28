@@ -1,0 +1,8 @@
+.app {
+  height: 100vh;
+  section {
+    height: calc(100% - 70px);
+    background-color: var(--section-bg);
+    padding: 20px;
+  }
+}

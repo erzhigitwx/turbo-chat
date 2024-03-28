@@ -1,0 +1,24 @@
+.theme__select {
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  border-radius: 100px;
+  background-color: var(--section-bg);
+
+  > div {
+    width: 64px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 100px;
+
+    &.theme__select__item {
+      background-color: var(--theme-select-item);
+    }
+  }
+}

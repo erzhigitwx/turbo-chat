@@ -1,0 +1,90 @@
+.registrationFormWrapper {
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.registrationForm {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 20px;
+  background-color: var(--block-bg);
+  border-radius: var(--radius);
+
+  h1 {
+    text-align: center;
+  }
+
+  h6 {
+    text-align: center;
+  }
+
+  &Button {
+    padding: 12px 24px;
+  }
+
+  &Switch {
+    width: 100%;
+    min-height: 50px;
+    padding: 4px;
+    border-radius: 20px;
+    background-color: var(--shared-bg);
+    display: flex;
+    flex-direction: row;
+
+    > div {
+      width: 50%;
+      border-radius: 20px;
+      padding: 8px 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      p {
+      }
+    }
+
+    &Active {
+      background-color: var(--block-bg);
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  &Providers {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    > button {
+      gap: 10px;
+    }
+
+    > :first-child {
+      background-color: var(--primary);
+
+      h6 {
+        font-weight: 600;
+        color: #FFFFFF;
+      }
+
+      &:hover{
+        background-color: var(--primary-hover);
+      }
+    }
+
+    > :nth-child(2) {
+      background-color: var(--block-secondary-bg);
+
+      h6 {
+        font-weight: 600;
+        color: #FFFFFF;
+      }
+
+      &:hover{
+        opacity: .7;
+      }
+    }
+  }
+}

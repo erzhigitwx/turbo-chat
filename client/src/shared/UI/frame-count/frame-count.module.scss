@@ -1,0 +1,24 @@
+.frameCount {
+  position: relative;
+
+  &Inner {
+    padding: 0 3px;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 100px;
+    border: 2px solid var(--section-bg);
+    background-color: #0969DA;
+    position: absolute;
+    transform: translateX(50%);
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    > p {
+      color: #ffffff;
+      font-size: 10px;
+    }
+  }
+}

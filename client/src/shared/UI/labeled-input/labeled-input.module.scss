@@ -1,0 +1,21 @@
+.labelInput {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .inputSuccess {
+    border: 1px solid var(--green);
+  }
+
+  .inputError {
+    border: 1px solid var(--red);
+  }
+
+  .labelInputSuccess {
+    color: var(--green);
+  }
+
+  .labelInputError {
+    color: var(--red);
+  }
+}

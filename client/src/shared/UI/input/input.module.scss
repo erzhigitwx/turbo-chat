@@ -1,0 +1,28 @@
+.input {
+  padding: 12px;
+  background-color: var(--shared-bg);
+  border-radius: 5px;
+  font-size: 16px;
+  line-height: 150%;
+}
+
+.inputLabel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  background-color: var(--shared-bg);
+  border-radius: 5px;
+  padding: 12px;
+
+  input {
+    padding: 0;
+    width: 100%;
+  }
+
+  > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

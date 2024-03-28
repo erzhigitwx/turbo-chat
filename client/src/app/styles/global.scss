@@ -1,0 +1,141 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  color: var(--font-main);
+  transition: all 0.3s;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "Manrope";
+  user-select: none;
+}
+
+body {
+  height: 100vh;
+}
+
+h1 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 26px;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 22px;
+}
+
+h5 {
+  font-size: 20px;
+}
+
+h6 {
+  font-size: 16px;
+}
+
+p {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+a {
+  text-decoration: none;
+}
+
+.blue-fill {
+  fill: var(--primary);
+
+  * {
+    fill: var(--primary);
+  }
+}
+
+.blue-stroke {
+  stroke: var(--primary);
+
+  * {
+    stroke: var(--primary);
+  }
+}
+
+.grey-fill {
+  fill: #A7ACB4;
+
+  * {
+    fill: #A7ACB4;
+  }
+}
+
+.grey-stroke {
+  stroke: #A7ACB4;
+
+  * {
+    stroke: #A7ACB4;
+  }
+}
+
+.grey-fill-hover:hover {
+  fill: #A7ACB4;
+
+  > * {
+    fill: #A7ACB4;
+  }
+}
+
+.grey-stroke-hover:hover {
+  stroke: #A7ACB4;
+
+  > * {
+    stroke: #A7ACB4;
+  }
+}
+
+.blue-stroke-hover:hover {
+  stroke: var(--primary);
+
+  > * {
+    stroke: var(--primary);
+  }
+}
+
+.blue-fill-hover:hover {
+  fill: var(--primary);
+
+  > * {
+    fill: var(--primary);
+  }
+}
+
+.scroll {
+  &::-webkit-scrollbar {
+    width: 15px;
+    height: 95%;
+  }
+
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+    width: 5px;
+    background-color: #0969DA;
+    border: 6px solid transparent;
+    background-clip: content-box;
+  }
+
+  &::-webkit-scrollbar-track {
+    width: 3px;
+    border-radius: 100px;
+    background-clip: content-box;
+    border: 6px solid transparent;
+    background-color: var(--section-bg);
+  }
+}

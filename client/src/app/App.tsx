@@ -1,0 +1,31 @@
+import { Layout } from '@/app/config/routes/layout'
+import { Header } from '@/widgets/header'
+import cl from './styles/app.module.scss'
+import { useTheme } from '@/shared/hooks/useTheme'
+import { initializeApp } from 'firebase/app'
+
+const firebaseConfig = {
+  apiKey: import.meta.env.VITE_API_KEY,
+  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_ID,
+  measurementId: import.meta.env.VITE_MEASUREMENT_ID,
+}
+
+function App() {
+  const { theme } = useTheme()
+  initializeApp(firebaseConfig)
+
+  return (
+    <div className={cl.app} data-theme={theme}>
+      <Header />
+      <section>
+        <Layout />
+      </section>
+    </div>
+  )
+}
+
+export { App }

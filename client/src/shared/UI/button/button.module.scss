@@ -1,0 +1,24 @@
+.button {
+  cursor: pointer;
+  border-radius: 5px;
+  padding: var(--corner);
+  background-color: var(--block-bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+}
+
+.buttonBlue {
+  background-color: var(--primary);
+  color: #FFFFFF;
+
+  &:hover {
+    background-color: var(--primary-hover);
+  }
+}
+
+.buttonGrey {
+  background-color: var(--section-bg);
+}

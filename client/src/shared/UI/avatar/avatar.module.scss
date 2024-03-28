@@ -1,0 +1,14 @@
+.avatar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+
+  &Indicator {
+    position: absolute;
+    border: 2px solid var(--block-bg);
+    border-radius: 100%;
+    width: 12px;
+    height: 12px;
+    background-color: #16B364;
+  }
+}

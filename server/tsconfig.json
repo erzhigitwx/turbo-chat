@@ -1,0 +1,6 @@
+{
+  "compilerOptions": {
+    "types": ["express"],
+    "esModuleInterop": true
+  }
+}
