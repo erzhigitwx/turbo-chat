@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
-import verifyUserData from "../jwt/verifyUserData";
+import { NextFunction, Request, Response } from "express";
+import verifyUserData from "../jwt/verify-user-data";
 
 class Middleware {
-  async verifyUser(req: Request, res: Response) {
+  async verifyUser(req: Request, res: Response, next: NextFunction) {
     const token = req.body.token || req.headers.token;
     if (!token) {
       return res.status(401).send({ success: false, data: "Unauthorized" });
@@ -14,6 +14,7 @@ class Middleware {
     }
 
     req.body.userData = userData;
+    next();
   }
 }
 

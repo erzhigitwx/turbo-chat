@@ -52,10 +52,7 @@ class RegistrationController {
       await sendEmailVerification(user.user);
     }
 
-    const token = generateToken({
-      email: userData.email,
-      nickname: userData.nickname,
-    });
+    const token = generateToken(userDataFormatted);
 
     const docResult = await addToCollection(usersCollection, userDataFormatted);
 
