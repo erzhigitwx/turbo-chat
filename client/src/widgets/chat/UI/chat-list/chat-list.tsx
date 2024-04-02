@@ -6,14 +6,14 @@ import { ChatListItem } from './chat-list-item/chat-list-item'
 import SettingsImg from '@/../public/icons/settings.svg?react'
 import SearchImg from '@/../public/icons/search.svg?react'
 import PlusImg from '@/../public/icons/plus.svg?react'
-import { useState } from 'react'
-import { Chat } from '@/shared/types'
+import { Chat, UserData } from '@/shared/types'
 import { useUnit } from 'effector-react'
-import { $seachValue, $searchedChats, searchValueChanged } from '@/widgets/chat/model'
+import { $chats, $seachValue, $searchedChats, searchValueChanged } from '@/widgets/chat/model'
+import { ChatListUser } from '@/widgets/chat/UI/chat-list/chat-list-user/chat-list-user'
 
 const ChatList = () => {
-  const [chats, setChats] = useState<Chat[]>([])
-  const searchedChats = useUnit($searchedChats)
+  const chats: Chat[] = useUnit($chats)
+  const searchedUsers: UserData[] = useUnit($searchedChats)
   const searchValue = useUnit($seachValue)
 
   return (
@@ -37,12 +37,12 @@ const ChatList = () => {
           placeholder={'Поиск'}
           labelImg={<SearchImg />}
           value={searchValue}
-          onChange={searchValueChanged}
+          onChange={(e) => searchValueChanged(e.target.value)}
         />
       </header>
       <div className={clsx(cl.chatListBody, 'scroll')}>
-        {searchedChats.length ? (
-          searchedChats.map((chat) => <ChatListItem key={chat.id} chat={chat} />)
+        {searchedUsers.length ? (
+          searchedUsers.map((user) => <ChatListUser key={user.uid} user={user} />)
         ) : searchValue.length ? (
           <p>Нет пользователей с такими именами</p>
         ) : chats.length ? (

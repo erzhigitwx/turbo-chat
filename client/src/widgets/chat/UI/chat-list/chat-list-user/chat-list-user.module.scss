@@ -41,23 +41,9 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
-        max-width: 260px;
+        max-width: 240px;
         font-size: 13px;
         line-height: 150%;
-      }
-
-      .chatListItemRowUnchecked {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-width: 19px;
-        height: 19px;
-        padding: 5px;
-        background-color: var(--primary);
-        border-radius: 100px;
-        font-size: 13px;
-        line-height: 150%;
-        color: #ffffff;
       }
     }
   }
