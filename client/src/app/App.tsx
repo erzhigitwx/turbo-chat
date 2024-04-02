@@ -13,10 +13,10 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_APP_ID,
   measurementId: import.meta.env.VITE_MEASUREMENT_ID,
 }
+initializeApp(firebaseConfig)
 
 function App() {
   const { theme } = useTheme()
-  initializeApp(firebaseConfig)
 
   return (
     <div className={cl.app} data-theme={theme}>

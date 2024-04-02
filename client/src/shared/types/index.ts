@@ -1,5 +1,5 @@
 export interface UserData {
-  uid: number
+  uid: string
   login: string
   email: string
   createdAt: string
