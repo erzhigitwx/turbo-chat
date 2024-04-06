@@ -19,12 +19,27 @@ class RegistrationController {
     const isValidPassword = /^(?=.*[0-9])(?=.*[a-zA-Z]).{6,16}$/.test(
       userData.password,
     );
+    const isEmailExist = users.some((user) => user.email === userData.email);
 
-    if (isAvailableLogin && isValidPassword) {
-      return res.status(200).send({ success: true, data: userData });
-    } else {
-      return res.status(400).send({ success: false, data: "uncorrect data" });
+    if (!isAvailableLogin) {
+      return res
+        .status(400)
+        .send({ success: false, data: "Login already exists" });
     }
+    if (!isValidPassword) {
+      return res
+        .status(400)
+        .send({
+          success: false,
+          data: "Password must contain at least one letter, one digit, and be between 6 to 16 characters long",
+        });
+    }
+    if (isEmailExist) {
+      return res
+        .status(400)
+        .send({ success: false, data: "Email already exists" });
+    }
+    return res.status(200).send({ success: true, data: userData });
   }
 
   async registrate(req: Request, res: Response) {
