@@ -11,7 +11,6 @@ import { githubSignIn } from '@/features/auth/github-signin'
 import { handleFormSubmit } from '@/features/auth/email-signin'
 import { HiddenLabeledInput } from '@/shared/UI/hidden-labeled-input/hidden-labeled-input'
 import { Status } from '@/widgets/registration-form/registration-form.props'
-import { Fetch } from '@/shared/utils/methods'
 
 const RegistrationForm = () => {
   const [status, setStatus] = useState<Status | null>(null)

@@ -4,19 +4,38 @@ import PinImg from '@/../public/icons/pin.svg?react'
 import ToCheckImg from '@/../public/icons/toCheck.svg?react'
 import CheckedImg from '@/../public/icons/checked.svg?react'
 import { Link } from 'react-router-dom'
-import { Chat } from '@/shared/types'
+import { Chat, UserData } from '@/shared/types'
+import { memo, useEffect, useState } from 'react'
+import { Fetch } from '@/shared/utils/methods'
+import { getCookie } from '@/shared/utils'
 
-const ChatListItem = ({ chat }: { chat: Chat }) => {
+const ChatListItem = memo(({ chat }: { chat: Chat }) => {
+  const [opponent, setOpponent] = useState<UserData | null>(null)
+
+  useEffect(() => {
+    const getOpponentData = async () => {
+      const { data } = await Fetch('http://localhost:5000/api/users/get-user', {
+        method: 'POST',
+        body: JSON.stringify({
+          opponentId: chat.opponentId,
+          token: getCookie('token'),
+        }),
+      })
+      setOpponent(data)
+    }
+
+    getOpponentData()
+  }, [])
   let pinned = true
   let status = 'send'
   const unCheckedMsg = 10
 
   return (
-    <Link className={cl.chatListItem} to={`?opponent-id=${chat.opponentId}`}>
+    <Link className={cl.chatListItem} to={`/?opponent-id=${chat.opponentId}`}>
       <Avatar size={[50, 50]} />
       <div className={cl.chatListItemCol}>
         <div className={cl.chatListItemRow}>
-          <h6>Антон</h6>
+          <h6>{opponent?.login}</h6>
           <span>
             <li>17:22</li>
             {pinned && <PinImg />}
@@ -33,6 +52,6 @@ const ChatListItem = ({ chat }: { chat: Chat }) => {
       </div>
     </Link>
   )
-}
+})
 
 export { ChatListItem }

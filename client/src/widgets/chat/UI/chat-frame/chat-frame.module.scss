@@ -3,4 +3,48 @@
   padding: 20px;
   border-radius: 0 8px 8px 0;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &Header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--shared-bg);
+
+    &Info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      > div {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+    }
+
+    &Options {
+      display: flex;
+      align-items: center;
+
+      > Button {
+        background-color: inherit;
+        padding: 8px;
+      }
+    }
+  }
+
+  &Body {
+    flex-grow: 1;
+  }
+
+  &Control {
+    display: flex;
+    align-items: center;
+    &Input{
+      width: 100%;
+    }
+  }
 }

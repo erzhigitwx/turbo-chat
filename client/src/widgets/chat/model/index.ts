@@ -3,6 +3,7 @@ import { Fetch } from '@/shared/utils/methods'
 import { getCookie } from '@/shared/utils'
 import { Chat, UserData } from '@/shared/types'
 
+// effects
 const fetchUsersFx = createEffect(async function () {
   const searchValue = $seachValue.getState()
 
@@ -25,16 +26,27 @@ export const fetchCreatedChatFx = createEffect(async function (opponentId: strin
       token: getCookie('token'),
     }),
   })
-
   return res
 })
+const fetchOpponentFx = createEffect(async function (opponentId: string) {
+  return await Fetch('http://localhost:5000/api/users/get-user', {
+    method: 'POST',
+    body: JSON.stringify({
+      opponentId,
+      token: getCookie('token'),
+    }),
+  })
+})
+
+// events
 const searchValueChanged = createEvent<string>()
 const selectedChatChanged = createEvent<string>()
 
-const $searchedChats = createStore<UserData[]>([]).on(
-  fetchUsersFx.doneData,
-  (_, users) => users.data,
-)
+// stores
+const $searchedChats = createStore<{
+  searchResults: UserData[]
+  existingChats: Chat[]
+} | null>(null).on(fetchUsersFx.doneData, (_, users) => users.data)
 const $chats = createStore<Chat[]>([]).on(fetchChatsFx.doneData, (_, chats) => chats.data)
 const $selectedChat = createStore<Chat | null>(null).on(
   selectedChatChanged,
@@ -44,6 +56,10 @@ const $createdChat = createStore<Chat | null>(null).on(
   fetchCreatedChatFx.doneData,
   (_, chat) => chat.data,
 )
+const $opponent = createStore<UserData | null>(null).on(
+  fetchOpponentFx.doneData,
+  (_, user) => user.data,
+)
 const $seachValue = createStore<string>('')
 
 $seachValue.on(searchValueChanged, (_, payload) => payload)
@@ -51,8 +67,16 @@ $seachValue.on(searchValueChanged, (_, payload) => payload)
 $seachValue.watch(() => {
   fetchUsersFx()
 })
-$createdChat.watch(() => {
+$createdChat.watch((chat) => {
   fetchChatsFx()
+  if (chat) {
+    fetchOpponentFx(chat.opponentId)
+  }
+})
+$selectedChat.watch((chat) => {
+  if (chat) {
+    fetchOpponentFx(chat.opponentId)
+  }
 })
 fetchChatsFx()
 
@@ -64,4 +88,5 @@ export {
   $chats,
   $selectedChat,
   $createdChat,
+  $opponent,
 }

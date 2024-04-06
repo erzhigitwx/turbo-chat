@@ -1,13 +1,13 @@
-import { createEvent, createStore } from "effector";
+import { createEvent, createStore } from 'effector'
 
-type stepTypes = "signup" | "signin";
+type Step = 'signup' | 'signin'
 
-const $step = createStore<stepTypes>("signup");
+const $step = createStore<Step>('signup')
 
-const stepChanged = createEvent<stepTypes>();
+const stepChanged = createEvent<Step>()
 
-$step.on(stepChanged, (_, curr: stepTypes) => {
-  return curr;
-});
+$step.on(stepChanged, (_, curr: Step) => {
+  return curr
+})
 
-export { $step, stepChanged };
+export { $step, stepChanged }
