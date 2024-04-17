@@ -37,13 +37,19 @@
   }
 
   &Body {
+    padding: 20px 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
     flex-grow: 1;
   }
 
   &Control {
     display: flex;
     align-items: center;
-    &Input{
+
+    &Input {
       width: 100%;
     }
   }

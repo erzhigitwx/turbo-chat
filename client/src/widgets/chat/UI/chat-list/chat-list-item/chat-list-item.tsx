@@ -8,8 +8,10 @@ import { Chat, UserData } from '@/shared/types'
 import { memo, useEffect, useState } from 'react'
 import { Fetch } from '@/shared/utils/methods'
 import { getCookie } from '@/shared/utils'
+import clsx from 'clsx'
+import { searchValueChanged } from '@/widgets/chat/model/chat-list'
 
-const ChatListItem = memo(({ chat }: { chat: Chat }) => {
+const ChatListItem = memo(({ chat, isActive }: { chat: Chat; isActive?: boolean }) => {
   const [opponent, setOpponent] = useState<UserData | null>(null)
 
   useEffect(() => {
@@ -31,7 +33,13 @@ const ChatListItem = memo(({ chat }: { chat: Chat }) => {
   const unCheckedMsg = 10
 
   return (
-    <Link className={cl.chatListItem} to={`/?opponent-id=${chat.opponentId}`}>
+    <Link
+      className={clsx(cl.chatListItem, isActive && cl.chatListItemActive)}
+      to={`/?chat=${chat.id}`}
+      onClick={() => {
+        searchValueChanged('')
+      }}
+    >
       <Avatar size={[50, 50]} />
       <div className={cl.chatListItemCol}>
         <div className={cl.chatListItemRow}>

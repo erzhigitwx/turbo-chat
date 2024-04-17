@@ -8,15 +8,24 @@ import SearchImg from '@/../public/icons/search.svg?react'
 import PlusImg from '@/../public/icons/plus.svg?react'
 import { Chat } from '@/shared/types'
 import { useUnit } from 'effector-react'
-import { $chats, $seachValue, $searchedChats, searchValueChanged } from '@/widgets/chat/model'
 import { ChatListUser } from '@/widgets/chat/UI/chat-list/chat-list-user/chat-list-user'
+import {
+  $isFetchingUsers,
+  $seachValue,
+  $searchedChats,
+  searchValueChanged,
+} from '@/widgets/chat/model/chat-list'
+import { $chats } from '@/widgets/chat/model/chat'
+import { $selectedChat } from '@/widgets/chat/model/chat-frame'
 
 const ChatList = () => {
   const chats: Chat[] = useUnit($chats)
+  const isFetchingUsers = useUnit($isFetchingUsers)
+  const searchValue = useUnit($seachValue)
+  const selectedChat = useUnit($selectedChat)
   const searchedUsers = useUnit($searchedChats)
   const isExistingChats = !!searchedUsers?.existingChats.length
   const isSearchResults = !!searchedUsers?.searchResults.length
-  const searchValue = useUnit($seachValue)
 
   return (
     <div className={cl.chatList}>
@@ -63,9 +72,17 @@ const ChatList = () => {
             )}
           </>
         ) : searchValue.length ? (
-          <p>Нет пользователей с такими именами</p>
+          <>
+            {isFetchingUsers ? (
+              <p>Ищем пользователей</p>
+            ) : (
+              <p>Нет пользователей с такими именами</p>
+            )}
+          </>
         ) : chats.length ? (
-          chats.map((chat) => <ChatListItem key={chat.id} chat={chat} />)
+          chats.map((chat) => (
+            <ChatListItem key={chat.id} chat={chat} isActive={selectedChat?.id === chat.id} />
+          ))
         ) : (
           <p>Нет чатов</p>
         )}

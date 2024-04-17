@@ -1,0 +1,27 @@
+.message {
+  border-radius: 12px 12px 4px 12px;
+  background-color: var(--receiver-message);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 80%;
+  margin-left: auto;
+}
+
+.messageOpponent {
+  border-radius: 12px 12px 12px 4px;
+  background-color: var(--opponent-message);
+  margin-right: auto;
+}
+
+.messageSmall {
+  padding: 4px;
+}
+
+.messageMedium {
+  padding: 6px;
+}
+
+.messageLarge {
+  padding: 12px;
+}

@@ -1,17 +1,18 @@
 import cl from './chat-list-user.module.scss'
 import { Avatar } from '@/shared/UI'
 import { UserData } from '@/shared/types'
-import { fetchCreatedChatFx, searchValueChanged } from '@/widgets/chat/model'
 import { useNavigate } from 'react-router-dom'
+import { fetchChatsFx, fetchCreatedChatFx } from '@/widgets/chat/model/chat'
+import { searchValueChanged } from '@/widgets/chat/model/chat-list'
 
 const ChatListUser = ({ user }: { user: UserData }) => {
   const navigate = useNavigate()
 
   const handleCreateChat = async () => {
     const res = await fetchCreatedChatFx(user.uid)
-
     if (res.success) {
-      navigate(`/?opponent-id=${user.uid}`)
+      await fetchChatsFx()
+      navigate(`/?chat=${res.data.id}`)
       searchValueChanged('')
     }
   }

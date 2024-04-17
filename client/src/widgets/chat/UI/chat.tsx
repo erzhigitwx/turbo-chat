@@ -3,15 +3,17 @@ import { ChatList } from './chat-list/chat-list'
 import { ChatFrame } from './chat-frame/chat-frame'
 import { useSearchParams } from 'react-router-dom'
 import { useEffect } from 'react'
-import { selectedChatChanged } from '@/widgets/chat/model'
+import { selectedChatChanged } from '@/widgets/chat/model/chat-frame'
 
 const Chat = () => {
   const [searchParams] = useSearchParams()
-  const opponentId = searchParams.get('opponent-id')
+  const chatId = searchParams.get('chat')
 
   useEffect(() => {
-    if (opponentId) selectedChatChanged(opponentId)
-  }, [opponentId])
+    if (chatId) {
+      selectedChatChanged(chatId)
+    }
+  }, [chatId])
 
   return (
     <div className={cl.chat}>
