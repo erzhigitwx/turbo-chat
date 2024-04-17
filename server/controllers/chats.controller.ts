@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import { addToCollection, getDocsAll } from "../models/firebase";
+import { addToCollection, findRefById, getDocsAll } from "../models/firebase";
 import { chatsCollection, usersCollection } from "../config";
 import { UserData } from "../types/user";
 import { uuid } from "../utils";
-import { Chat } from "../types/Chat";
-import { getDoc, doc } from "firebase/firestore";
+import { Chat, Message } from "../types/Chat";
+import { getDoc, doc, collection, addDoc } from "firebase/firestore";
 
 class ChatsController {
   async createChat(req: Request, res: Response) {
@@ -64,12 +64,26 @@ class ChatsController {
     const { userData } = body;
 
     const chats = await getDocsAll(chatsCollection);
-    chats.filter((chat) => {
-      if (chat.creatorId === userData.uid || chat.opponentId === userData.uid)
-        return chat;
-    });
-    if (chats) {
-      return res.status(200).send({ success: true, data: chats });
+
+    const filteredChats = await Promise.all(
+      chats.map(async (chat) => {
+        if (
+          chat.creatorId === userData.uid ||
+          chat.opponentId === userData.uid
+        ) {
+          const chatRef = await findRefById(chatsCollection, chat.id);
+          const messagesCollection = collection(chatRef.ref, "messages");
+          chat.messages = await getDocsAll(messagesCollection);
+          return chat;
+        }
+        return null;
+      }),
+    );
+
+    const userChats = filteredChats.filter((chat) => chat !== null);
+
+    if (filteredChats) {
+      return res.status(200).send({ success: true, data: userChats });
     } else {
       return res.status(400).send({ success: false, data: "Cannot Get Chats" });
     }
@@ -133,6 +147,29 @@ class ChatsController {
       return res
         .status(500)
         .send({ success: false, data: "Internal Server Error" });
+    }
+  }
+
+  async createMessage(req: Request, res: Response) {
+    const body = req.body;
+    const { userData, id, content } = body;
+    const chatRef = await findRefById(chatsCollection, id);
+    const messagesCollection = collection(chatRef.ref, "messages");
+    const message = await addDoc(messagesCollection, {
+      senderId: userData.uid,
+      createdAt: Date.now(),
+      messageId: uuid(),
+      isChecked: false,
+      type: "text",
+      content,
+    } as Message);
+
+    if (message) {
+      return res.status(200).send({ success: true, data: message });
+    } else {
+      return res
+        .status(400)
+        .send({ success: false, data: "Cannot Post Message" });
     }
   }
 }

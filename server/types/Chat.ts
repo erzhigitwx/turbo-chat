@@ -8,6 +8,7 @@ export interface Message {
   deletedFor: Array<string>;
   createdAt: number;
   isForwarded: boolean;
+  isChecked: boolean;
   reply: string; // message id
   content: any;
 }
