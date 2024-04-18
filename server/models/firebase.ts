@@ -23,13 +23,19 @@ export async function addToCollection(
 
 export async function findRefById(
   collection: CollectionReference<DocumentData>,
+  fieldName: string,
   id: string,
 ) {
-  const chatsSnapshot = await getDocs(collection);
-  const chat = chatsSnapshot.docs.find(
-    (chatDoc: QueryDocumentSnapshot<DocumentData>) => chatDoc.data().id === id,
+  const snapshot = await getDocs(collection);
+  const result = snapshot.docs.find(
+    (doc: QueryDocumentSnapshot<DocumentData>) => doc.data()[fieldName] === id,
   );
-  return chat ? chat : null;
+
+  if (result) {
+    return result;
+  } else {
+    return null;
+  }
 }
 
 export async function getDocsAll(
@@ -41,23 +47,6 @@ export async function getDocsAll(
   return result;
 }
 
-export async function updateDocField(
-  collection: CollectionReference<DocumentData>,
-  docId: string,
-  fieldName: string,
-  newValue: any,
-) {
-  try {
-    const docRef = doc(collection, docId);
-    await updateDoc(docRef, {
-      [fieldName]: newValue,
-    });
-    return {
-      success: true,
-      message: "Field updated successfully",
-      data: docRef,
-    };
-  } catch (e) {
-    return { success: false, message: "Error updating field" };
-  }
+export async function updateDocField(ref: any, updatedFields: any) {
+  return await updateDoc(ref, updatedFields);
 }

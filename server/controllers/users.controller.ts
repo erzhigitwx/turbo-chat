@@ -1,19 +1,33 @@
 import { Request, Response } from "express";
-import { getDocsAll } from "../models/firebase";
+import { findRefById, getDocsAll, updateDocField } from "../models/firebase";
 import { usersCollection } from "../config";
 import { UserData } from "../types/user";
 
 class UsersController {
   async getUser(req: Request, res: Response) {
-    const { userData, opponentId } = req.body;
+    const { userData, id } = req.body;
     const users = await getDocsAll(usersCollection);
-    const opponent = users.filter((user) => user.uid === opponentId)[0];
+    const user = users.find((user) => user.uid === id);
 
-    if (opponent) {
-      return res.status(200).send({ success: true, data: opponent });
+    if (!id) return res.status(200).send({ success: true, data: userData });
+
+    if (user) {
+      return res.status(200).send({ success: true, data: user });
     } else {
       return res.status(400).send({ success: false, data: "Cannot Get User" });
     }
+  }
+
+  async updateLastOnline(uid: string) {
+    const users = (await getDocsAll(usersCollection)) as UserData[];
+    const currentUser = users.find((user) => user.uid === uid);
+    const currentUserRef = await findRefById(usersCollection, "uid", uid);
+
+    if (!currentUser) return;
+
+    const res = await updateDocField(currentUserRef.ref, {
+      lastLoginAt: Date.now(),
+    });
   }
 }
 

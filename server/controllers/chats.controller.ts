@@ -71,7 +71,7 @@ class ChatsController {
           chat.creatorId === userData.uid ||
           chat.opponentId === userData.uid
         ) {
-          const chatRef = await findRefById(chatsCollection, chat.id);
+          const chatRef = await findRefById(chatsCollection, "id", chat.id);
           const messagesCollection = collection(chatRef.ref, "messages");
           chat.messages = await getDocsAll(messagesCollection);
           return chat;
@@ -97,8 +97,10 @@ class ChatsController {
       const chats: Chat[] = await getDocsAll(chatsCollection);
 
       const searchResults = !!query
-        ? users.filter((user) =>
-            user.login.toLowerCase().startsWith(query.toLowerCase()),
+        ? users.filter(
+            (user) =>
+              user.uid !== userData.uid &&
+              user.login.toLowerCase().startsWith(query.toLowerCase()),
           )
         : [];
 
@@ -153,7 +155,7 @@ class ChatsController {
   async createMessage(req: Request, res: Response) {
     const body = req.body;
     const { userData, id, content } = body;
-    const chatRef = await findRefById(chatsCollection, id);
+    const chatRef = await findRefById(chatsCollection, "id", id);
     const messagesCollection = collection(chatRef.ref, "messages");
     const message = await addDoc(messagesCollection, {
       senderId: userData.uid,

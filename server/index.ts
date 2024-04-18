@@ -7,11 +7,12 @@ import { PORT } from "./constants";
 import { registrationRoute } from "./routes/registration.route";
 import { chatsRoute } from "./routes/chats.route";
 import { usersRouter } from "./routes/users.router";
+import { startSocket } from "./socket/main";
 
 dotenv.config();
 const app = express();
 const httpServer = createServer(app);
-const io = new Server(httpServer, {
+export const io = new Server(httpServer, {
   cors: {
     origin: "*",
   },
@@ -20,9 +21,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/api", [registrationRoute, chatsRoute, usersRouter]);
 
-io.on("connection", (socket) => {
-  console.log("a user connected", socket.id);
-});
+startSocket(io);
 
 httpServer.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
