@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { fetchChatsFx, fetchCreatedChatFx } from '@/widgets/chat/model/chat'
 import { searchValueChanged } from '@/widgets/chat/model/chat-list'
 
-const ChatListUser = ({ user }: { user: UserData }) => {
+const ChatListUser = ({ user, isOnline }: { user: UserData; isOnline: boolean }) => {
   const navigate = useNavigate()
 
   const handleCreateChat = async () => {
@@ -19,7 +19,7 @@ const ChatListUser = ({ user }: { user: UserData }) => {
 
   return (
     <div className={cl.chatListItem} onClick={handleCreateChat}>
-      <Avatar size={[50, 50]} />
+      <Avatar size={[40, 40]} isActive={isOnline} />
       <div className={cl.chatListItemCol}>
         <div className={cl.chatListItemRow}>
           <h6>{user.login}</h6>

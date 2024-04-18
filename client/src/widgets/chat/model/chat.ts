@@ -25,7 +25,7 @@ const fetchOpponentFx = createEffect(async function (opponentId: string) {
   return await Fetch('http://localhost:5000/api/users/get-user', {
     method: 'POST',
     body: JSON.stringify({
-      opponentId,
+      id: opponentId,
       token: getCookie('token'),
     }),
   })

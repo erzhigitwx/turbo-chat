@@ -11,55 +11,57 @@ import { getCookie } from '@/shared/utils'
 import clsx from 'clsx'
 import { searchValueChanged } from '@/widgets/chat/model/chat-list'
 
-const ChatListItem = memo(({ chat, isActive }: { chat: Chat; isActive?: boolean }) => {
-  const [opponent, setOpponent] = useState<UserData | null>(null)
+const ChatListItem = memo(
+  ({ chat, isActive, isOnline }: { chat: Chat; isActive?: boolean; isOnline: boolean }) => {
+    const [opponent, setOpponent] = useState<UserData | null>(null)
 
-  useEffect(() => {
-    const getOpponentData = async () => {
-      const { data } = await Fetch('http://localhost:5000/api/users/get-user', {
-        method: 'POST',
-        body: JSON.stringify({
-          opponentId: chat.opponentId,
-          token: getCookie('token'),
-        }),
-      })
-      setOpponent(data)
-    }
+    useEffect(() => {
+      const getOpponentData = async () => {
+        const { data } = await Fetch('http://localhost:5000/api/users/get-user', {
+          method: 'POST',
+          body: JSON.stringify({
+            id: chat.opponentId,
+            token: getCookie('token'),
+          }),
+        })
+        setOpponent(data)
+      }
 
-    getOpponentData()
-  }, [])
-  let pinned = true
-  let status = 'send'
-  const unCheckedMsg = 10
+      getOpponentData()
+    }, [])
+    let pinned = true
+    let status = 'send'
+    const unCheckedMsg = 10
 
-  return (
-    <Link
-      className={clsx(cl.chatListItem, isActive && cl.chatListItemActive)}
-      to={`/?chat=${chat.id}`}
-      onClick={() => {
-        searchValueChanged('')
-      }}
-    >
-      <Avatar size={[50, 50]} />
-      <div className={cl.chatListItemCol}>
-        <div className={cl.chatListItemRow}>
-          <h6>{opponent?.login}</h6>
-          <span>
-            <li>17:22</li>
-            {pinned && <PinImg />}
-          </span>
+    return (
+      <Link
+        className={clsx(cl.chatListItem, isActive && cl.chatListItemActive)}
+        to={`/?chat=${chat.id}`}
+        onClick={() => {
+          searchValueChanged('')
+        }}
+      >
+        <Avatar size={[40, 40]} isActive={isOnline} />
+        <div className={cl.chatListItemCol}>
+          <div className={cl.chatListItemRow}>
+            <h6>{opponent?.login}</h6>
+            <span>
+              <li>17:22</li>
+              {pinned && <PinImg />}
+            </span>
+          </div>
+          <div className={cl.chatListItemRow}>
+            <p>Текст сообщения текст сообщения текст сообщения</p>
+            {!unCheckedMsg ? (
+              (status === 'send' && <ToCheckImg />) || (status === 'checked' && <CheckedImg />)
+            ) : (
+              <span className={cl.chatListItemRowUnchecked}>{11}</span>
+            )}
+          </div>
         </div>
-        <div className={cl.chatListItemRow}>
-          <p>Текст сообщения текст сообщения текст сообщения</p>
-          {!unCheckedMsg ? (
-            (status === 'send' && <ToCheckImg />) || (status === 'checked' && <CheckedImg />)
-          ) : (
-            <span className={cl.chatListItemRowUnchecked}>{11}</span>
-          )}
-        </div>
-      </div>
-    </Link>
-  )
-})
+      </Link>
+    )
+  },
+)
 
 export { ChatListItem }

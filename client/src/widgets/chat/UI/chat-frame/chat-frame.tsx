@@ -12,7 +12,7 @@ import { $selectedChat, fetchMessageFx } from '@/widgets/chat/model/chat-frame'
 import { $opponent } from '@/widgets/chat/model/chat'
 import { ChatMessage } from '@/entities/chat-message/chat-message'
 
-const ChatFrame = () => {
+const ChatFrame = ({ onlineUsers }: { onlineUsers: string[] }) => {
   const [message, setMessage] = useState('')
   const selectedChat: Chat | null = useUnit($selectedChat)
   const opponent: UserData | null = useUnit($opponent)

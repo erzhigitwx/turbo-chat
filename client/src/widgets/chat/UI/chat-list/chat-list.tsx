@@ -17,9 +17,11 @@ import {
 } from '@/widgets/chat/model/chat-list'
 import { $chats } from '@/widgets/chat/model/chat'
 import { $selectedChat } from '@/widgets/chat/model/chat-frame'
+import { $user } from '@/app/model'
 
-const ChatList = () => {
+const ChatList = ({ onlineUsers }: { onlineUsers: string[] }) => {
   const chats: Chat[] = useUnit($chats)
+  const user = useUnit($user)
   const isFetchingUsers = useUnit($isFetchingUsers)
   const searchValue = useUnit($seachValue)
   const selectedChat = useUnit($selectedChat)
@@ -58,7 +60,11 @@ const ChatList = () => {
               <div>
                 <p>Search results</p>
                 {searchedUsers.searchResults.map((user) => (
-                  <ChatListUser key={user.uid} user={user} />
+                  <ChatListUser
+                    key={user.uid}
+                    user={user}
+                    isOnline={onlineUsers.includes(user.uid)}
+                  />
                 ))}
               </div>
             )}
@@ -66,7 +72,13 @@ const ChatList = () => {
               <div>
                 <p>Existing chats</p>
                 {searchedUsers.existingChats.map((chat) => (
-                  <ChatListItem key={chat.id} chat={chat} />
+                  <ChatListItem
+                    key={chat.id}
+                    chat={chat}
+                    isOnline={onlineUsers.includes(
+                      chat.creatorId === user?.uid ? chat.opponentId : chat.creatorId,
+                    )}
+                  />
                 ))}
               </div>
             )}
@@ -81,7 +93,14 @@ const ChatList = () => {
           </>
         ) : chats.length ? (
           chats.map((chat) => (
-            <ChatListItem key={chat.id} chat={chat} isActive={selectedChat?.id === chat.id} />
+            <ChatListItem
+              key={chat.id}
+              chat={chat}
+              isActive={selectedChat?.id === chat.id}
+              isOnline={onlineUsers.includes(
+                chat.creatorId === user?.uid ? chat.opponentId : chat.creatorId,
+              )}
+            />
           ))
         ) : (
           <p>Нет чатов</p>
