@@ -8,7 +8,6 @@ export interface Message {
   deletedFor: Array<string>;
   createdAt: number;
   isForwarded: boolean;
-  isChecked: boolean;
   reply: string; // message id
   content: any;
 }
@@ -17,6 +16,7 @@ export interface Chat {
   id: string;
   creatorId: string;
   opponentId: string;
+  unread: number;
   messages: Message[];
   deletedFor: Array<string>;
   bio?: string;

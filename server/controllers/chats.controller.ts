@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { addToCollection, findRefById, getDocsAll } from "../models/firebase";
 import { chatsCollection, usersCollection } from "../config";
 import { UserData } from "../types/user";
-import { uuid } from "../utils";
+import { getChatById, uuid } from "../utils";
 import { Chat, Message } from "../types/Chat";
 import { getDoc, doc, collection, addDoc } from "firebase/firestore";
 
@@ -30,6 +30,7 @@ class ChatsController {
         id: uuid(),
         opponentId,
         creatorId: userData.uid,
+        unread: 0,
         messages: [],
         deletedFor: [],
       } as Chat);
@@ -155,24 +156,6 @@ class ChatsController {
   async createMessage(req: Request, res: Response) {
     const body = req.body;
     const { userData, id, content } = body;
-    const chatRef = await findRefById(chatsCollection, "id", id);
-    const messagesCollection = collection(chatRef.ref, "messages");
-    const message = await addDoc(messagesCollection, {
-      senderId: userData.uid,
-      createdAt: Date.now(),
-      messageId: uuid(),
-      isChecked: false,
-      type: "text",
-      content,
-    } as Message);
-
-    if (message) {
-      return res.status(200).send({ success: true, data: message });
-    } else {
-      return res
-        .status(400)
-        .send({ success: false, data: "Cannot Post Message" });
-    }
   }
 }
 
