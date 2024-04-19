@@ -7,13 +7,14 @@ import { Link } from 'react-router-dom'
 import { Chat, UserData } from '@/shared/types'
 import { memo, useEffect, useState } from 'react'
 import { Fetch } from '@/shared/utils/methods'
-import { getCookie } from '@/shared/utils'
+import { formattedTime, getCookie } from '@/shared/utils'
 import clsx from 'clsx'
 import { searchValueChanged } from '@/widgets/chat/model/chat-list'
 
 const ChatListItem = memo(
   ({ chat, isActive, isOnline }: { chat: Chat; isActive?: boolean; isOnline: boolean }) => {
     const [opponent, setOpponent] = useState<UserData | null>(null)
+    const msgLength = chat.messages.length
 
     useEffect(() => {
       const getOpponentData = async () => {
@@ -31,7 +32,6 @@ const ChatListItem = memo(
     }, [])
     let pinned = true
     let status = 'send'
-    const unCheckedMsg = 10
 
     return (
       <Link
@@ -46,16 +46,16 @@ const ChatListItem = memo(
           <div className={cl.chatListItemRow}>
             <h6>{opponent?.login}</h6>
             <span>
-              <li>17:22</li>
+              {msgLength ? <li>{formattedTime(chat.messages[msgLength - 1].createdAt)}</li> : null}
               {pinned && <PinImg />}
             </span>
           </div>
           <div className={cl.chatListItemRow}>
-            <p>Текст сообщения текст сообщения текст сообщения</p>
-            {!unCheckedMsg ? (
-              (status === 'send' && <ToCheckImg />) || (status === 'checked' && <CheckedImg />)
+            <p>{msgLength ? chat.messages[msgLength - 1].content : 'Новый чат'}</p>
+            {chat.unread ? (
+              <span className={cl.chatListItemRowUnchecked}>{chat.unread}</span>
             ) : (
-              <span className={cl.chatListItemRowUnchecked}>{11}</span>
+              (status === 'send' && <ToCheckImg />) || (status === 'checked' && <CheckedImg />)
             )}
           </div>
         </div>

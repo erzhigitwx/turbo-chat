@@ -5,6 +5,8 @@ import { useSearchParams } from 'react-router-dom'
 import { useContext, useEffect, useState } from 'react'
 import { selectedChatChanged } from '@/widgets/chat/model/chat-frame'
 import { SocketContext } from '@/app/providers/socket-provider'
+import { chatMessageAdded, fetchChatsFx } from '@/widgets/chat/model/chat'
+import { Message } from '@/shared/types'
 
 const Chat = () => {
   const [searchParams] = useSearchParams()
@@ -31,6 +33,32 @@ const Chat = () => {
       socket?.off('profile-owner-disconnect')
     }
   }, [])
+
+  useEffect(() => {
+    async function incomingMessageHandler() {
+      await fetchChatsFx()
+    }
+
+    socket?.on('incoming-message', incomingMessageHandler)
+    socket?.on('messages-viewed', incomingMessageHandler)
+
+    return () => {
+      socket?.off('incoming-message', incomingMessageHandler)
+      socket?.off('messages-viewed', incomingMessageHandler)
+    }
+  }, [])
+
+  const incomingMessageListener = async (data: { message: Message; chatId: string }) => {
+    if (!data.message) return
+    chatMessageAdded(data)
+  }
+
+  useEffect(() => {
+    socket?.on('incoming-message', incomingMessageListener)
+    return () => {
+      socket?.off('incoming-message', incomingMessageListener)
+    }
+  }, [incomingMessageListener])
 
   return (
     <div className={cl.chat}>

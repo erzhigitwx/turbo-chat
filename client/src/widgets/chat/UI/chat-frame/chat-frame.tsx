@@ -1,3 +1,4 @@
+import { useContext, useState } from 'react'
 import cl from './chat-frame.module.scss'
 import { useUnit } from 'effector-react'
 import { Chat, UserData } from '@/shared/types'
@@ -7,20 +8,27 @@ import NoteImg from '@/../public/icons/chat/note.svg?react'
 import DotsImg from '@/../public/icons/chat/dots.svg?react'
 import SendImg from '@/../public/icons/chat/send.svg?react'
 import clsx from 'clsx'
-import { useState } from 'react'
-import { $selectedChat, fetchMessageFx } from '@/widgets/chat/model/chat-frame'
-import { $opponent } from '@/widgets/chat/model/chat'
+import { $selectedChat } from '@/widgets/chat/model/chat-frame'
+import { $opponent, fetchChatsFx } from '@/widgets/chat/model/chat'
 import { ChatMessage } from '@/entities/chat-message/chat-message'
+import { SocketContext } from '@/app/providers/socket-provider'
+import { calculateDateDifference, getCookie } from '@/shared/utils'
 
 const ChatFrame = ({ onlineUsers }: { onlineUsers: string[] }) => {
   const [message, setMessage] = useState('')
   const selectedChat: Chat | null = useUnit($selectedChat)
   const opponent: UserData | null = useUnit($opponent)
+  const socket = useContext(SocketContext)
 
   const handleSendMessage = async () => {
     if (!message.trim().length) return
     setMessage('')
-    await fetchMessageFx(message)
+
+    socket?.emit('create-message', {
+      token: getCookie('token'),
+      chatId: selectedChat?.id,
+      message: message,
+    })
   }
 
   return (
@@ -29,10 +37,14 @@ const ChatFrame = ({ onlineUsers }: { onlineUsers: string[] }) => {
         <>
           <header className={cl.chatFrameHeader}>
             <div className={cl.chatFrameHeaderInfo}>
-              <Avatar />
+              <Avatar isActive={onlineUsers.includes(opponent.uid)} />
               <div>
                 <h6>{opponent.login}</h6>
-                <p>Онлайн</p>
+                {onlineUsers.includes(opponent.uid) ? (
+                  <p className={cl.chatFrameHeaderInfoOnline}>Онлайн</p>
+                ) : (
+                  <p>{calculateDateDifference(opponent.lastLoginAt)}</p>
+                )}
               </div>
             </div>
             <div className={cl.chatFrameHeaderOptions}>

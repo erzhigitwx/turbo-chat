@@ -1,7 +1,15 @@
-import { createEffect, createStore } from 'effector'
+import { createEffect, createEvent, createStore } from 'effector'
 import { Fetch } from '@/shared/utils/methods'
 import { getCookie } from '@/shared/utils'
-import { Chat, UserData } from '@/shared/types'
+import { Chat, Message, UserData } from '@/shared/types'
+
+interface ChatMessageAddedPayload {
+  chatId: string
+  message: Message
+}
+
+// events
+const chatMessageAdded = createEvent<ChatMessageAddedPayload>()
 
 // effects
 export const fetchChatsFx = createEffect(async function () {
@@ -32,7 +40,16 @@ const fetchOpponentFx = createEffect(async function (opponentId: string) {
 })
 
 // stores
-const $chats = createStore<Chat[]>([]).on(fetchChatsFx.doneData, (_, chats) => chats.data)
+const $chats = createStore<Chat[]>([])
+  .on(fetchChatsFx.doneData, (_, chats) => chats.data)
+  .on(chatMessageAdded, (chats, newMessage: ChatMessageAddedPayload) => {
+    return chats.map((chat) => {
+      if (chat.id === newMessage.chatId) {
+        return { ...chat, messages: [...chat.messages, newMessage.message] }
+      }
+      return chat
+    })
+  })
 
 const $createdChat = createStore<Chat | null>(null).on(
   fetchCreatedChatFx.doneData,
@@ -52,4 +69,4 @@ $createdChat.watch(async (chat) => {
 
 await fetchChatsFx()
 
-export { $chats, $createdChat, $opponent, fetchOpponentFx }
+export { $chats, $createdChat, $opponent, fetchOpponentFx, chatMessageAdded }

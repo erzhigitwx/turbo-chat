@@ -26,3 +26,26 @@ export function debounce(func: (...args: any[]) => void, delay: number) {
     }, delay)
   }
 }
+
+export function calculateDateDifference(timestamp: number) {
+  const difference = new Date(Date.now() - timestamp)
+  const hours = difference.getHours()
+  const minutes = difference.getMinutes()
+  const seconds = difference.getSeconds()
+
+  if (hours) {
+    return `${hours} час. ${minutes} мин.`
+  } else if (minutes) {
+    return `${minutes} мин.`
+  } else {
+    return `${seconds} сек.`
+  }
+}
+
+export function formattedTime(timestamp: number): string {
+  const date = new Date(timestamp)
+  const hours = date.getHours().toString().padStart(2, '0')
+  const minutes = date.getMinutes().toString().padStart(2, '0')
+
+  return `${hours}:${minutes}`
+}
