@@ -42,6 +42,7 @@ export interface Chat {
   unread: number
   messages: Message[]
   deletedFor: Array<string>
+  isPinned: boolean
   bio?: string
   theme?: string
 }

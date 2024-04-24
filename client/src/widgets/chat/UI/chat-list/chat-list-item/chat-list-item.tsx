@@ -30,7 +30,6 @@ const ChatListItem = memo(
 
       getOpponentData()
     }, [])
-    let pinned = true
     let status = 'send'
 
     return (
@@ -47,7 +46,7 @@ const ChatListItem = memo(
             <h6>{opponent?.login}</h6>
             <span>
               {msgLength ? <li>{formattedTime(chat.messages[msgLength - 1].createdAt)}</li> : null}
-              {pinned && <PinImg />}
+              {chat.isPinned && <PinImg />}
             </span>
           </div>
           <div className={cl.chatListItemRow}>

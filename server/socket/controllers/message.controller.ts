@@ -8,7 +8,7 @@ import { findRefById } from "../../models/firebase";
 import { chatsCollection } from "../../config";
 import { addDoc, collection } from "firebase/firestore";
 import { getChatById, uuid } from "../../utils";
-import { Message } from "../../types/Chat";
+import { Message } from "../../types/chat";
 
 interface ChatMemberBody {
   userData: UserData;

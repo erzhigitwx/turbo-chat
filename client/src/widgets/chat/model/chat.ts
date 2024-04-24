@@ -1,6 +1,6 @@
 import { createEffect, createEvent, createStore } from 'effector'
 import { Fetch } from '@/shared/utils/methods'
-import { getCookie } from '@/shared/utils'
+import { getCookie, sortByDate } from '@/shared/utils'
 import { Chat, Message, UserData } from '@/shared/types'
 
 interface ChatMessageAddedPayload {
@@ -65,6 +65,12 @@ $createdChat.watch(async (chat) => {
   if (chat) {
     await fetchOpponentFx(chat.opponentId)
   }
+})
+
+$chats.watch((chats) => {
+  chats.map((chat) => {
+    chat.messages = sortByDate(chat.messages, 'createdAt')
+  })
 })
 
 await fetchChatsFx()

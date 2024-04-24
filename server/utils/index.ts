@@ -3,7 +3,7 @@ import { userSocketRoomPrefix } from "../constants";
 import { io } from "../index";
 import { findRefById } from "../models/firebase";
 import { chatsCollection } from "../config";
-import { Chat } from "../types/Chat";
+import { Chat } from "../types/chat";
 
 export function uuid(options?: any) {
   return uuidv4(options);

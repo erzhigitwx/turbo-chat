@@ -3,7 +3,7 @@ import { addToCollection, findRefById, getDocsAll } from "../models/firebase";
 import { chatsCollection, usersCollection } from "../config";
 import { UserData } from "../types/user";
 import { getChatById, uuid } from "../utils";
-import { Chat, Message } from "../types/Chat";
+import { Chat, Message } from "../types/chat";
 import { getDoc, doc, collection, addDoc } from "firebase/firestore";
 
 class ChatsController {
@@ -33,6 +33,7 @@ class ChatsController {
         unread: 0,
         messages: [],
         deletedFor: [],
+        isPinned: false,
       } as Chat);
 
       if (createdChat.success) {

@@ -49,3 +49,9 @@ export function formattedTime(timestamp: number): string {
 
   return `${hours}:${minutes}`
 }
+
+export function sortByDate(array: Array<any>, field: string) {
+  return array.sort((a, b) => {
+    return a[field] - b[field]
+  })
+}

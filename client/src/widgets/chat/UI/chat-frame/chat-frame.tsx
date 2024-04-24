@@ -7,18 +7,30 @@ import SearchImg from '@/../public/icons/chat/search.svg?react'
 import NoteImg from '@/../public/icons/chat/note.svg?react'
 import DotsImg from '@/../public/icons/chat/dots.svg?react'
 import SendImg from '@/../public/icons/chat/send.svg?react'
+import MediaImg from '@/../public/icons/chat/media.svg?react'
+import EraserImg from '@/../public/icons/chat/eraser.svg?react'
+import TrashImg from '@/../public/icons/chat/trash.svg?react'
 import clsx from 'clsx'
 import { $selectedChat } from '@/widgets/chat/model/chat-frame'
-import { $opponent, fetchChatsFx } from '@/widgets/chat/model/chat'
+import { $opponent } from '@/widgets/chat/model/chat'
 import { ChatMessage } from '@/entities/chat-message/chat-message'
 import { SocketContext } from '@/app/providers/socket-provider'
 import { calculateDateDifference, getCookie } from '@/shared/utils'
+import { Popup } from '@/shared/UI/popup/popup'
+import { DropdownMenuItem } from '@/shared/UI/dropdown-menu/UI/dropdown-menu.props'
+import { DropdownMenu } from '@/shared/UI/dropdown-menu'
 
 const ChatFrame = ({ onlineUsers }: { onlineUsers: string[] }) => {
   const [message, setMessage] = useState('')
+  const [isPopup, setIsPopup] = useState(true)
   const selectedChat: Chat | null = useUnit($selectedChat)
   const opponent: UserData | null = useUnit($opponent)
   const socket = useContext(SocketContext)
+  const [menuItems, setMenuItems] = useState<DropdownMenuItem[]>([
+    { isSelected: false, id: 1, content: 'Вложения', icon: MediaImg },
+    { isSelected: false, id: 2, content: 'Очистить переписку', icon: EraserImg },
+    { isSelected: false, id: 3, content: 'Удалить чат', icon: TrashImg },
+  ])
 
   const handleSendMessage = async () => {
     if (!message.trim().length) return
@@ -40,7 +52,7 @@ const ChatFrame = ({ onlineUsers }: { onlineUsers: string[] }) => {
               <Avatar isActive={onlineUsers.includes(opponent.uid)} />
               <div>
                 <h6>{opponent.login}</h6>
-                {onlineUsers.includes(opponent.uid) ? (
+                {opponent.uid && onlineUsers.includes(opponent.uid) ? (
                   <p className={cl.chatFrameHeaderInfoOnline}>Онлайн</p>
                 ) : (
                   <p>{calculateDateDifference(opponent.lastLoginAt)}</p>
@@ -54,9 +66,14 @@ const ChatFrame = ({ onlineUsers }: { onlineUsers: string[] }) => {
               <Button>
                 <NoteImg className={'blue-stroke-hover'} />
               </Button>
-              <Button>
+              <Button onClick={() => setIsPopup((prev) => !prev)}>
                 <DotsImg className={'blue-stroke-hover'} />
               </Button>
+              {isPopup && (
+                <Popup extraClass={cl.chatFrameHeaderOptionsPopup}>
+                  <DropdownMenu items={menuItems} setItems={setMenuItems} />
+                </Popup>
+              )}
             </div>
           </header>
           <div className={clsx(cl.chatFrameBody, 'scroll')}>

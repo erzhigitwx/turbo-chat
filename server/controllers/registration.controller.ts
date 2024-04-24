@@ -22,22 +22,27 @@ class RegistrationController {
     const isEmailExist = users.some((user) => user.email === userData.email);
 
     if (!isAvailableLogin) {
-      return res
-        .status(400)
-        .send({ success: false, data: "Login already exists" });
+      return res.status(400).send({
+        success: false,
+        data: { login: { text: "Login already exists", ok: false } },
+      });
     }
     if (!isValidPassword) {
-      return res
-        .status(400)
-        .send({
-          success: false,
-          data: "Password must contain at least one letter, one digit, and be between 6 to 16 characters long",
-        });
+      return res.status(400).send({
+        success: false,
+        data: {
+          password: {
+            text: "Password must contain at least one letter, one digit, and be between 6 to 16 characters long",
+            ok: false,
+          },
+        },
+      });
     }
     if (isEmailExist) {
-      return res
-        .status(400)
-        .send({ success: false, data: "Email already exists" });
+      return res.status(400).send({
+        success: false,
+        data: { email: { text: "Email already exists", ok: false } },
+      });
     }
     return res.status(200).send({ success: true, data: userData });
   }

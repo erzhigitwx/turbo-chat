@@ -1,6 +1,5 @@
 .chatFrame {
   background-color: var(--block-bg);
-  padding: 20px;
   border-radius: 0 8px 8px 0;
   width: 100%;
   display: flex;
@@ -10,7 +9,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-bottom: 20px;
+    padding: 20px;
     border-bottom: 1px solid var(--shared-bg);
 
     &Info {
@@ -36,16 +35,22 @@
     &Options {
       display: flex;
       align-items: center;
+      position: relative;
 
       > Button {
         background-color: inherit;
         padding: 8px;
       }
     }
+
+    &OptionsPopup{
+      top: 100%;
+      right: 10px;
+    }
   }
 
   &Body {
-    padding: 20px 0;
+    padding: 20px 20px 0 20px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -54,6 +59,7 @@
   }
 
   &Control {
+    padding: 20px;
     display: flex;
     align-items: center;
 

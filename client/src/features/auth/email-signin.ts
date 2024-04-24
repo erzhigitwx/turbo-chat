@@ -4,6 +4,10 @@ import { object, string, ValidationError } from 'yup'
 import { Status } from '@/widgets/registration-form/registration-form.props'
 import { Fetch } from '@/shared/utils/methods'
 
+interface StatusType {
+  [key: string]: any
+}
+
 export const handleFormSubmit = async (
   e: FormEvent<HTMLFormElement>,
   setStatus: Dispatch<SetStateAction<Status | null>>,
@@ -17,26 +21,36 @@ export const handleFormSubmit = async (
 
   try {
     await userSchema.validate({ email, login, password }, { abortEarly: false })
+
     const validateRes = await Fetch('http://localhost:5000/api/reg/validate', {
       method: 'POST',
       body: JSON.stringify({ login, password }),
     })
 
-    setStatus((prev) => ({
-      ...prev,
-      email: { text: '', ok: true },
-      login: { text: '', ok: true },
-      password: { text: '', ok: true },
-    }))
+    if (validateRes.success) {
+      setStatus((prev) => ({
+        ...prev,
+        email: { text: '', ok: true },
+        login: { text: '', ok: true },
+        password: { text: '', ok: true },
+      }))
 
-    validateRes.success &&
-      (await handleRegistration({
+      await handleRegistration({
         email,
         login,
         password,
         nickname: '',
         method: 'default',
-      }))
+      })
+    } else {
+      setStatus((prev) => {
+        const newStatus = { ...prev } as StatusType
+        return Object.keys(validateRes.data).reduce((acc, key) => {
+          acc[key] = validateRes.data[key]
+          return acc
+        }, {} as StatusType)
+      })
+    }
   } catch (error: any) {
     if (error instanceof ValidationError) {
       setStatus((prev) => {

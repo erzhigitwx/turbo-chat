@@ -1,0 +1,13 @@
+.popup {
+  position: absolute;
+  z-index: 50;
+  background-color: var(--block-bg);
+}
+
+.popupShadow {
+
+}
+
+.popupCentered {
+  top: 50%;
+}

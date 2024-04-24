@@ -17,7 +17,7 @@ const Message = ({
     <div
       className={clsx(
         cl.message,
-        isOpponent && cl.messageSender,
+        isOpponent && cl.messageOpponent,
         isSmall && cl.messageSmall,
         isMedium && cl.messageMedium,
         isLarge && cl.messageLarge,
