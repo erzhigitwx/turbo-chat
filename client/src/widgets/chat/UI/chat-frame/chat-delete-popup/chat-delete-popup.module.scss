@@ -1,0 +1,37 @@
+.chatPopup {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.chatPopupHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chatPopupNotice {
+  display: flex;
+  flex-direction: column;
+}
+
+.chatPopupControl {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  > input {
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+  }
+
+  p {
+    color: var(--red);
+  }
+}
+.chatPopupButtons{
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}

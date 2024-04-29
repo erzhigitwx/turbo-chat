@@ -14,6 +14,6 @@ export const fetchUserFx = createEffect(async () => {
 
 const $user = createStore<UserData | null>(null).on(fetchUserFx.doneData, (_, user) => user.data)
 
-await fetchUserFx()
+fetchUserFx()
 
 export { $user }

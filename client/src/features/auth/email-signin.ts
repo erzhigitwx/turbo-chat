@@ -43,8 +43,7 @@ export const handleFormSubmit = async (
         method: 'default',
       })
     } else {
-      setStatus((prev) => {
-        const newStatus = { ...prev } as StatusType
+      setStatus(() => {
         return Object.keys(validateRes.data).reduce((acc, key) => {
           acc[key] = validateRes.data[key]
           return acc

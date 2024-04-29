@@ -1,5 +1,5 @@
 import cl from './avatar.module.scss'
-import AvatarImg from '@/../public/icons/avatar.svg?react'
+import AvatarImg from '@/assets/icons/avatar.svg?react'
 
 const Avatar = ({ isActive = false, size }: { isActive?: boolean; size?: number[] | string[] }) => {
   return isActive ? (

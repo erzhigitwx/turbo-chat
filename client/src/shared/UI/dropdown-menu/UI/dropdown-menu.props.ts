@@ -1,4 +1,4 @@
-import { Dispatch, ReactNode, SetStateAction } from 'react'
+import { Dispatch, FunctionComponent, SetStateAction, SVGProps } from 'react'
 
 export interface DropdownMenuProps {
   items: DropdownMenuItem[]
@@ -8,6 +8,7 @@ export interface DropdownMenuProps {
 export interface DropdownMenuItem {
   id: number
   content: string
-  icon: ReactNode
+  onClick: any
   isSelected: boolean
+  icon: FunctionComponent<SVGProps<SVGSVGElement>>
 }

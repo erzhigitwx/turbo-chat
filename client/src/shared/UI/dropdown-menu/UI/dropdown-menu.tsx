@@ -6,7 +6,10 @@ const DropdownMenu = ({ items, setItems }: DropdownMenuProps) => {
   const handleItemClick = (id: number) => {
     setItems((prev) => {
       return prev.map((item) => {
-        item.isSelected = item.id === id
+        return {
+          ...item,
+          isSelected: item.id === id,
+        }
       })
     })
   }
@@ -16,7 +19,10 @@ const DropdownMenu = ({ items, setItems }: DropdownMenuProps) => {
       {items.map((item) => (
         <div
           key={item.id}
-          onClick={() => handleItemClick(item.id)}
+          onClick={() => {
+            handleItemClick(item.id)
+            item.onClick()
+          }}
           className={clsx(cl.dropdownMenuItem, item.isSelected && cl.dropdownMenuItemActive)}
         >
           <item.icon />

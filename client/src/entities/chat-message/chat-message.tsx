@@ -1,4 +1,3 @@
-import cl from './chat-message.module.scss'
 import { ChatMessageProps } from './chat-message.props'
 import { Message } from '@/shared/UI/message/message'
 import { useUnit } from 'effector-react'

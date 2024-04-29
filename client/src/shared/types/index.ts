@@ -23,6 +23,8 @@ export interface Response {
 
 export type MessageType = 'file' | 'media' | 'voice' | 'text'
 
+export type ChatPopupType = 'delete' | 'clear' | 'media'
+
 export interface Message {
   senderId: string
   messageId: string

@@ -2,8 +2,8 @@ import cl from './HiddenLabaledInput.module.scss'
 import { Button, LabeledInput } from '@/shared/UI'
 import { HiddenLabeledInputProps } from './hidden-labeled-input.props'
 import { useState } from 'react'
-import Eye from '@/../public/icons/eye.svg?react'
-import EyeClose from '@/../public/icons/eye-close.svg?react'
+import Eye from '@/assets/icons/eye.svg?react'
+import EyeClose from '@/assets/icons/eye-close.svg?react'
 import clsx from 'clsx'
 
 const HiddenLabeledInput = ({ label, status, ...rest }: HiddenLabeledInputProps) => {

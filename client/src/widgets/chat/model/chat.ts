@@ -73,6 +73,6 @@ $chats.watch((chats) => {
   })
 })
 
-await fetchChatsFx()
+fetchChatsFx()
 
 export { $chats, $createdChat, $opponent, fetchOpponentFx, chatMessageAdded }

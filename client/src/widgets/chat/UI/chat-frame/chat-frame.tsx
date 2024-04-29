@@ -1,17 +1,16 @@
 import { useContext, useState } from 'react'
 import cl from './chat-frame.module.scss'
 import { useUnit } from 'effector-react'
-import { Chat, UserData } from '@/shared/types'
 import { Avatar, Button, Input } from '@/shared/UI'
-import SearchImg from '@/../public/icons/chat/search.svg?react'
-import NoteImg from '@/../public/icons/chat/note.svg?react'
-import DotsImg from '@/../public/icons/chat/dots.svg?react'
-import SendImg from '@/../public/icons/chat/send.svg?react'
-import MediaImg from '@/../public/icons/chat/media.svg?react'
-import EraserImg from '@/../public/icons/chat/eraser.svg?react'
-import TrashImg from '@/../public/icons/chat/trash.svg?react'
+import SearchImg from '@/assets/icons/chat/search.svg?react'
+import NoteImg from '@/assets/icons/chat/note.svg?react'
+import DotsImg from '@/assets/icons/chat/dots.svg?react'
+import SendImg from '@/assets/icons/chat/send.svg?react'
+import MediaImg from '@/assets/icons/chat/media.svg?react'
+import EraserImg from '@/assets/icons/chat/eraser.svg?react'
+import TrashImg from '@/assets/icons/chat/trash.svg?react'
 import clsx from 'clsx'
-import { $selectedChat } from '@/widgets/chat/model/chat-frame'
+import { $popup, $selectedChat, popupChanged } from '@/widgets/chat/model/chat-frame'
 import { $opponent } from '@/widgets/chat/model/chat'
 import { ChatMessage } from '@/entities/chat-message/chat-message'
 import { SocketContext } from '@/app/providers/socket-provider'
@@ -19,17 +18,37 @@ import { calculateDateDifference, getCookie } from '@/shared/utils'
 import { Popup } from '@/shared/UI/popup/popup'
 import { DropdownMenuItem } from '@/shared/UI/dropdown-menu/UI/dropdown-menu.props'
 import { DropdownMenu } from '@/shared/UI/dropdown-menu'
+import { ChatDeletePopup } from '@/widgets/chat/UI/chat-frame/chat-delete-popup/chat-delete-popup'
 
 const ChatFrame = ({ onlineUsers }: { onlineUsers: string[] }) => {
   const [message, setMessage] = useState('')
   const [isPopup, setIsPopup] = useState(true)
-  const selectedChat: Chat | null = useUnit($selectedChat)
-  const opponent: UserData | null = useUnit($opponent)
+  const popup = useUnit($popup)
+  const opponent = useUnit($opponent)
+  const selectedChat = useUnit($selectedChat)
   const socket = useContext(SocketContext)
   const [menuItems, setMenuItems] = useState<DropdownMenuItem[]>([
-    { isSelected: false, id: 1, content: 'Вложения', icon: MediaImg },
-    { isSelected: false, id: 2, content: 'Очистить переписку', icon: EraserImg },
-    { isSelected: false, id: 3, content: 'Удалить чат', icon: TrashImg },
+    {
+      isSelected: false,
+      id: 1,
+      content: 'Вложения',
+      onClick: popupChanged('media'),
+      icon: MediaImg,
+    },
+    {
+      isSelected: false,
+      id: 2,
+      content: 'Очистить переписку',
+      onClick: popupChanged('clear'),
+      icon: EraserImg,
+    },
+    {
+      isSelected: false,
+      id: 3,
+      content: 'Удалить чат',
+      onClick: popupChanged('delete'),
+      icon: TrashImg,
+    },
   ])
 
   const handleSendMessage = async () => {
@@ -47,6 +66,7 @@ const ChatFrame = ({ onlineUsers }: { onlineUsers: string[] }) => {
     <div className={cl.chatFrame}>
       {opponent ? (
         <>
+          {popup === 'delete' && <ChatDeletePopup />}
           <header className={cl.chatFrameHeader}>
             <div className={cl.chatFrameHeaderInfo}>
               <Avatar isActive={onlineUsers.includes(opponent.uid)} />
@@ -85,8 +105,8 @@ const ChatFrame = ({ onlineUsers }: { onlineUsers: string[] }) => {
               placeholder={'Написать сообщение...'}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') handleSendMessage()
+              onKeyDown={async (e) => {
+                if (e.key === 'Enter') await handleSendMessage()
               }}
             />
             <Button onClick={handleSendMessage}>
