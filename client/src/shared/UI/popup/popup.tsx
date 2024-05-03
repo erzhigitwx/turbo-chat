@@ -3,16 +3,21 @@ import { PopupProps } from '@/shared/UI/popup/popup.props'
 import clsx from 'clsx'
 
 const Popup = ({ children, withShadow, isCentered, extraClass, ...rest }: PopupProps) => {
-  return (
+  return isCentered ? (
     <div
       className={clsx(
-        cl.popup,
+        cl.popupContainer,
         withShadow && cl.popupShadow,
         isCentered && cl.popupCentered,
-        extraClass,
       )}
       {...rest}
     >
+      <div className={extraClass} onClick={(e) => e.stopPropagation()}>
+        {children}
+      </div>
+    </div>
+  ) : (
+    <div className={clsx(cl.popup, withShadow && cl.popupShadow, extraClass)} {...rest}>
       {children}
     </div>
   )

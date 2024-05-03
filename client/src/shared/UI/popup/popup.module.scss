@@ -1,13 +1,29 @@
-.popup {
-  position: absolute;
+.popupContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 50;
-  background-color: var(--block-bg);
+
+  > div {
+    background-color: var(--block-bg);
+    border-radius: 5px;
+  }
 }
 
-.popupShadow {
+.popup {
+  position: absolute;
+  z-index: 40;
+}
 
+
+.popupShadow {
+  background-color: rgba(15, 17, 20, 0.5);
 }
 
 .popupCentered {
-  top: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

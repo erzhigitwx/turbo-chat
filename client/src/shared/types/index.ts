@@ -30,11 +30,12 @@ export interface Message {
   messageId: string
   type: MessageType
   reactions: Array<string>
-  deletedFor: Array<string>
+  clearedFor: Array<string>
   createdAt: number
   isForwarded: boolean
   reply: string // message id
   content: any
+  status: 'send' | 'check'
 }
 
 export interface Chat {
