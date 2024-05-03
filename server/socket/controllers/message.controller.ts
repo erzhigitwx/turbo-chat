@@ -3,10 +3,9 @@ import { socketMiddlewareRouting } from "../middleware/socket-middleware-routing
 import socketMiddleware from "../middleware/middleware";
 import { UserData } from "../../types/user";
 import { userSocketRoomPrefix } from "../../constants";
-import { chatsController } from "../../controllers/chats.controller";
 import { findRefById } from "../../models/firebase";
 import { chatsCollection } from "../../config";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, updateDoc } from "firebase/firestore";
 import { getChatById, uuid } from "../../utils";
 import { Message } from "../../types/chat";
 
@@ -43,18 +42,20 @@ function messageController(io: Server, socket: Socket) {
         senderId: userData.uid,
         createdAt: Date.now(),
         messageId: uuid(),
-        type: "text",
         content: message,
+        clearedFor: [],
+        status: "send",
+        type: "text",
       };
       const newMessage = await addDoc(
         messagesCollection,
         messageFormatted as Message,
       );
       const chatRow = await getChatById(chatId);
-
       if (!chatRow) return;
 
       if (newMessage) {
+        await updateDoc(chatRef.ref, { unread: chatRow.unread + 1 });
         io.to(userSocketRoomPrefix + chatRow.creatorId).emit(
           "incoming-message",
           {

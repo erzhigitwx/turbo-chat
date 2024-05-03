@@ -19,7 +19,6 @@ function onlineController(io: Server, socket: Socket) {
   socket.on("user-connect", async (body: { userData: UserData }) => {
     const { userData } = body;
     const { uid } = userData;
-    console.log(userData);
 
     if (!uid || typeof uid !== "string") return;
 
