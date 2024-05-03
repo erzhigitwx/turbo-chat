@@ -3,10 +3,15 @@ import {
   DocumentData,
   CollectionReference,
   getDocs,
-  doc,
+  deleteDoc,
   updateDoc,
   QueryDocumentSnapshot,
+  query,
+  where,
+  collection,
 } from "firebase/firestore";
+import { UserData } from "../types/user";
+import { chatsCollection } from "../config";
 
 export async function addToCollection(
   collection: CollectionReference<DocumentData>,
@@ -49,4 +54,76 @@ export async function getDocsAll(
 
 export async function updateDocField(ref: any, updatedFields: any) {
   return await updateDoc(ref, updatedFields);
+}
+
+export async function updateMessagesStatus(
+  collectionRef: CollectionReference<DocumentData>,
+  userData: UserData,
+) {
+  try {
+    const q = query(
+      collectionRef,
+      where("senderId", "!=", userData.uid),
+      where("status", "==", "send"),
+    );
+    const querySnapshot = await getDocs(q);
+    const promises = [];
+    querySnapshot.forEach((doc) => {
+      promises.push(updateDoc(doc.ref, { status: "check" }));
+    });
+    await Promise.all(promises);
+    return { success: true, message: "Status updated successfully" };
+  } catch (error) {
+    console.error("Error updating message status:", error);
+    return { success: false, message: "Internal Server Error" };
+  }
+}
+
+export async function updateClearChat(chatId: string, clearedFor: string[]) {
+  try {
+    const chatRef = await findRefById(chatsCollection, "id", chatId);
+    const messagesCollectionRef = collection(chatRef.ref, "messages");
+    const querySnapshot = await getDocs(messagesCollectionRef);
+    querySnapshot.forEach((doc) => {
+      const currentClearedFor = doc.data().clearedFor || [];
+      const newClearedFor = [
+        ...currentClearedFor,
+        ...clearedFor.filter((id) => !currentClearedFor.includes(id)),
+      ];
+      if (newClearedFor.length > 1) {
+        deleteDoc(doc.ref);
+      } else {
+        updateDoc(doc.ref, {
+          clearedFor: newClearedFor,
+        });
+      }
+    });
+    return { success: true, message: "Chat cleared successfully" };
+  } catch (error) {
+    console.error("Error updating message status:", error);
+    return { success: false, message: "Internal Server Error" };
+  }
+}
+
+export async function updateDeleteChat(chatId: string, deleteFor: string[]) {
+  try {
+    const chatRef = await findRefById(chatsCollection, "id", chatId);
+    const currentDeletedFor = chatRef.data().deletedFor || [];
+    const newClearedFor = [
+      ...currentDeletedFor,
+      ...deleteFor.filter((id) => !currentDeletedFor.includes(id)),
+    ];
+    if (newClearedFor.length > 1) {
+      await deleteDoc(chatRef.ref);
+    } else {
+      await updateDoc(chatRef.ref, {
+        deletedFor: newClearedFor,
+      });
+    }
+
+    return { success: true, message: "Chat cleared successfully" };
+  } catch (error) {
+    console.error("Error updating message status:", error);
+    return { success: false, message: "Internal Server Error" };
+  }
 }
