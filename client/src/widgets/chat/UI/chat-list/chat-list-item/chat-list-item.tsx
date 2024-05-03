@@ -5,23 +5,28 @@ import ToCheckImg from '@/assets/icons/toCheck.svg?react'
 import CheckedImg from '@/assets/icons/checked.svg?react'
 import { Link } from 'react-router-dom'
 import { Chat, UserData } from '@/shared/types'
-import { memo, useEffect, useState } from 'react'
-import { Fetch } from '@/shared/utils/methods'
+import { memo, useContext, useEffect, useState } from 'react'
 import { formattedTime, getCookie } from '@/shared/utils'
 import clsx from 'clsx'
 import { searchValueChanged } from '@/widgets/chat/model/chat-list'
+import { SocketContext } from '@/app/providers/socket-provider'
+import { Fetch } from '@/shared/utils/methods'
+import { useUnit } from 'effector-react'
+import { $user } from '@/app/model'
 
 const ChatListItem = memo(
   ({ chat, isActive, isOnline }: { chat: Chat; isActive?: boolean; isOnline: boolean }) => {
     const [opponent, setOpponent] = useState<UserData | null>(null)
+    const socket = useContext(SocketContext)
     const msgLength = chat.messages.length
+    const user = useUnit($user)
 
     useEffect(() => {
       const getOpponentData = async () => {
         const { data } = await Fetch('http://localhost:5000/api/users/get-user', {
           method: 'POST',
           body: JSON.stringify({
-            id: chat.opponentId,
+            id: chat.opponentId === user?.uid ? chat.creatorId : chat.opponentId,
             token: getCookie('token'),
           }),
         })
@@ -30,13 +35,20 @@ const ChatListItem = memo(
 
       getOpponentData()
     }, [])
-    let status = 'send'
+
+    const handleSelectChat = () => {
+      socket?.emit('select-chat', {
+        token: getCookie('token'),
+        chatId: chat.id,
+      })
+    }
 
     return (
       <Link
         className={clsx(cl.chatListItem, isActive && cl.chatListItemActive)}
         to={`/?chat=${chat.id}`}
         onClick={() => {
+          handleSelectChat()
           searchValueChanged('')
         }}
       >
@@ -51,11 +63,15 @@ const ChatListItem = memo(
           </div>
           <div className={cl.chatListItemRow}>
             <p>{msgLength ? chat.messages[msgLength - 1].content : 'Новый чат'}</p>
-            {chat.unread ? (
+            {(msgLength &&
+            chat.unread > 0 &&
+            chat.messages[msgLength - 1].senderId === opponent?.uid ? (
               <span className={cl.chatListItemRowUnchecked}>{chat.unread}</span>
+            ) : chat.messages[msgLength - 1]?.status === 'send' ? (
+              <ToCheckImg />
             ) : (
-              (status === 'send' && <ToCheckImg />) || (status === 'checked' && <CheckedImg />)
-            )}
+              <CheckedImg />
+            )) || null}
           </div>
         </div>
       </Link>

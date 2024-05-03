@@ -29,6 +29,8 @@ const ChatList = ({ onlineUsers }: { onlineUsers: string[] }) => {
   const isExistingChats = !!searchedUsers?.existingChats.length
   const isSearchResults = !!searchedUsers?.searchResults.length
 
+  console.log(chats)
+
   return (
     <div className={cl.chatList}>
       <header className={cl.chatListHeader}>

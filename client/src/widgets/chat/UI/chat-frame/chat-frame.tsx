@@ -19,37 +19,41 @@ import { Popup } from '@/shared/UI/popup/popup'
 import { DropdownMenuItem } from '@/shared/UI/dropdown-menu/UI/dropdown-menu.props'
 import { DropdownMenu } from '@/shared/UI/dropdown-menu'
 import { ChatDeletePopup } from '@/widgets/chat/UI/chat-frame/chat-delete-popup/chat-delete-popup'
+import { ChatClearPopup } from '@/widgets/chat/UI/chat-frame/chat-clear-poup/chat-clear-popup'
+import { ChatMediaPopup } from '@/widgets/chat/UI/chat-frame/chat-media-popup/chat-media-popup'
+
+const initialMenuItems = [
+  {
+    isSelected: false,
+    id: 1,
+    content: 'Вложения',
+    onClick: () => popupChanged('media'),
+    icon: MediaImg,
+  },
+  {
+    isSelected: false,
+    id: 2,
+    content: 'Очистить переписку',
+    onClick: () => popupChanged('clear'),
+    icon: EraserImg,
+  },
+  {
+    isSelected: false,
+    id: 3,
+    content: 'Удалить чат',
+    onClick: () => popupChanged('delete'),
+    icon: TrashImg,
+  },
+]
 
 const ChatFrame = ({ onlineUsers }: { onlineUsers: string[] }) => {
   const [message, setMessage] = useState('')
-  const [isPopup, setIsPopup] = useState(true)
+  const [isPopup, setIsPopup] = useState(false)
   const popup = useUnit($popup)
   const opponent = useUnit($opponent)
   const selectedChat = useUnit($selectedChat)
   const socket = useContext(SocketContext)
-  const [menuItems, setMenuItems] = useState<DropdownMenuItem[]>([
-    {
-      isSelected: false,
-      id: 1,
-      content: 'Вложения',
-      onClick: popupChanged('media'),
-      icon: MediaImg,
-    },
-    {
-      isSelected: false,
-      id: 2,
-      content: 'Очистить переписку',
-      onClick: popupChanged('clear'),
-      icon: EraserImg,
-    },
-    {
-      isSelected: false,
-      id: 3,
-      content: 'Удалить чат',
-      onClick: popupChanged('delete'),
-      icon: TrashImg,
-    },
-  ])
+  const [menuItems, setMenuItems] = useState<DropdownMenuItem[]>(initialMenuItems)
 
   const handleSendMessage = async () => {
     if (!message.trim().length) return
@@ -67,6 +71,8 @@ const ChatFrame = ({ onlineUsers }: { onlineUsers: string[] }) => {
       {opponent ? (
         <>
           {popup === 'delete' && <ChatDeletePopup />}
+          {popup === 'clear' && <ChatClearPopup />}
+          {popup === 'media' && <ChatMediaPopup />}
           <header className={cl.chatFrameHeader}>
             <div className={cl.chatFrameHeaderInfo}>
               <Avatar isActive={onlineUsers.includes(opponent.uid)} />
@@ -115,7 +121,7 @@ const ChatFrame = ({ onlineUsers }: { onlineUsers: string[] }) => {
           </div>
         </>
       ) : (
-        <div>Loading</div>
+        <div>select chat</div>
       )}
     </div>
   )

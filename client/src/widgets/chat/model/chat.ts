@@ -2,6 +2,7 @@ import { createEffect, createEvent, createStore } from 'effector'
 import { Fetch } from '@/shared/utils/methods'
 import { getCookie, sortByDate } from '@/shared/utils'
 import { Chat, Message, UserData } from '@/shared/types'
+import { $user } from '@/app/model'
 
 interface ChatMessageAddedPayload {
   chatId: string
@@ -63,7 +64,9 @@ const $opponent = createStore<UserData | null>(null).on(
 $createdChat.watch(async (chat) => {
   await fetchChatsFx()
   if (chat) {
-    await fetchOpponentFx(chat.opponentId)
+    await fetchOpponentFx(
+      chat.opponentId === $user.getState()?.uid ? chat.creatorId : chat.opponentId,
+    )
   }
 })
 
