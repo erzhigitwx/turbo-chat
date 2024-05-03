@@ -24,7 +24,7 @@ export const handleFormSubmit = async (
 
     const validateRes = await Fetch('http://localhost:5000/api/reg/validate', {
       method: 'POST',
-      body: JSON.stringify({ login, password }),
+      body: JSON.stringify({ login, password, email }),
     })
 
     if (validateRes.success) {
