@@ -70,12 +70,16 @@ class ChatsController {
     const filteredChats = await Promise.all(
       chats.map(async (chat) => {
         if (
-          chat.creatorId === userData.uid ||
-          chat.opponentId === userData.uid
+          (chat.creatorId === userData.uid ||
+            chat.opponentId === userData.uid) &&
+          !chat.deletedFor.includes(userData.uid)
         ) {
           const chatRef = await findRefById(chatsCollection, "id", chat.id);
           const messagesCollection = collection(chatRef.ref, "messages");
-          chat.messages = await getDocsAll(messagesCollection);
+          const messages = await getDocsAll(messagesCollection);
+          chat.messages = messages.filter((msg) => {
+            return !msg.clearedFor.includes(userData.uid);
+          });
           return chat;
         }
         return null;
