@@ -21,4 +21,8 @@
 
 .buttonGrey {
   background-color: var(--section-bg);
+
+  &:hover{
+    background-color: var(--section-bg-hover);
+  }
 }

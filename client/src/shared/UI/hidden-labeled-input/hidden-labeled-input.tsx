@@ -20,7 +20,7 @@ const HiddenLabeledInput = ({ label, status, ...rest }: HiddenLabeledInputProps)
         type={isOpen ? 'text' : 'password'}
         status={status}
       />
-      <Button onClick={() => setIsOpen((prev) => !prev)} type={'button'} isGrey>
+      <Button onClick={() => setIsOpen((prev) => !prev)} type={'button'}>
         {isOpen ? (
           <Eye className={'blue-stroke-hover'} />
         ) : (
