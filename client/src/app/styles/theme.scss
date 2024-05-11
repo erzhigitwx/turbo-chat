@@ -2,6 +2,7 @@
   --primary: #0969DA;
   --primary-hover: #1677e8;
   --section-bg: #F0F2F7;
+  --section-bg-hover: #d5d5d5;
   --block-bg: #FFFFFF;
   --block-secondary-bg: #686E7A;
   --font-main: #000000;
@@ -11,6 +12,7 @@
   --theme-select-item: #0969DA;
   --opponent-message: #F0F2F7;
   --receiver-message: #dae9f9;
+  --grey-text: #686e7a;
   --green: #03A855;
   --red: #D83030;
   --corner: 8px 12px;
@@ -19,6 +21,7 @@
 
 [data-theme='dark'] {
   --section-bg: #0F1114;
+  --section-bg-hover: #4f4f4f;
   --block-bg: #16181D;
   --font-main: #FFFFFF;
   --font-main-reversed: #000000;
@@ -27,4 +30,5 @@
   --theme-select-item: #F0F2F7;
   --opponent-message: #1c2026;
   --receiver-message: #2b4f78;
+  --grey-text: rgba(255, 255, 255, 0.4);
 }

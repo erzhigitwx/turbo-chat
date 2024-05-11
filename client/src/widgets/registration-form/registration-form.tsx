@@ -10,16 +10,25 @@ import GithubIcon from '@/assets/logos/github.svg?react'
 import { githubSignIn } from '@/features/auth/github-signin'
 import { handleFormSubmit } from '@/features/auth/email-signin'
 import { HiddenLabeledInput } from '@/shared/UI/hidden-labeled-input/hidden-labeled-input'
-import { Status } from '@/widgets/registration-form/registration-form.props'
+import { LoginStatus, Status } from '@/widgets/registration-form/registration-form.props'
+import { handleLogin } from '@/features/auth/login'
 
 const RegistrationForm = () => {
   const [status, setStatus] = useState<Status | null>(null)
+  const [loginStatus, setLoginStatus] = useState<LoginStatus>({
+    isLoading: false,
+  })
   const step = useUnit($step)
   const isSignup = step === 'signup'
 
   return (
     <div className={cl.registrationFormWrapper}>
-      <form className={cl.registrationForm} onSubmit={(e) => handleFormSubmit(e, setStatus)}>
+      <form
+        className={cl.registrationForm}
+        onSubmit={(e) =>
+          isSignup ? handleFormSubmit(e, setStatus) : handleLogin(e, setLoginStatus)
+        }
+      >
         <h1>Добро пожаловать!</h1>
         <h6>Зарегистрируйтесь или введите данные от аккаунта 🙂</h6>
         <div className={cl.registrationFormSwitch}>
@@ -60,6 +69,11 @@ const RegistrationForm = () => {
           </>
         ) : (
           <>
+            {loginStatus.error && (
+              <div className={cl.registrationFormError}>
+                <p>{loginStatus.error}</p>
+              </div>
+            )}
             <LabeledInput
               label={'Электронная почта'}
               name={'email'}
@@ -74,9 +88,16 @@ const RegistrationForm = () => {
             />
           </>
         )}
-        <Button isBlue extraClass={cl.registrationFormButton}>
-          {isSignup ? 'Зарегистрироваться' : 'Войти'}
-        </Button>
+
+        {isSignup ? (
+          <Button isBlue extraClass={cl.registrationFormButton}>
+            Зарегистрироваться
+          </Button>
+        ) : (
+          <Button isBlue extraClass={cl.registrationFormButton}>
+            {loginStatus.isLoading ? 'Идет загрузка...' : 'Войти'}
+          </Button>
+        )}
         <TextDivider text={'Или зарегистрироваться через'}></TextDivider>
         <div className={cl.registrationFormProviders}>
           <Button onClick={googleSignIn} type={'button'}>

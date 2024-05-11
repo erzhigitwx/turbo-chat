@@ -7,7 +7,10 @@ const selectedChatChanged = createEvent<string | null>()
 const popupChanged = createEvent<ChatPopupType | null>()
 const $selectedChat = createStore<Chat | null>(null).on(
   selectedChatChanged,
-  (_, payload: string | null) => $chats.getState().find((chat) => chat.id === payload),
+  (_, payload: string | null) => {
+    if (payload) return $chats.getState().find((chat) => chat.id === payload)
+    return null
+  },
 )
 const $popup = createStore<ChatPopupType | null>(null).on(popupChanged, (_, payload) => payload)
 

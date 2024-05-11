@@ -22,6 +22,7 @@ const Chat = () => {
     })
   }
 
+  // SOCKET LISTENERS
   async function refetchChats() {
     await fetchChatsFx()
   }
@@ -92,6 +93,7 @@ const Chat = () => {
       socket?.off('incoming-message', incomingMessageListener)
     }
   }, [incomingMessageListener])
+  // SOCKET LISTENERS
 
   return (
     <div className={cl.chat}>

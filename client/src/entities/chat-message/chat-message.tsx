@@ -1,3 +1,4 @@
+import cl from './chat-message.module.scss'
 import { ChatMessageProps } from './chat-message.props'
 import { Message } from '@/shared/UI/message/message'
 import { useUnit } from 'effector-react'
@@ -10,9 +11,9 @@ const ChatMessage = ({ message, ...rest }: ChatMessageProps) => {
   const user = useUnit($user)
 
   return (
-    <Message isOpponent={message.senderId !== user?.uid} {...rest}>
-      <p>{message.content}</p>
-      <div>
+    <Message isOpponent={message.senderId !== user?.uid} extraClass={cl.chatMessage} {...rest}>
+      <p className={cl.chatMessageText}>{message.content}</p>
+      <div className={cl.chatMessageDate}>
         <p>{formattedTime(message.createdAt)}</p>
         {(message.status === 'send' && <ToCheckImg />) || <CheckedImg />}
       </div>

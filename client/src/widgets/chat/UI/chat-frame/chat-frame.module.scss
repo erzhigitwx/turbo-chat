@@ -47,6 +47,38 @@
       top: 100%;
       right: 10px;
     }
+
+    &OptionsNote{
+      box-shadow: 0 15px 40px 0 rgba(22, 24, 29, 0.12);
+      background: #fff;
+      top: 100%;
+      right: 50px;
+      min-width: 350px;
+
+      > div{
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 16px;
+
+        h3{
+          font-weight: 600;
+          font-size: 16px;
+          line-height: 150%;
+        }
+
+        .noteTextarea{
+          height: 200px;
+        }
+
+        :last-child{
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          gap: 8px;
+        }
+      }
+    }
   }
 
   &Body {

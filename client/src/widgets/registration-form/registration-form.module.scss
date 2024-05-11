@@ -69,7 +69,7 @@
         color: #FFFFFF;
       }
 
-      &:hover{
+      &:hover {
         background-color: var(--primary-hover);
       }
     }
@@ -82,9 +82,21 @@
         color: #FFFFFF;
       }
 
-      &:hover{
+      &:hover {
         opacity: .7;
       }
+    }
+  }
+
+  &Error {
+    padding: 8px;
+    background-color: var(--red);
+    border-radius: 5px;
+
+    p {
+      text-align: center;
+      font-size: 16px;
+      color: #FFFFFF;
     }
   }
 }

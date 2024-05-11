@@ -4,10 +4,6 @@ import { object, string, ValidationError } from 'yup'
 import { Status } from '@/widgets/registration-form/registration-form.props'
 import { Fetch } from '@/shared/utils/methods'
 
-interface StatusType {
-  [key: string]: any
-}
-
 export const handleFormSubmit = async (
   e: FormEvent<HTMLFormElement>,
   setStatus: Dispatch<SetStateAction<Status | null>>,
@@ -47,7 +43,7 @@ export const handleFormSubmit = async (
         return Object.keys(validateRes.data).reduce((acc, key) => {
           acc[key] = validateRes.data[key]
           return acc
-        }, {} as StatusType)
+        }, {} as Status)
       })
     }
   } catch (error: any) {

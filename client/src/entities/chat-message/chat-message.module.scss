@@ -1,0 +1,15 @@
+.chatMessage {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+
+  .chatMessageDate {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    > p {
+      color: var(--grey-text);
+    }
+  }
+}

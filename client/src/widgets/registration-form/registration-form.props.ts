@@ -4,3 +4,8 @@ export interface Status {
     ok: boolean
   }
 }
+
+export interface LoginStatus {
+  isLoading: boolean
+  error?: string
+}

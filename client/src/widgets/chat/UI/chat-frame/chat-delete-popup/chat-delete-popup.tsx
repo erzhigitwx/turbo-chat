@@ -40,7 +40,7 @@ const ChatDeletePopup = () => {
         <p>Удалить у меня и у Digital Dreams</p>
       </label>
       <div className={cl.chatPopupButtons}>
-        <Button onClick={() => popupChanged(null)}>
+        <Button onClick={() => popupChanged(null)} isGrey>
           <p>Отмена</p>
         </Button>
         <Button onClick={deleteChat}>
