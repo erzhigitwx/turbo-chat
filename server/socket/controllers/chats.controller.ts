@@ -56,7 +56,6 @@ function chatController(io: Server, socket: Socket) {
     "clear-chat",
     async (body: ChatMemberBody & { forBoth: boolean }) => {
       const { chatId, forBoth, userData } = body;
-      console.log(chatId, forBoth);
       const chatRow = await getChatById(chatId);
       if (!chatRow) return;
       const clearedFor = forBoth
