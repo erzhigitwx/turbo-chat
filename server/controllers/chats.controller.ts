@@ -4,7 +4,9 @@ import { chatsCollection, usersCollection } from "../config";
 import { UserData } from "../types/user";
 import { getChatById, uuid } from "../utils";
 import { Chat, Message } from "../types/chat";
-import { getDoc, doc, collection, addDoc } from "firebase/firestore";
+import { getDoc, doc, collection, addDoc, updateDoc } from "firebase/firestore";
+import firebase from "firebase/compat";
+import onLog = firebase.onLog;
 
 class ChatsController {
   async createChat(req: Request, res: Response) {
@@ -22,7 +24,7 @@ class ChatsController {
     });
 
     if (hasChat) {
-      // corresponding logic
+      // corresponding logic if needs
     }
 
     try {
@@ -117,7 +119,8 @@ class ChatsController {
           searchResults.some(
             (user) =>
               user.uid === chat.opponentId || user.uid === chat.creatorId,
-          )
+          ) &&
+          !chat.deletedFor.includes(userData.uid)
         ) {
           const userToRemove = searchResults.find(
             (user) =>
@@ -137,7 +140,8 @@ class ChatsController {
           existingUsersInChats.some(
             (user) =>
               user.uid === chat.opponentId || user.uid === chat.creatorId,
-          )
+          ) &&
+          !chat.deletedFor.includes(userData.uid)
         );
       });
 
@@ -158,9 +162,17 @@ class ChatsController {
     }
   }
 
-  async createMessage(req: Request, res: Response) {
+  async manageChat(req: Request, res: Response) {
     const body = req.body;
-    const { userData, id, content } = body;
+    const { userData, chatId, node } = body;
+    const chatRef = await findRefById(chatsCollection, "id", chatId);
+    await updateDoc(chatRef.ref, node);
+
+    if (chatRef) {
+      return res.status(200).send({ success: true, data: chatId });
+    } else {
+      return res.status(400).send({ success: false, data: "Cannot Get Chats" });
+    }
   }
 }
 

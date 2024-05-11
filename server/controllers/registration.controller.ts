@@ -3,6 +3,7 @@ import { generateToken } from "../models/registration";
 import { UserData } from "../types/user";
 import {
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   sendEmailVerification,
 } from "firebase/auth";
 import { auth, usersCollection } from "../config";
@@ -82,6 +83,38 @@ class RegistrationController {
       return res
         .status(400)
         .send({ success: false, data: "Internal Server Error" });
+    }
+  }
+
+  async login(req: Request, res: Response) {
+    const { email, password } = req.body;
+    const users = await getDocsAll(usersCollection);
+    const user = users.find((user) => user.email === email);
+
+    if (!user) {
+      return res.status(400).send({
+        success: false,
+        data: "No Such User",
+        message: "No such user",
+      });
+    }
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      const token = generateToken(user);
+
+      if (token) {
+        return res.status(200).send({
+          success: true,
+          data: token,
+        });
+      }
+    } catch (error) {
+      return res.status(400).send({
+        success: false,
+        error: "Incorrect User Data",
+        message: "You entered incorrect information",
+      });
     }
   }
 }
