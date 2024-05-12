@@ -6,12 +6,24 @@ import { useAuth } from '@/shared/hooks/useAuth'
 import { Avatar, FrameCount, Toggler } from '@/shared/UI'
 import LogoImg from '@/assets/logo.svg?react'
 import ChatImg from '@/assets/icons/chat.svg?react'
+import { useUnit } from 'effector-react'
+import { $chats } from '@/widgets/chat/model/chat'
+import { $user } from '@/app/model'
 
 const Header = () => {
   const isAuth = useAuth()
   const location = useLocation()
   const isHomePage = location.pathname === '/'
   const { theme, setTheme } = useTheme()
+  const user = useUnit($user)
+  const chats = useUnit($chats)
+  const newMessagesAmount = chats.reduce((curr, prev) => {
+    if (user?.uid && prev.unread) {
+      curr += 1
+    }
+
+    return curr
+  }, 0)
 
   const toggleTheme = () => {
     if (setTheme) {
@@ -26,7 +38,7 @@ const Header = () => {
       </Link>
       <div className={cl.headerLinks}>
         <Link to={'/'}>
-          <FrameCount count={0}>
+          <FrameCount count={newMessagesAmount}>
             <ChatImg className={clsx(isHomePage && 'blue-stroke', 'blue-stroke-hover')} />
           </FrameCount>
         </Link>

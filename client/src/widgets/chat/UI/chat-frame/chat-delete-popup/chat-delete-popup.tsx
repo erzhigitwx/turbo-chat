@@ -13,7 +13,7 @@ const ChatDeletePopup = () => {
   const socket = useContext(SocketContext)
   const selectedChat = useUnit($selectedChat)
 
-  function deleteChat() {
+  async function deleteChat() {
     socket?.emit('delete-chat', {
       forBoth,
       chatId: selectedChat?.id,

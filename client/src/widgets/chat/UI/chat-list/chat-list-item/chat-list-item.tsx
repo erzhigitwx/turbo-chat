@@ -45,7 +45,11 @@ const ChatListItem = memo(
 
     return (
       <Link
-        className={clsx(cl.chatListItem, isActive && cl.chatListItemActive)}
+        className={clsx(
+          cl.chatListItem,
+          isActive && cl.chatListItemActive,
+          chat.isPinned && cl.chatListItemPinned,
+        )}
         to={`/?chat=${chat.id}`}
         onClick={() => {
           handleSelectChat()
@@ -62,7 +66,18 @@ const ChatListItem = memo(
             </span>
           </div>
           <div className={cl.chatListItemRow}>
-            <p>{msgLength ? chat.messages[msgLength - 1].content : 'Новый чат'}</p>
+            {msgLength ? (
+              <p
+                className={clsx(
+                  chat.messages[msgLength - 1].senderId !== user?.uid &&
+                    cl.chatListItemRowOpponentMsg,
+                )}
+              >
+                {chat.messages[msgLength - 1].content}
+              </p>
+            ) : (
+              <p>Новый чат</p>
+            )}
             {(msgLength &&
             chat.unread > 0 &&
             chat.messages[msgLength - 1].senderId === opponent?.uid ? (

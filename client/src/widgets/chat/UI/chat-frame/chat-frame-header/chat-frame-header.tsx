@@ -16,34 +16,7 @@ import { useRef, useState } from 'react'
 import { useUnit } from 'effector-react'
 import { useClickAway } from '@/shared/hooks/useClickAway'
 import { Fetch } from '@/shared/utils/methods'
-import { $opponent } from '@/widgets/chat/model/chat'
-
-const initialMenuItems: DropdownMenuItem[] = [
-  {
-    id: 1,
-    content: 'Закрепить',
-    onClick: () => console.log('sa'),
-    icon: PinImg,
-  },
-  {
-    id: 2,
-    content: 'Вложения',
-    onClick: () => popupChanged('media'),
-    icon: MediaImg,
-  },
-  {
-    id: 3,
-    content: 'Очистить переписку',
-    onClick: () => popupChanged('clear'),
-    icon: EraserImg,
-  },
-  {
-    id: 4,
-    content: 'Удалить чат',
-    onClick: () => popupChanged('delete'),
-    icon: TrashImg,
-  },
-]
+import { $opponent, fetchChatsFx } from '@/widgets/chat/model/chat'
 
 const ChatFrameHeader = ({ onlineUsers }: { onlineUsers: string[] }) => {
   const [isControlPopup, setIsControlPopup] = useState(false)
@@ -53,6 +26,44 @@ const ChatFrameHeader = ({ onlineUsers }: { onlineUsers: string[] }) => {
   const popupRef = useRef(null)
   const notePopupRef = useRef(null)
   const [note, setNote] = useState(selectedChat?.note || '')
+  const initialMenuItems: DropdownMenuItem[] = [
+    {
+      id: 1,
+      content: selectedChat?.isPinned ? 'Открепить' : 'Закрепить',
+      onClick: async () => {
+        await Fetch('http://localhost:5000/api/chats/manage-chat', {
+          method: 'POST',
+          body: JSON.stringify({
+            node: { isPinned: !selectedChat?.isPinned },
+            chatId: selectedChat?.id,
+            token: getCookie('token'),
+          }),
+        })
+
+        await fetchChatsFx()
+        setIsControlPopup(false)
+      },
+      icon: PinImg,
+    },
+    {
+      id: 2,
+      content: 'Вложения',
+      onClick: () => popupChanged('media'),
+      icon: MediaImg,
+    },
+    {
+      id: 3,
+      content: 'Очистить переписку',
+      onClick: () => popupChanged('clear'),
+      icon: EraserImg,
+    },
+    {
+      id: 4,
+      content: 'Удалить чат',
+      onClick: () => popupChanged('delete'),
+      icon: TrashImg,
+    },
+  ]
 
   useClickAway(popupRef, () => setIsControlPopup(false))
   useClickAway(notePopupRef, () => setIsNotePopup(false))

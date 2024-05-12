@@ -92,16 +92,26 @@ const ChatList = ({ onlineUsers }: { onlineUsers: string[] }) => {
             )}
           </>
         ) : chats.length ? (
-          chats.map((chat) => (
-            <ChatListItem
-              key={chat.id}
-              chat={chat}
-              isActive={selectedChat?.id === chat.id}
-              isOnline={onlineUsers.includes(
-                chat.creatorId === user?.uid ? chat.opponentId : chat.creatorId,
-              )}
-            />
-          ))
+          chats
+            .sort((a, b) => {
+              if (a.isPinned && !b.isPinned) {
+                return -1
+              }
+              if (!a.isPinned && b.isPinned) {
+                return 1
+              }
+              return 0
+            })
+            .map((chat) => (
+              <ChatListItem
+                key={chat.id}
+                chat={chat}
+                isActive={selectedChat?.id === chat.id}
+                isOnline={onlineUsers.includes(
+                  chat.creatorId === user?.uid ? chat.opponentId : chat.creatorId,
+                )}
+              />
+            ))
         ) : (
           <p>Нет чатов</p>
         )}
