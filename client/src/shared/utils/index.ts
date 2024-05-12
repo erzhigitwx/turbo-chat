@@ -1,3 +1,5 @@
+import { Message } from '@/shared/types'
+
 export function getCookie(name: string) {
   const value = `; ${document.cookie}`
   const parts = value.split(`; ${name}=`)
@@ -50,8 +52,39 @@ export function formattedTime(timestamp: number): string {
   return `${hours}:${minutes}`
 }
 
+export function formattedDate(dateString: string): string {
+  const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' }
+  const date = new Date(dateString)
+  return date.toLocaleDateString('ru-RU', options)
+}
+
 export function sortByDate(array: Array<any>, field: string) {
   return array.sort((a, b) => {
     return a[field] - b[field]
   })
+}
+
+export function groupMessagesByDay(messages: Message[]) {
+  const groupedMessages: { [key: string]: Message[] } = {}
+
+  messages.forEach((message) => {
+    const messageDate = new Date(message.createdAt)
+    const messageDay = new Date(
+      messageDate.getFullYear(),
+      messageDate.getMonth(),
+      messageDate.getDate(),
+    ).toISOString()
+
+    if (!groupedMessages[messageDay]) {
+      groupedMessages[messageDay] = []
+    }
+
+    groupedMessages[messageDay].push(message)
+  })
+
+  const sortedGroupedMessages = Object.keys(groupedMessages)
+    .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
+    .map((date) => ({ day: date, messages: groupedMessages[date] }))
+
+  return sortedGroupedMessages
 }
