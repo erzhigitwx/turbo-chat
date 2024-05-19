@@ -15,13 +15,13 @@ const Header = () => {
   const location = useLocation()
   const isHomePage = location.pathname === '/'
   const { theme, setTheme } = useTheme()
-  const user = useUnit($user)
   const chats = useUnit($chats)
-  const newMessagesAmount = chats.reduce((curr, prev) => {
-    if (user?.uid && prev.unread) {
+  const user = useUnit($user)
+  const chatArray = Array.isArray(chats) ? chats : []
+  const newMessagesAmount = chatArray.reduce((curr, chat) => {
+    if (user?.uid !== chat.messages[chat.messages.length - 1]?.senderId && chat.unread) {
       curr += 1
     }
-
     return curr
   }, 0)
 

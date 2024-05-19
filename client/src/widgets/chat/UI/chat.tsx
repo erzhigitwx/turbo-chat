@@ -84,6 +84,11 @@ const Chat = () => {
   const incomingMessageListener = async (data: { message: Message; chatId: string }) => {
     if (!data.message) return
     chatMessageAdded(data)
+    if (chatId === data.chatId) {
+      socket?.emit('select-chat', {
+        chatId,
+      })
+    }
   }
 
   useEffect(() => {

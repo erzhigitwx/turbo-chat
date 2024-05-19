@@ -7,11 +7,13 @@ import { useContext, useState } from 'react'
 import { SocketContext } from '@/app/providers/socket-provider'
 import { getCookie } from '@/shared/utils'
 import { useUnit } from 'effector-react'
+import { $opponent } from '@/widgets/chat/model/chat'
 
 const ChatClearPopup = () => {
   const [forBoth, setForBoth] = useState(false)
-  const socket = useContext(SocketContext)
+  const opponent = useUnit($opponent)
   const selectedChat = useUnit($selectedChat)
+  const socket = useContext(SocketContext)
 
   function clearChat() {
     socket?.emit('clear-chat', {
@@ -32,12 +34,12 @@ const ChatClearPopup = () => {
         </Button>
       </div>
       <div className={cl.chatPopupNotice}>
-        <p>Очистить чат с Digital Dreams?</p>
+        <p>Очистить чат с {opponent?.login}?</p>
         <p>Это действие нельзя будет отменить.</p>
       </div>
       <label className={cl.chatPopupControl}>
         <input type="checkbox" checked={forBoth} onChange={(e) => setForBoth(e.target.checked)} />
-        <p>Очистить у меня и у Digital Dreams</p>
+        <p>Очистить у меня и у {opponent?.login}</p>
       </label>
       <div className={cl.chatPopupButtons}>
         <Button onClick={() => popupChanged(null)}>
