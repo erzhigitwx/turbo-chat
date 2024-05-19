@@ -54,6 +54,10 @@ function messageController(io: Server, socket: Socket) {
       const chatRow = await getChatById(chatId);
       if (!chatRow) return;
 
+      if (chatRow.deletedFor.length) {
+        await updateDoc(chatRef.ref, { deletedFor: [] });
+      }
+
       if (newMessage) {
         await updateDoc(chatRef.ref, { unread: chatRow.unread + 1 });
         io.to(userSocketRoomPrefix + chatRow.creatorId).emit(
