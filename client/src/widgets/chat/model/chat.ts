@@ -14,13 +14,13 @@ const chatMessageAdded = createEvent<ChatMessageAddedPayload>()
 
 // effects
 export const fetchChatsFx = createEffect(async function () {
-  return await Fetch('http://localhost:5000/api/chats/get-chats', {
+  return await Fetch(import.meta.env.VITE_API_URL + '/api/chats/get-chats', {
     method: 'POST',
     body: JSON.stringify({ token: getCookie('token') }),
   })
 })
 export const fetchCreatedChatFx = createEffect(async function (opponentId: string) {
-  const res = await Fetch('http://localhost:5000/api/chats/create-chat', {
+  const res = await Fetch(import.meta.env.VITE_API_URL + '/api/chats/create-chat', {
     method: 'POST',
     body: JSON.stringify({
       opponentId: opponentId,
@@ -31,7 +31,7 @@ export const fetchCreatedChatFx = createEffect(async function (opponentId: strin
 })
 
 const fetchOpponentFx = createEffect(async function (opponentId: string) {
-  return await Fetch('http://localhost:5000/api/users/get-user', {
+  return await Fetch(import.meta.env.VITE_API_URL + '/api/users/get-user', {
     method: 'POST',
     body: JSON.stringify({
       id: opponentId,

@@ -17,7 +17,7 @@ export const handleLogin = async (
   const email = formData.get('email') as string
   const password = formData.get('password') as string
 
-  const res = await Fetch('http://localhost:5000/api/reg/login', {
+  const res = await Fetch(import.meta.env.VITE_API_URL + '/api/reg/login', {
     method: 'POST',
     body: JSON.stringify({ password, email }),
   })

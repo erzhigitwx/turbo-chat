@@ -23,7 +23,7 @@ const ChatListItem = memo(
 
     useEffect(() => {
       const getOpponentData = async () => {
-        const { data } = await Fetch('http://localhost:5000/api/users/get-user', {
+        const { data } = await Fetch(import.meta.env.VITE_API_URL + '/api/users/get-user', {
           method: 'POST',
           body: JSON.stringify({
             id: chat.opponentId === user?.uid ? chat.creatorId : chat.opponentId,

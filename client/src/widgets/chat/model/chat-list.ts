@@ -6,7 +6,7 @@ import { getCookie } from '@/shared/utils'
 const fetchUsersFx = createEffect(async function () {
   const searchValue = $seachValue.getState()
 
-  return await Fetch('http://localhost:5000/api/chats/search-users', {
+  return await Fetch(import.meta.env.VITE_API_URL + '/api/chats/search-users', {
     method: 'POST',
     body: JSON.stringify({ query: searchValue, token: getCookie('token') }),
   })

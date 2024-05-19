@@ -4,7 +4,7 @@ import { getCookie } from '@/shared/utils'
 import { UserData } from '@/shared/types'
 
 export const fetchUserFx = createEffect(async () => {
-  return await Fetch('http://localhost:5000/api/users/get-user', {
+  return await Fetch(import.meta.env.VITE_API_URL + '/api/users/get-user', {
     method: 'POST',
     body: JSON.stringify({
       token: getCookie('token'),

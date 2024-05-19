@@ -5,7 +5,7 @@ import { setCookie } from '@/shared/utils'
 export const handleRegistration = async (
   data: Omit<UserData, 'uid' | 'createdAt' | 'lastLoginAt'>,
 ) => {
-  const res = await Fetch('http://localhost:5000/api/reg/registrate', {
+  const res = await Fetch(import.meta.env.VITE_API_URL + '/api/reg/registrate', {
     method: 'POST',
     body: JSON.stringify(data),
   })

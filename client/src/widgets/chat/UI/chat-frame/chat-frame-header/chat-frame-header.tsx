@@ -31,7 +31,7 @@ const ChatFrameHeader = ({ onlineUsers }: { onlineUsers: string[] }) => {
       id: 1,
       content: selectedChat?.isPinned ? 'Открепить' : 'Закрепить',
       onClick: async () => {
-        await Fetch('http://localhost:5000/api/chats/manage-chat', {
+        await Fetch(import.meta.env.VITE_API_URL + '/api/chats/manage-chat', {
           method: 'POST',
           body: JSON.stringify({
             node: { isPinned: !selectedChat?.isPinned },
@@ -69,7 +69,7 @@ const ChatFrameHeader = ({ onlineUsers }: { onlineUsers: string[] }) => {
   useClickAway(notePopupRef, () => setIsNotePopup(false))
 
   const handleSaveNote = async () => {
-    await Fetch('http://localhost:5000/api/chats/manage-chat', {
+    await Fetch(import.meta.env.VITE_API_URL + '/api/chats/manage-chat', {
       method: 'POST',
       body: JSON.stringify({
         node: { note: note },

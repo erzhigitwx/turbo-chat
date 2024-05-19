@@ -18,7 +18,7 @@ export const handleFormSubmit = async (
   try {
     await userSchema.validate({ email, login, password }, { abortEarly: false })
 
-    const validateRes = await Fetch('http://localhost:5000/api/reg/validate', {
+    const validateRes = await Fetch(import.meta.env.VITE_API_URL + '/api/reg/validate', {
       method: 'POST',
       body: JSON.stringify({ login, password, email }),
     })
