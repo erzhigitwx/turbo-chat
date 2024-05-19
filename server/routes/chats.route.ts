@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { middleware } from "../middleware/middleware.ts";
-import { chatsController } from "../controllers/chats.controller.ts";
+import { middleware } from "../middleware/middleware.js";
+import { chatsController } from "../controllers/chats.controller.js";
 
 const chatsRoute = Router();
 chatsRoute.use("/chats/*", middleware.verifyUser);

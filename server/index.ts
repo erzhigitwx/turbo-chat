@@ -3,11 +3,11 @@ import dotenv from "dotenv";
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
-import { PORT } from "./constants/index.ts";
-import { registrationRoute } from "./routes/registration.route.ts";
-import { chatsRoute } from "./routes/chats.route.ts";
-import { usersRouter } from "./routes/users.router.ts";
-import { startSocket } from "./socket/main.ts";
+import { PORT } from "./constants/index.js";
+import { registrationRoute } from "./routes/registration.route.js";
+import { chatsRoute } from "./routes/chats.route.js";
+import { usersRouter } from "./routes/users.router.js";
+import { startSocket } from "./socket/main.js";
 
 dotenv.config();
 const app = express();

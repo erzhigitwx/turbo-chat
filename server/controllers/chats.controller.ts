@@ -3,11 +3,11 @@ import {
   addToCollection,
   findRefById,
   getDocsAll,
-} from "../models/firebase.ts";
-import { chatsCollection, usersCollection } from "../config/index.ts";
-import { UserData } from "../types/user.ts";
-import { uuid } from "../utils/index.ts";
-import { Chat } from "../types/chat.ts";
+} from "../models/firebase.js";
+import { chatsCollection, usersCollection } from "../config/index.js";
+import { UserData } from "../types/user.js";
+import { uuid } from "../utils/index.js";
+import { Chat } from "../types/chat.js";
 import { getDoc, doc, collection, updateDoc } from "firebase/firestore";
 
 class ChatsController {

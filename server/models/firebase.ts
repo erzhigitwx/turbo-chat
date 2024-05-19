@@ -10,8 +10,8 @@ import {
   where,
   collection,
 } from "firebase/firestore";
-import { UserData } from "../types/user.ts";
-import { chatsCollection } from "../config/index.ts";
+import { UserData } from "../types/user.js";
+import { chatsCollection } from "../config/index.js";
 
 export async function addToCollection(
   collection: CollectionReference<DocumentData>,

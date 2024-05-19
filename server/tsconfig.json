@@ -4,6 +4,5 @@
     "esModuleInterop": true,
     "types": ["express"],
     "moduleResolution": "nodenext",
-    "allowImportingTsExtensions": true,
   }
 }
