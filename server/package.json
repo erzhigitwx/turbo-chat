@@ -5,7 +5,7 @@
   "main": "index.ts",
   "type": "module",
   "scripts": {
-    "dev": "node --loader ts-node/esm index.ts\n",
+    "start": "node --loader ts-node/esm --experimental-specifier-resolution=node -r ts-node/register index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
