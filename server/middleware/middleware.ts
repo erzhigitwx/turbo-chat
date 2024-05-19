@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import verifyUserData from "../jwt/verify-user-data";
+import verifyUserData from "../jwt/verify-user-data.ts";
 
 class Middleware {
   async verifyUser(req: Request, res: Response, next: NextFunction) {

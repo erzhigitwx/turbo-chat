@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { middleware } from "../middleware/middleware";
-import { usersController } from "../controllers/users.controller";
+import { middleware } from "../middleware/middleware.ts";
+import { usersController } from "../controllers/users.controller.ts";
 
 const usersRouter = Router();
 usersRouter.use("/users/*", middleware.verifyUser);

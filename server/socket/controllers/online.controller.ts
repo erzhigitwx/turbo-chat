@@ -1,10 +1,10 @@
 import { Server, Socket } from "socket.io";
-import { UserData } from "../../types/user";
-import { usersController } from "../../controllers/users.controller";
-import { userSocketRoomPrefix } from "../../constants";
-import { isOnline } from "../../utils";
-import { socketMiddlewareRouting } from "../middleware/socket-middleware-routing";
-import socketMiddleware from "../middleware/middleware";
+import { UserData } from "../../types/user.ts";
+import { usersController } from "../../controllers/users.controller.ts";
+import { userSocketRoomPrefix } from "../../constants/index.ts";
+import { isOnline } from "../../utils/index.ts";
+import { socketMiddlewareRouting } from "../middleware/socket-middleware-routing.ts";
+import socketMiddleware from "../middleware/middleware.ts";
 
 const visitorsRoomPrefix = "visitors_";
 

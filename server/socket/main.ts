@@ -1,7 +1,7 @@
 import { Server } from "socket.io";
-import onlineController from "./controllers/online.controller";
-import messageController from "./controllers/message.controller";
-import chatController from "./controllers/chats.controller";
+import onlineController from "./controllers/online.controller.ts";
+import messageController from "./controllers/message.controller.ts";
+import chatController from "./controllers/chats.controller.ts";
 
 export function startSocket(io: Server) {
   io.on("connection", (socket) => {

@@ -3,11 +3,11 @@ import dotenv from "dotenv";
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
-import { PORT } from "./constants";
-import { registrationRoute } from "./routes/registration.route";
-import { chatsRoute } from "./routes/chats.route";
-import { usersRouter } from "./routes/users.router";
-import { startSocket } from "./socket/main";
+import { PORT } from "./constants/index.ts";
+import { registrationRoute } from "./routes/registration.route.ts";
+import { chatsRoute } from "./routes/chats.route.ts";
+import { usersRouter } from "./routes/users.router.ts";
+import { startSocket } from "./socket/main.ts";
 
 dotenv.config();
 const app = express();
@@ -26,3 +26,5 @@ startSocket(io);
 httpServer.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
 });
+
+export default app;

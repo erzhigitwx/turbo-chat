@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import { generateToken } from "../models/registration";
-import { UserData } from "../types/user";
+import { generateToken } from "../models/registration.ts";
+import { UserData } from "../types/user.ts";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   sendEmailVerification,
 } from "firebase/auth";
-import { auth, usersCollection } from "../config";
-import { uuid } from "../utils";
-import { addToCollection, getDocsAll } from "../models/firebase";
+import { auth, usersCollection } from "../config/index.ts";
+import { uuid } from "../utils/index.ts";
+import { addToCollection, getDocsAll } from "../models/firebase.ts";
 
 class RegistrationController {
   async validateRegistration(req: Request, res: Response) {

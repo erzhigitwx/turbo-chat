@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
-import { UserData } from "../types/user";
+import { UserData } from "../types/user.ts";
 
 dotenv.config();
 

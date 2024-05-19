@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from "uuid";
-import { userSocketRoomPrefix } from "../constants";
-import { io } from "../index";
-import { findRefById } from "../models/firebase";
-import { chatsCollection } from "../config";
-import { Chat } from "../types/chat";
+import { userSocketRoomPrefix } from "../constants/index.ts";
+import { io } from "../index.ts";
+import { findRefById } from "../models/firebase.ts";
+import { chatsCollection } from "../config/index.ts";
+import { Chat } from "../types/chat.ts";
 
 export function uuid(options?: any) {
   return uuidv4(options);

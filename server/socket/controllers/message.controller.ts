@@ -1,13 +1,13 @@
 import { Server, Socket } from "socket.io";
-import { socketMiddlewareRouting } from "../middleware/socket-middleware-routing";
-import socketMiddleware from "../middleware/middleware";
-import { UserData } from "../../types/user";
-import { userSocketRoomPrefix } from "../../constants";
-import { findRefById } from "../../models/firebase";
-import { chatsCollection } from "../../config";
+import { socketMiddlewareRouting } from "../middleware/socket-middleware-routing.ts";
+import socketMiddleware from "../middleware/middleware.ts";
+import { UserData } from "../../types/user.ts";
+import { userSocketRoomPrefix } from "../../constants/index.ts";
+import { findRefById } from "../../models/firebase.ts";
+import { chatsCollection } from "../../config/index.ts";
 import { addDoc, collection, updateDoc } from "firebase/firestore";
-import { getChatById, uuid } from "../../utils";
-import { Message } from "../../types/chat";
+import { getChatById, uuid } from "../../utils/index.ts";
+import { Message } from "../../types/chat.ts";
 
 interface ChatMemberBody {
   userData: UserData;

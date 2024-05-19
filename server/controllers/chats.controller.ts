@@ -1,12 +1,14 @@
 import { Request, Response } from "express";
-import { addToCollection, findRefById, getDocsAll } from "../models/firebase";
-import { chatsCollection, usersCollection } from "../config";
-import { UserData } from "../types/user";
-import { getChatById, uuid } from "../utils";
-import { Chat, Message } from "../types/chat";
-import { getDoc, doc, collection, addDoc, updateDoc } from "firebase/firestore";
-import firebase from "firebase/compat";
-import onLog = firebase.onLog;
+import {
+  addToCollection,
+  findRefById,
+  getDocsAll,
+} from "../models/firebase.ts";
+import { chatsCollection, usersCollection } from "../config/index.ts";
+import { UserData } from "../types/user.ts";
+import { uuid } from "../utils/index.ts";
+import { Chat } from "../types/chat.ts";
+import { getDoc, doc, collection, updateDoc } from "firebase/firestore";
 
 class ChatsController {
   async createChat(req: Request, res: Response) {

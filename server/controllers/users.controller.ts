@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { findRefById, getDocsAll, updateDocField } from "../models/firebase";
-import { usersCollection } from "../config";
-import { UserData } from "../types/user";
+import { findRefById, getDocsAll, updateDocField } from "../models/firebase.ts";
+import { usersCollection } from "../config/index.ts";
+import { UserData } from "../types/user.ts";
 
 class UsersController {
   async getUser(req: Request, res: Response) {

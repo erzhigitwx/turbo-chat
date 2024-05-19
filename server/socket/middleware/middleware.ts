@@ -1,6 +1,6 @@
 import { Event } from "socket.io";
-import verifyUserData from "../../jwt/verify-user-data";
-import { verifyChatMember } from "../../utils";
+import verifyUserData from "../../jwt/verify-user-data.ts";
+import { verifyChatMember } from "../../utils/index.ts";
 
 class SocketMiddleware {
   async verifyToken(event: Event, next: (err?: Error | undefined) => void) {
