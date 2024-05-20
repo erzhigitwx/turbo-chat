@@ -50,7 +50,8 @@
 
     &OptionsNote {
       box-shadow: 0 15px 40px 0 rgba(22, 24, 29, 0.12);
-      background: #fff;
+      background: var(--block-bg);
+      border-radius: var(--radius);
       top: 100%;
       right: 50px;
       min-width: 350px;
@@ -102,4 +103,22 @@
       width: 100%;
     }
   }
+}
+
+.chatFrameSelect {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  > div {
+    padding: 10px;
+    background-color: var(--receiver-message);
+    border-radius: var(--radius);
+  }
+}
+.chatFrameAttachPopup{
+  bottom: 100px;
 }

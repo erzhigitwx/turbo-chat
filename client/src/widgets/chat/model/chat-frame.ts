@@ -1,10 +1,11 @@
 import { createEvent, createStore } from 'effector'
-import { Chat, ChatPopupType } from '@/shared/types'
+import { AttachType, Chat, ChatPopupType } from '@/shared/types'
 import { $chats, fetchOpponentFx } from '@/widgets/chat/model/chat'
 import { $user } from '@/app/model'
 
 const selectedChatChanged = createEvent<string | null>()
 const popupChanged = createEvent<ChatPopupType | null>()
+const attachChanged = createEvent<AttachType | null>()
 const $selectedChat = createStore<Chat | null>(null).on(
   selectedChatChanged,
   (_, payload: string | null) => {
@@ -13,6 +14,7 @@ const $selectedChat = createStore<Chat | null>(null).on(
   },
 )
 const $popup = createStore<ChatPopupType | null>(null).on(popupChanged, (_, payload) => payload)
+const $attach = createStore<AttachType | null>(null).on(popupChanged, (_, payload) => payload)
 
 $chats.watch(() => {
   const selectedChatId = $selectedChat.getState()?.id
@@ -28,4 +30,4 @@ $selectedChat.watch(async (chat) => {
   }
 })
 
-export { $selectedChat, $popup, popupChanged, selectedChatChanged }
+export { $selectedChat, $popup, popupChanged, selectedChatChanged, $attach, attachChanged }

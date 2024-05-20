@@ -78,15 +78,17 @@ const ChatListItem = memo(
             ) : (
               <p>Новый чат</p>
             )}
-            {(msgLength &&
-            chat.unread > 0 &&
-            chat.messages[msgLength - 1].senderId === opponent?.uid ? (
-              <span className={cl.chatListItemRowUnchecked}>{chat.unread}</span>
-            ) : chat.messages[msgLength - 1]?.status === 'send' ? (
-              <ToCheckImg />
-            ) : (
-              <CheckedImg />
-            )) || null}
+            {msgLength ? (
+              <>
+                {chat.unread > 0 && chat.messages[msgLength - 1].senderId === opponent?.uid ? (
+                  <span className={cl.chatListItemRowUnchecked}>{chat.unread}</span>
+                ) : chat.messages[msgLength - 1]?.status === 'send' ? (
+                  <ToCheckImg />
+                ) : (
+                  <CheckedImg />
+                )}
+              </>
+            ) : null}
           </div>
         </div>
       </Link>

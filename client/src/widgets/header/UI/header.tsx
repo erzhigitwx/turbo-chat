@@ -9,6 +9,7 @@ import ChatImg from '@/assets/icons/chat.svg?react'
 import { useUnit } from 'effector-react'
 import { $chats } from '@/widgets/chat/model/chat'
 import { $user } from '@/app/model'
+import { setCookie } from '@/shared/utils'
 
 const Header = () => {
   const isAuth = useAuth()
@@ -28,6 +29,7 @@ const Header = () => {
   const toggleTheme = () => {
     if (setTheme) {
       setTheme(theme === 'dark' ? 'light' : 'dark')
+      setCookie('theme', theme === 'dark' ? 'light' : 'dark')
     }
   }
 
