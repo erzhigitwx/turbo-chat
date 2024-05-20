@@ -1,5 +1,7 @@
-const Profile = () => {
-  return <div>Profile</div>;
-};
+import { Settings } from '@/widgets/settings'
 
-export default Profile;
+const Profile = () => {
+  return <Settings />
+}
+
+export default Profile
