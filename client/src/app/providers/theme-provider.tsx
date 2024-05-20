@@ -10,7 +10,7 @@ interface ThemeContextProps {
 export const ThemeContext = createContext<ThemeContextProps | null>(null)
 
 const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const [theme, setTheme] = useState<Theme>(getCookie('theme') || 'light')
+  const [theme, setTheme] = useState<Theme>((getCookie('theme') as Theme) || 'light')
 
   return <ThemeContext.Provider value={{ theme, setTheme }}>{children}</ThemeContext.Provider>
 }

@@ -14,7 +14,7 @@ const $selectedChat = createStore<Chat | null>(null).on(
   },
 )
 const $popup = createStore<ChatPopupType | null>(null).on(popupChanged, (_, payload) => payload)
-const $attach = createStore<AttachType | null>(null).on(popupChanged, (_, payload) => payload)
+const $attach = createStore<AttachType | null>(null).on(attachChanged, (_, payload) => payload)
 
 $chats.watch(() => {
   const selectedChatId = $selectedChat.getState()?.id

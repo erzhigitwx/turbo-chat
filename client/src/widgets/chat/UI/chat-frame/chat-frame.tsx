@@ -7,7 +7,7 @@ import AttachImg from '@/assets/icons/chat/attach.svg?react'
 import ImageImg from '@/assets/icons/chat/image.svg?react'
 import FileImg from '@/assets/icons/chat/file.svg?react'
 import clsx from 'clsx'
-import { $attach, $popup, $selectedChat, attachChanged } from '@/widgets/chat/model/chat-frame'
+import { $popup, $selectedChat, attachChanged } from '@/widgets/chat/model/chat-frame'
 import { $opponent } from '@/widgets/chat/model/chat'
 import { ChatMessage } from '@/entities/chat-message/chat-message'
 import { SocketContext } from '@/app/providers/socket-provider'
@@ -41,7 +41,7 @@ const ChatFrame = ({ onlineUsers }: { onlineUsers: string[] }) => {
   const opponent = useUnit($opponent)
   const selectedChat = useUnit($selectedChat)
   // attach
-  const attach = useUnit($attach)
+  // const attach = useUnit($attach)
   const attachRef = useRef<HTMLDivElement | null>(null)
   const [isAttachPopup, setIsAttachPopup] = useState(false)
   const socket = useContext(SocketContext)
