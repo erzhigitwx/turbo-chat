@@ -25,6 +25,7 @@ export type MessageType = 'file' | 'media' | 'voice' | 'text'
 
 export type ChatPopupType = 'delete' | 'clear' | 'media'
 
+export type AttachType = 'media' | 'file'
 export interface Message {
   senderId: string
   messageId: string

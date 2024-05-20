@@ -30,13 +30,18 @@ export function debounce(func: (...args: any[]) => void, delay: number) {
 }
 
 export function calculateDateDifference(timestamp: number) {
-  const difference = new Date(Date.now() - timestamp)
-  const hours = difference.getHours()
-  const minutes = difference.getMinutes()
-  const seconds = difference.getSeconds()
+  const now = Date.now()
+  const difference = now - timestamp
 
-  if (hours) {
-    return `${hours} час. ${minutes} мин.`
+  const seconds = Math.floor(difference / 1000)
+  const minutes = Math.floor(seconds / 60)
+  const hours = Math.floor(minutes / 60)
+  const days = Math.floor(hours / 24)
+
+  if (days > 1) {
+    return `${days} дней назад`
+  } else if (hours) {
+    return `${hours} час. ${minutes % 60} мин.`
   } else if (minutes) {
     return `${minutes} мин.`
   } else {
