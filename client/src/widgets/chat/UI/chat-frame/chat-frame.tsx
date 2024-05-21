@@ -20,6 +20,7 @@ import { DropdownMenuItem } from '@/shared/UI/dropdown-menu/UI/dropdown-menu.pro
 import { DropdownMenu } from '@/shared/UI/dropdown-menu'
 import { Popup } from '@/shared/UI/popup/popup'
 import { useClickAway } from '@/shared/hooks/useClickAway'
+import { useWindowWidth } from '@/shared/hooks/useWindowWidth'
 
 const initialAttachItems: DropdownMenuItem[] = [
   {
@@ -51,6 +52,7 @@ const ChatFrame = ({ onlineUsers }: { onlineUsers: string[] }) => {
   const [message, setMessage] = useState('')
   const [prevMessage, setPrevMessage] = useState(message)
   const [textAreaHeight, setTextAreaHeight] = useState(50)
+  const width = useWindowWidth()
 
   const handleSendMessage = async () => {
     if (!message.trim().length) return
@@ -121,7 +123,7 @@ const ChatFrame = ({ onlineUsers }: { onlineUsers: string[] }) => {
             </Button>
             <TextArea
               extraClass={cl.chatFrameControlInput}
-              placeholder={'Написать сообщение...'}
+              placeholder={width <= 500 ? 'Написать...' : 'Написать сообщение...'}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               style={{ height: `${textAreaHeight}px`, maxHeight: '100px' }}

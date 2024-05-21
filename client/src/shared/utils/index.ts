@@ -18,6 +18,10 @@ export function setCookie(name: string, value: string, daysToExpire?: number) {
   document.cookie = cookieString
 }
 
+export function deleteCookie(name: string) {
+  document.cookie = name + '=; Max-Age=-99999999;'
+}
+
 export function debounce(func: (...args: any[]) => void, delay: number) {
   let timeoutId: any
 
@@ -88,7 +92,7 @@ export function groupMessagesByDay(messages: Message[]) {
   })
 
   const sortedGroupedMessages = Object.keys(groupedMessages)
-    .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
+    .sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
     .map((date) => ({ day: date, messages: groupedMessages[date] }))
 
   return sortedGroupedMessages

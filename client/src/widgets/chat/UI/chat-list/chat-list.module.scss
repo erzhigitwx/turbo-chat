@@ -42,3 +42,15 @@
     overflow-y: auto;
   }
 }
+
+@media screen and (max-width: 650px) {
+  .chatList {
+    padding: 10px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .chatList {
+    min-width: calc(100% - 70px);
+  }
+}

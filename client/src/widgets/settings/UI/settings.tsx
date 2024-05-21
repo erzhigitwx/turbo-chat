@@ -2,6 +2,7 @@ import cl from './settings.module.scss'
 import { Avatar, Button, LabeledInput } from '@/shared/UI'
 import { useUnit } from 'effector-react'
 import { $user } from '@/app/model'
+import { deleteCookie } from '@/shared/utils'
 
 const Settings = () => {
   const user = useUnit($user)
@@ -28,6 +29,14 @@ const Settings = () => {
         <LabeledInput label={'URL'} value={'turbo-chat/' + user?.login} />
       </div>
       <Button isBlue>Сохранить</Button>
+      <Button
+        onClick={() => {
+          deleteCookie('token')
+          window.location.reload()
+        }}
+      >
+        Выйти
+      </Button>
     </div>
   )
 }

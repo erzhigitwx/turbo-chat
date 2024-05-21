@@ -1,8 +1,17 @@
 .app {
   height: 100vh;
+  overflow: auto;
   section {
-    height: calc(100% - 70px);
+    height: 100%;
     background-color: var(--section-bg);
     padding: 20px;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .app{
+    > section {
+      padding: 10px;
+    }
   }
 }

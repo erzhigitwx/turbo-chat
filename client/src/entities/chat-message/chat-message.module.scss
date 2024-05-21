@@ -3,6 +3,11 @@
   align-items: flex-end;
   gap: 10px;
 
+  .chatMessageText {
+    white-space: break-spaces;
+    word-break: break-word;
+  }
+
   .chatMessageDate {
     display: flex;
     align-items: center;

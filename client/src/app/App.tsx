@@ -7,6 +7,7 @@ import { useContext, useEffect } from 'react'
 import { getCookie } from '@/shared/utils'
 import { SocketContext } from '@/app/providers/socket-provider'
 import { fetchUserFx } from '@/app/model'
+import clsx from 'clsx'
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
@@ -47,7 +48,7 @@ function App() {
   }, [])
 
   return (
-    <div className={cl.app} data-theme={theme}>
+    <div className={clsx(cl.app, 'scroll')} data-theme={theme}>
       <Header />
       <section>
         <Layout />

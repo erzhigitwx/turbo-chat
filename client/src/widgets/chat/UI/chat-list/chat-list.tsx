@@ -27,6 +27,7 @@ const ChatList = ({ onlineUsers }: { onlineUsers: string[] }) => {
   const selectedChat = useUnit($selectedChat)
   const searchedUsers = useUnit($searchedChats)
   const isExistingChats = !!searchedUsers?.existingChats.length
+
   const isSearchResults = !!searchedUsers?.searchResults.length
 
   return (

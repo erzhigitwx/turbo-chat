@@ -82,3 +82,15 @@
 .chatListItemActive {
   background: var(--shared-bg);
 }
+
+@media screen and (max-width: 500px) {
+  .chatListItem {
+    &Col {
+      div:nth-child(2) {
+        p {
+          max-width: 140px;
+        }
+      }
+    }
+  }
+}

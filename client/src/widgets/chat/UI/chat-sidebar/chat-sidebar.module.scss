@@ -1,0 +1,47 @@
+.chatSidebar{
+  background-color: var(--block-bg);
+  min-width: 70px;
+  padding: 20px 0;
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  > span {
+    height: 1px;
+    width: 100%;
+    background-color: #686E7A;
+  }
+
+  &Switch {
+    padding: 0;
+    background-color: transparent;
+    transform: rotate(180deg);
+  }
+
+  &SwitchActive{
+    transform: rotate(0deg);
+  }
+
+  &Content{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .chatListItem{
+      padding: 4px;
+      display: grid;
+      place-items: center;
+      border-radius: 5px;
+    }
+
+    .chatListItemActive{
+      background: var(--shared-bg);
+    }
+    .chatListItemPinned {
+      backdrop-filter: brightness(85%);
+    }
+  }
+}

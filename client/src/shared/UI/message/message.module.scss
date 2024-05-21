@@ -26,3 +26,9 @@
 .messageLarge {
   padding: 12px;
 }
+
+@media screen and (max-width: 650px) {
+  .message{
+    max-width: 95%;
+  }
+}
