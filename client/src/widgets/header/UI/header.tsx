@@ -11,8 +11,8 @@ import { $user } from '@/app/model'
 
 const Header = () => {
   const isAuth = useAuth()
-  const { theme, setTheme } = useTheme()
   const user = useUnit($user)
+  const { theme, setTheme } = useTheme()
 
   const toggleTheme = () => {
     if (setTheme) {
@@ -24,7 +24,7 @@ const Header = () => {
   return (
     <header className={cl.header}>
       <Link to={'/'}>
-        <LogoImg />
+        <LogoImg className={'theme-fill'} />
       </Link>
       <div className={cl.headerLinks}>
         <Link to={'/'}>

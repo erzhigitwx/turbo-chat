@@ -62,7 +62,7 @@ const ChatList = ({ onlineUsers }: { onlineUsers: string[] }) => {
             {isSearchResults && (
               <div>
                 <div className={cl.row}>
-                  <UserFound />
+                  <UserFound className={'theme-stroke'} />
                   <p>
                     {searchedUsers.searchResults.length}{' '}
                     {searchedUsers.searchResults.length === 1 ? 'user' : 'users'} found
@@ -100,7 +100,7 @@ const ChatList = ({ onlineUsers }: { onlineUsers: string[] }) => {
               </div>
             ) : (
               <div className={cl.center}>
-                <NoUserImg />
+                <NoUserImg className={'theme-stroke'} />
                 <p>Нет пользователей с таким именем</p>
               </div>
             )}
@@ -128,7 +128,7 @@ const ChatList = ({ onlineUsers }: { onlineUsers: string[] }) => {
             ))
         ) : (
           <div className={cl.center}>
-            <NoChats />
+            <NoChats className={'theme-fill'} />
             <p>Нет чатов</p>
           </div>
         )}

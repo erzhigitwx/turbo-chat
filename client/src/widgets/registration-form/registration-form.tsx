@@ -106,7 +106,7 @@ const RegistrationForm = () => {
           </Button>
           <Button onClick={githubSignIn} type={'button'}>
             <GithubIcon />
-            <h6>с помощью Google</h6>
+            <h6>с помощью Github</h6>
           </Button>
         </div>
       </form>

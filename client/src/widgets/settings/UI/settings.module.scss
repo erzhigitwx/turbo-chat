@@ -6,9 +6,21 @@
   gap: 20px;
   border-radius: var(--radius);
 
-  > :last-child {
-    color: #FFFFFF;
-    background-color: var(--red);
+  &Buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+    > button {
+      max-width: 500px;
+      width: 100%;
+    }
+
+    > :last-child {
+      color: #FFFFFF;
+      background-color: var(--red);
+    }
   }
 
   &Avatar {

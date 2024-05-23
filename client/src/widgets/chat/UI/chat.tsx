@@ -10,13 +10,14 @@ import { Message } from '@/shared/types'
 import { useWindowWidth } from '@/shared/hooks/useWindowWidth'
 import { ChatSidebar } from '@/widgets/chat/UI/chat-sidebar/chat-sidebar'
 import { useClickAway } from '@/shared/hooks/useClickAway'
+import { getCookie } from '@/shared/utils'
 
 const Chat = () => {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
   const chatId = searchParams.get('chat')
   const socket = useContext(SocketContext)
-  const [onlineUsers, setOnlineUsers] = useState<string[]>([])
+  const onlineUsersRef = useRef<string[]>([])
   const [isChatList, setIsChatList] = useState(false)
   const chatListRef = useRef(null)
   const width = useWindowWidth()
@@ -41,19 +42,23 @@ const Chat = () => {
     await fetchChatsFx()
   }
 
+  const updateOnlineUsersRef = (uid: string) => {
+    onlineUsersRef.current = [...onlineUsersRef.current, uid]
+  }
+
   useEffect(() => {
-    socket?.on('profile-owner-connect', ({ uid }: { uid: string }) => {
-      setOnlineUsers((prev) => [...prev, uid])
+    socket?.on('profile-owner-connect', ({ uid }) => {
+      updateOnlineUsersRef(uid)
     })
-    socket?.on('profile-owner-disconnect', ({ uid }: { uid: string }) => {
-      setOnlineUsers((prev) => prev.filter((userId) => userId === uid))
+    socket?.on('profile-owner-disconnect', ({ uid }) => {
+      onlineUsersRef.current = onlineUsersRef.current.filter((userId) => userId !== uid)
     })
 
     return () => {
       socket?.off('profile-owner-connect')
       socket?.off('profile-owner-disconnect')
     }
-  }, [])
+  }, [socket])
 
   useEffect(() => {
     socket?.on('incoming-message', refetchChats)
@@ -100,6 +105,7 @@ const Chat = () => {
     chatMessageAdded(data)
     if (chatId === data.chatId) {
       socket?.emit('select-chat', {
+        token: getCookie('token'),
         chatId,
       })
     }
@@ -121,7 +127,7 @@ const Chat = () => {
       {/* show sidebar if not computer */}
       {(isTablet || isMobile) && (
         <ChatSidebar
-          onlineUsers={onlineUsers}
+          onlineUsers={onlineUsersRef.current}
           setIsChatList={setIsChatList}
           isChatList={isChatList}
         />
@@ -130,20 +136,20 @@ const Chat = () => {
         // if tablet, show either with chat-list or without it
         (isChatList && (
           <div className={cl.chatGroup}>
-            <ChatFrame onlineUsers={onlineUsers} />
-            <ChatList onlineUsers={onlineUsers} />
+            <ChatFrame onlineUsers={onlineUsersRef.current} />
+            <ChatList onlineUsers={onlineUsersRef.current} />
           </div>
-        )) || <ChatFrame onlineUsers={onlineUsers} />
+        )) || <ChatFrame onlineUsers={onlineUsersRef.current} />
       ) : isMobile ? (
         // if mobile, show either chat-list or chat-frame
-        (isChatList && <ChatList onlineUsers={onlineUsers} />) || (
-          <ChatFrame onlineUsers={onlineUsers} />
+        (isChatList && <ChatList onlineUsers={onlineUsersRef.current} />) || (
+          <ChatFrame onlineUsers={onlineUsersRef.current} />
         )
       ) : (
         <>
           {/* show just chat-list and chat-frame(default) */}
-          <ChatList onlineUsers={onlineUsers} />
-          <ChatFrame onlineUsers={onlineUsers} />
+          <ChatList onlineUsers={onlineUsersRef.current} />
+          <ChatFrame onlineUsers={onlineUsersRef.current} />
         </>
       )}
     </div>

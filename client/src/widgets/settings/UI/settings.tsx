@@ -43,15 +43,17 @@ const Settings = () => {
         <LabeledInput label={'Почта'} value={user?.email} />
         <LabeledInput label={'URL'} value={'turbo-chat/' + user?.login} />
       </div>
-      <Button isBlue>Сохранить</Button>
-      <Button
-        onClick={() => {
-          deleteCookie('token')
-          window.location.reload()
-        }}
-      >
-        Выйти
-      </Button>
+      <div className={cl.settingsButtons}>
+        <Button isBlue>Сохранить</Button>
+        <Button
+          onClick={() => {
+            deleteCookie('token')
+            window.location.reload()
+          }}
+        >
+          Выйти
+        </Button>
+      </div>
     </div>
   )
 }

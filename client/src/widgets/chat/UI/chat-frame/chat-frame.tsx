@@ -66,6 +66,15 @@ const ChatFrame = ({ onlineUsers }: { onlineUsers: string[] }) => {
     })
   }
 
+  const handleKeyDown = async (event: any) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault()
+      await handleSendMessage()
+    } else if (event.key === 'Enter' && event.shiftKey) {
+      setTextAreaHeight(textAreaHeight + 14)
+    }
+  }
+
   useEffect(() => {
     if (!message) setTextAreaHeight(50)
     if (message.length > 145) setTextAreaHeight(textAreaHeight + 14 * (message.length / 70))
@@ -79,23 +88,9 @@ const ChatFrame = ({ onlineUsers }: { onlineUsers: string[] }) => {
     const chatBody = messagesCnt.current
 
     if (chatBody) {
-      const isScrolledToBottom =
-        chatBody.scrollHeight - chatBody.clientHeight <= chatBody.scrollTop + 1
-
-      if (isScrolledToBottom) {
-        chatBody.scrollIntoView({ behavior: 'smooth', block: 'end' })
-      }
+      chatBody.scrollTop = chatBody.scrollHeight
     }
   }, [selectedChat])
-
-  const handleKeyDown = async (event: any) => {
-    if (event.key === 'Enter' && !event.shiftKey) {
-      event.preventDefault()
-      await handleSendMessage()
-    } else if (event.key === 'Enter' && event.shiftKey) {
-      setTextAreaHeight(textAreaHeight + 14)
-    }
-  }
 
   useClickAway(attachRef, () => setIsAttachPopup(false))
 
@@ -107,11 +102,11 @@ const ChatFrame = ({ onlineUsers }: { onlineUsers: string[] }) => {
           {popup === 'clear' && <ChatClearPopup />}
           {popup === 'media' && <ChatMediaPopup />}
           <ChatFrameHeader onlineUsers={onlineUsers} />
-          <div className={clsx(cl.chatFrameBody, 'scroll')}>
+          <div className={clsx(cl.chatFrameBody, 'scroll')} ref={messagesCnt}>
             {groupedMessages.map((group) => (
               <>
                 <TextDivider text={formattedDate(group.day)} />
-                <div className={cl.chatFrameBodyMessages} ref={messagesCnt}>
+                <div className={cl.chatFrameBodyMessages}>
                   {group?.messages.map((msg) => <ChatMessage message={msg} key={msg.messageId} />)}
                 </div>
               </>
