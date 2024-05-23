@@ -48,6 +48,22 @@ a {
   text-decoration: none;
 }
 
+.theme-fill {
+  fill: var(--font-main);
+
+  * {
+    fill: var(--font-main);
+  }
+}
+
+.theme-stroke {
+  stroke: var(--font-main);
+
+  * {
+    stroke: var(--font-main);
+  }
+}
+
 .blue-fill {
   fill: var(--primary);
 
