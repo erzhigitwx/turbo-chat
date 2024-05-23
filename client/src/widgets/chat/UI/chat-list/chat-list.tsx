@@ -4,6 +4,9 @@ import { Input } from '@/shared/UI/input/input'
 import { Button } from '@/shared/UI/button/button'
 import { ChatListItem } from './chat-list-item/chat-list-item'
 import SettingsImg from '@/assets/icons/settings.svg?react'
+import NoUserImg from '@/assets/icons/no-user.svg?react'
+import NoChats from '@/assets/icons/no-chats.svg?react'
+import UserFound from '@/assets/icons/user-found.svg?react'
 import SearchImg from '@/assets/icons/search.svg?react'
 import PlusImg from '@/assets/icons/plus.svg?react'
 import { Chat } from '@/shared/types'
@@ -27,7 +30,6 @@ const ChatList = ({ onlineUsers }: { onlineUsers: string[] }) => {
   const selectedChat = useUnit($selectedChat)
   const searchedUsers = useUnit($searchedChats)
   const isExistingChats = !!searchedUsers?.existingChats.length
-
   const isSearchResults = !!searchedUsers?.searchResults.length
 
   return (
@@ -59,7 +61,13 @@ const ChatList = ({ onlineUsers }: { onlineUsers: string[] }) => {
           <>
             {isSearchResults && (
               <div>
-                <p>Search results</p>
+                <div className={cl.row}>
+                  <UserFound />
+                  <p>
+                    {searchedUsers.searchResults.length}{' '}
+                    {searchedUsers.searchResults.length === 1 ? 'user' : 'users'} found
+                  </p>
+                </div>
                 {searchedUsers.searchResults.map((user) => (
                   <ChatListUser
                     key={user.uid}
@@ -87,9 +95,14 @@ const ChatList = ({ onlineUsers }: { onlineUsers: string[] }) => {
         ) : searchValue.length ? (
           <>
             {isFetchingUsers ? (
-              <p>Ищем пользователей</p>
+              <div className={cl.center}>
+                <p>Ищем пользователей</p>
+              </div>
             ) : (
-              <p>Нет пользователей с такими именами</p>
+              <div className={cl.center}>
+                <NoUserImg />
+                <p>Нет пользователей с таким именем</p>
+              </div>
             )}
           </>
         ) : chats.length ? (
@@ -114,7 +127,10 @@ const ChatList = ({ onlineUsers }: { onlineUsers: string[] }) => {
               />
             ))
         ) : (
-          <p>Нет чатов</p>
+          <div className={cl.center}>
+            <NoChats />
+            <p>Нет чатов</p>
+          </div>
         )}
       </div>
     </div>

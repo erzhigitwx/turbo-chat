@@ -1,4 +1,4 @@
-.chatSidebar{
+.chatSidebar {
   background-color: var(--block-bg);
   min-width: 70px;
   padding: 20px 0;
@@ -21,27 +21,34 @@
     transform: rotate(180deg);
   }
 
-  &SwitchActive{
+  &SwitchActive {
     transform: rotate(0deg);
   }
 
-  &Content{
+  &Content {
     display: flex;
     flex-direction: column;
     gap: 10px;
 
-    .chatListItem{
+    .chatListItem {
       padding: 4px;
       display: grid;
       place-items: center;
       border-radius: 5px;
     }
 
-    .chatListItemActive{
+    .chatListItemActive {
       background: var(--shared-bg);
     }
+
     .chatListItemPinned {
       backdrop-filter: brightness(85%);
     }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .chatSidebar {
+    min-width: 60px;
   }
 }

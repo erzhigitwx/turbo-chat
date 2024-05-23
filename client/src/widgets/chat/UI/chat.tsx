@@ -30,6 +30,12 @@ const Chat = () => {
     })
   }
 
+  useEffect(() => {
+    if (chatId) {
+      setIsChatList(false)
+    }
+  }, [chatId])
+
   // SOCKET LISTENERS
   async function refetchChats() {
     await fetchChatsFx()

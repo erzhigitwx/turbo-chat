@@ -19,7 +19,7 @@ const ChatListUser = ({ user, isOnline }: { user: UserData; isOnline: boolean })
 
   return (
     <div className={cl.chatListItem} onClick={handleCreateChat}>
-      <Avatar size={[40, 40]} isActive={isOnline} />
+      <Avatar size={[40, 40]} isActive={isOnline} src={user.avatar} />
       <div className={cl.chatListItemCol}>
         <div className={cl.chatListItemRow}>
           <h6>{user.login}</h6>

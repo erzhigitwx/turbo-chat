@@ -6,10 +6,13 @@ import { Avatar, Toggler } from '@/shared/UI'
 import LogoImg from '@/assets/logo.svg?react'
 import { setCookie } from '@/shared/utils'
 import { ChatCount } from '@/entities/chat-count/chat-count'
+import { useUnit } from 'effector-react'
+import { $user } from '@/app/model'
 
 const Header = () => {
   const isAuth = useAuth()
   const { theme, setTheme } = useTheme()
+  const user = useUnit($user)
 
   const toggleTheme = () => {
     if (setTheme) {
@@ -30,7 +33,7 @@ const Header = () => {
         <Toggler value={theme === 'dark'} setter={toggleTheme} size={[48, 34]} isThemeToggler />
         {isAuth && (
           <Link to={'/profile'}>
-            <Avatar isActive />
+            <Avatar isActive src={user?.avatar} />
           </Link>
         )}
       </div>

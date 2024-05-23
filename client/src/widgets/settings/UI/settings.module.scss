@@ -10,6 +10,28 @@
     color: #FFFFFF;
     background-color: var(--red);
   }
+
+  &Avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    > button {
+      position: absolute;
+      background-color: inherit;
+      backdrop-filter: blur(5px);
+      top: calc(100% - 50px);
+      margin-left: 100px;
+    }
+
+    &Custom {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 100px;
+    }
+  }
 }
 
 .settingsRow {

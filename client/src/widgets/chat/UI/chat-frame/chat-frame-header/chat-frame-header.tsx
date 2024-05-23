@@ -85,7 +85,7 @@ const ChatFrameHeader = ({ onlineUsers }: { onlineUsers: string[] }) => {
     opponent && (
       <header className={cl.chatFrameHeader}>
         <div className={cl.chatFrameHeaderInfo}>
-          <Avatar isActive={onlineUsers.includes(opponent.uid)} />
+          <Avatar isActive={onlineUsers.includes(opponent.uid)} src={opponent.avatar} />
           <div>
             <h6>{opponent.login}</h6>
             {opponent.uid && onlineUsers.includes(opponent.uid) ? (

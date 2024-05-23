@@ -3,6 +3,7 @@ import { Avatar, Button, LabeledInput } from '@/shared/UI'
 import { useUnit } from 'effector-react'
 import { $user } from '@/app/model'
 import { deleteCookie } from '@/shared/utils'
+import ChangeImg from '@/assets/icons/change.svg?react'
 
 const Settings = () => {
   const user = useUnit($user)
@@ -12,7 +13,21 @@ const Settings = () => {
       <div className={cl.settingsCol}>
         <h2>Вид профиля</h2>
         <div>
-          <Avatar size={[100, 100]} />
+          {user?.avatar ? (
+            <div className={cl.settingsAvatar}>
+              <img src={user.avatar} alt={'avatar'} className={cl.settingsAvatarCustom} />
+              <Button>
+                <ChangeImg className={'blue-stroke'} />
+              </Button>
+            </div>
+          ) : (
+            <div className={cl.settingsAvatar}>
+              <Avatar size={[150, 150]} />
+              <Button>
+                <ChangeImg className={'blue-stroke'} />
+              </Button>
+            </div>
+          )}
         </div>
       </div>
       <div className={cl.settingsCol}>

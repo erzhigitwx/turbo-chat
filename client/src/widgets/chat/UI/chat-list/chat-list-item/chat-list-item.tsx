@@ -56,7 +56,7 @@ const ChatListItem = memo(
           searchValueChanged('')
         }}
       >
-        <Avatar size={[40, 40]} isActive={isOnline} />
+        <Avatar size={[40, 40]} isActive={isOnline} src={opponent?.avatar} />
         <div className={cl.chatListItemCol}>
           <div className={cl.chatListItemRow}>
             <h6>{opponent?.login}</h6>
