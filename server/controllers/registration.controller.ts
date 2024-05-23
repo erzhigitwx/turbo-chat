@@ -53,7 +53,8 @@ class RegistrationController {
       UserData,
       "uid" | "createdAt" | "lastLoginAt"
     >;
-
+    const users = await getDocsAll(usersCollection);
+    const isEmailExist = users.some((user) => user.email === userData.email);
     const userDataFormatted: UserData = {
       login: userData.login,
       email: userData.email,
@@ -76,7 +77,12 @@ class RegistrationController {
 
     const token = generateToken(userDataFormatted);
 
-    const docResult = await addToCollection(usersCollection, userDataFormatted);
+    let docResult;
+    if (isEmailExist) {
+      return res.status(200).send({ success: true, data: token });
+    } else {
+      docResult = await addToCollection(usersCollection, userDataFormatted);
+    }
 
     if (token && docResult.success) {
       return res.status(200).send({ success: true, data: token });
