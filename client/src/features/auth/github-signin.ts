@@ -5,7 +5,6 @@ export const githubSignIn = async () => {
   try {
     const auth = getAuth()
     const provider = new GithubAuthProvider()
-
     const result = await signInWithPopup(auth, provider)
 
     if (result && result.user) {
@@ -15,6 +14,7 @@ export const githubSignIn = async () => {
         email: user.email || '',
         method: 'github',
         nickname: '',
+        avatar: user.photoURL!,
       })
     } else {
       console.error('User authentication failed.')

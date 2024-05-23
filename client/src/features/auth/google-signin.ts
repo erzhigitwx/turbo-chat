@@ -6,12 +6,14 @@ export const googleSignIn = async () => {
   const provider = new GoogleAuthProvider()
   const result = await signInWithPopup(auth, provider)
   const user = result.user
+
   if (result && result.user) {
     await handleRegistration({
       login: user.displayName as string,
       email: user.email as string,
       method: 'google',
       nickname: '',
+      avatar: user.photoURL!,
     })
   } else {
     console.error('User authentication failed.')
