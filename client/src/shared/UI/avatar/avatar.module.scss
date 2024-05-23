@@ -12,4 +12,9 @@
     height: 12px;
     background-color: #16B364;
   }
+
+  &Custom {
+    border-radius: 100px;
+    object-fit: cover;
+  }
 }

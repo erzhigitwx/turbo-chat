@@ -4,6 +4,7 @@ export interface UserData {
   email: string
   createdAt: string
   lastLoginAt: number
+  avatar?: string
   nickname?: string
   password?: string
   method: 'default' | 'google' | 'github'
