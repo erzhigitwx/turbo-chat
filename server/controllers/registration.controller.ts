@@ -63,7 +63,7 @@ class RegistrationController {
       lastLoginAt: Date.now(),
       nickname: userData.nickname,
       method: userData.method,
-      avatar: userData.avatar,
+      ...(userData.avatar && { avatar: userData.avatar }),
       uid: uuid(),
     };
 
