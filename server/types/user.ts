@@ -4,6 +4,7 @@ export interface UserData {
   email: string;
   createdAt: number;
   lastLoginAt: number;
+  avatar?: string;
   nickname?: string;
   password?: string;
   method: "default" | "google" | "github";
@@ -12,5 +13,4 @@ export interface UserData {
 export interface UserDataFull {
   user: UserData;
   theme: "dark" | "light";
-  avatar?: string;
 }
