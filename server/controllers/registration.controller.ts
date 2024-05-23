@@ -9,6 +9,7 @@ import {
 import { auth, usersCollection } from "../config/index.js";
 import { uuid } from "../utils/index.js";
 import { addToCollection, getDocsAll } from "../models/firebase.js";
+import { doc } from "firebase/firestore";
 
 class RegistrationController {
   async validateRegistration(req: Request, res: Response) {
@@ -84,6 +85,7 @@ class RegistrationController {
       docResult = await addToCollection(usersCollection, userDataFormatted);
     }
 
+    console.log(docResult, token, userDataFormatted);
     if (token && docResult.success) {
       return res.status(200).send({ success: true, data: token });
     } else {
