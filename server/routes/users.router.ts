@@ -6,5 +6,6 @@ const usersRouter = Router();
 usersRouter.use("/users/*", middleware.verifyUser);
 
 usersRouter.post("/users/get-user", usersController.getUser);
+usersRouter.post("/users/manage-user", usersController.manageUser);
 
 export { usersRouter };

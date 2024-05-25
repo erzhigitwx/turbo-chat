@@ -8,6 +8,11 @@ export interface UserData {
   nickname?: string;
   password?: string;
   method: "default" | "google" | "github";
+  fullname?: {
+    lastname?: string;
+    name?: string;
+    surname?: string;
+  };
 }
 
 export interface UserDataFull {
