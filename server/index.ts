@@ -1,6 +1,7 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
+import bodyParser from "body-parser";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { PORT } from "./constants/index.js";
@@ -14,7 +15,7 @@ const app = express();
 const httpServer = createServer(app);
 export const io = new Server(httpServer, {
   cors: {
-    origin: "*",
+    origin: process.env.HOST_ORIGIN,
   },
 });
 app.use(cors());

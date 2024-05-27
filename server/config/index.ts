@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import dotenv from "dotenv";
+import { getStorage } from "firebase/storage";
 
 dotenv.config();
 
@@ -18,7 +19,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
+const storage = getStorage(app);
 const usersCollection = collection(db, "users");
 const chatsCollection = collection(db, "chats");
 
-export { db, auth, usersCollection, chatsCollection };
+export { db, auth, storage, usersCollection, chatsCollection };
