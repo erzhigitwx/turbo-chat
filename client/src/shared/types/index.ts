@@ -8,13 +8,16 @@ export interface UserData {
   nickname?: string
   password?: string
   method: 'default' | 'google' | 'github'
+  fullname?: {
+    lastname?: string
+    name?: string
+    surname?: string
+  }
 }
 
 export interface UserDataFull {
   user: UserData
-  method: 'email' | 'google' | 'github'
   theme: 'dark' | 'light'
-  avatar?: string
 }
 
 export interface Response {
@@ -50,4 +53,11 @@ export interface Chat {
   isPinned: boolean
   note?: string
   theme?: string
+}
+
+export interface Status {
+  [key: string]: {
+    text: string
+    ok: boolean
+  }
 }
