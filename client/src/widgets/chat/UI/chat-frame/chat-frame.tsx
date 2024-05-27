@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react'
+import { Fragment, useContext, useEffect, useRef, useState } from 'react'
 import cl from './chat-frame.module.scss'
 import { useUnit } from 'effector-react'
 import { Button, DropdownMenu, TextArea, TextDivider } from '@/shared/UI'
@@ -102,13 +102,13 @@ const ChatFrame = ({ onlineUsers }: { onlineUsers: string[] }) => {
           {popup === 'media' && <ChatMediaPopup />}
           <ChatFrameHeader onlineUsers={onlineUsers} />
           <div className={clsx(cl.chatFrameBody, 'scroll')} ref={messagesCnt}>
-            {groupedMessages.map((group) => (
-              <>
+            {groupedMessages.map((group, i) => (
+              <Fragment key={i}>
                 <TextDivider text={formattedDate(group.day)} />
                 <div className={cl.chatFrameBodyMessages}>
                   {group?.messages.map((msg) => <ChatMessage message={msg} key={msg.messageId} />)}
                 </div>
-              </>
+              </Fragment>
             ))}
           </div>
           <div className={cl.chatFrameControl}>
@@ -123,9 +123,11 @@ const ChatFrame = ({ onlineUsers }: { onlineUsers: string[] }) => {
               style={{ height: `${textAreaHeight}px`, maxHeight: '100px' }}
               onKeyDown={handleKeyDown}
             />
-            <Button onClick={handleSendMessage}>
-              <SendImg />
-            </Button>
+            {message && (
+              <Button onClick={handleSendMessage}>
+                <SendImg />
+              </Button>
+            )}
             {isAttachPopup && (
               <Popup
                 onClick={() => setIsAttachPopup(false)}

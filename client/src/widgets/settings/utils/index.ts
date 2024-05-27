@@ -48,7 +48,7 @@ export const handleSave = async (
         token: getCookie('token'),
         node: {
           login: login,
-          ...(uploadRes.data && { avatar: uploadRes.data }),
+          ...(uploadRes.data && uploadRes.success && { avatar: uploadRes.data }),
           fullname: {
             lastname,
             name,

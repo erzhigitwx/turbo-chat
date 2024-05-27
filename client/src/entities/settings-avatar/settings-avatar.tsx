@@ -19,7 +19,11 @@ const SettingsAvatar = ({ imageUrl, handleTriggerInput, error }: SettingsAvatarP
         </div>
       ) : (
         <div className={cl.settingsAvatar}>
-          <Avatar size={[150, 150]} />
+          {imageUrl ? (
+            <img src={imageUrl} alt="avatar" className={cl.settingsAvatarCustom} />
+          ) : (
+            <Avatar size={[150, 150]} />
+          )}
           <Button onClick={handleTriggerInput} type={'button'}>
             <ChangeImg className={'blue-stroke'} />
           </Button>
