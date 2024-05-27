@@ -23,12 +23,16 @@ class UsersController {
   async manageUser(req: Request, res: Response) {
     const { userData, node } = req.body;
     const userRef = await findRefById(userData, "uid", userData.uid);
-    await updateDoc(userRef.ref, node);
+    const result = await updateDoc(userRef.ref, node);
+
+    console.log(userData, node, userRef, result);
 
     if (userRef) {
       return res.status(200).send({ success: true, data: userRef });
     } else {
-      return res.status(400).send({ success: false, data: "Cannot Get Chats" });
+      return res
+        .status(400)
+        .send({ success: false, data: "Cannot Update User" });
     }
   }
 

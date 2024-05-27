@@ -5,9 +5,9 @@ import { useAuth } from '@/shared/hooks/useAuth'
 import { Avatar, Toggler } from '@/shared/UI'
 import LogoImg from '@/assets/logo.svg?react'
 import { setCookie } from '@/shared/utils'
-import { ChatCount } from '@/entities/chat-count/chat-count'
 import { useUnit } from 'effector-react'
 import { $user } from '@/app/model'
+import { ChatCount } from '@/entities'
 
 const Header = () => {
   const isAuth = useAuth()
