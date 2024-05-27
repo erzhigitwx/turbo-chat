@@ -1,9 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
 import { userSocketRoomPrefix } from "../constants/index.js";
 import { io } from "../index.js";
-import { findRefById } from "../models/firebase.js";
-import { chatsCollection } from "../config/index.js";
+import { findRefById, getDocsAll } from "../models/firebase.js";
+import { chatsCollection, usersCollection } from "../config/index.js";
 import { Chat } from "../types/chat.js";
+import { UserData } from "../types/user.js";
 
 export function uuid(options?: any) {
   return uuidv4(options);
@@ -18,6 +19,10 @@ export async function getChatById(chatId: string): Promise<Chat> {
   return chatRef.data() as Chat;
 }
 
+export async function getUserById(uid: string) {
+  const users: UserData[] = await getDocsAll(usersCollection);
+  return users.find((user) => user.uid === uid);
+}
 export async function verifyChatMember(chatId: string, userId: string) {
   const chatRow = await getChatById(chatId);
 

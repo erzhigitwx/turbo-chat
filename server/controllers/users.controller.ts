@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { findRefById, getDocsAll, updateDocField } from "../models/firebase.js";
 import { storage, usersCollection } from "../config/index.js";
-import { UserData } from "../types/user.js";
 import { updateDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
@@ -60,13 +59,9 @@ class UsersController {
   }
 
   async updateLastOnline(uid: string) {
-    const users = (await getDocsAll(usersCollection)) as UserData[];
-    const currentUser = users.find((user) => user.uid === uid);
     const currentUserRef = await findRefById(usersCollection, "uid", uid);
 
-    if (!currentUser) return;
-
-    const res = await updateDocField(currentUserRef.ref, {
+    await updateDocField(currentUserRef.ref, {
       lastLoginAt: Date.now(),
     });
   }
