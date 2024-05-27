@@ -1,5 +1,5 @@
 import cl from './dropdown-menu.module.scss'
-import { DropdownMenuProps } from '@/shared/UI/dropdown-menu/UI/dropdown-menu.props'
+import { DropdownMenuProps } from '@/shared/UI/dropdown-menu/dropdown-menu.props'
 
 const DropdownMenu = ({ items }: DropdownMenuProps) => {
   return (
