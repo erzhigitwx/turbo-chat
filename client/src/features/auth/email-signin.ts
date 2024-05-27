@@ -1,8 +1,9 @@
 import { Dispatch, FormEvent, SetStateAction } from 'react'
 import { handleRegistration } from '@/features/auth/handle-registration'
-import { object, string, ValidationError } from 'yup'
-import { Status } from '@/widgets/registration-form/registration-form.props'
+import { object, ValidationError } from 'yup'
 import { Fetch } from '@/shared/utils/methods'
+import { Status } from '@/shared/types'
+import { emailValidation, loginValidation, passwordValidation } from '@/shared/constants'
 
 export const handleFormSubmit = async (
   e: FormEvent<HTMLFormElement>,
@@ -67,14 +68,7 @@ export const handleFormSubmit = async (
 }
 
 let userSchema = object({
-  email: string().required('Email is required').email('Must be the correct email'),
-  login: string().trim().min(3).max(16).required('Login is required'),
-  password: string()
-    .trim()
-    .transform((value) => (value === '' ? undefined : value))
-    .required('Password is required')
-    .matches(/^(?=.*[0-9])/, 'Password must contain at least one digit')
-    .matches(/^(?=.*[a-zA-Z])/, 'Password must contain at least one letter')
-    .min(6, 'Password must be at least 6 characters long')
-    .max(16, 'Password must be less than 16 characters long'),
+  email: emailValidation,
+  login: loginValidation,
+  password: passwordValidation,
 })
