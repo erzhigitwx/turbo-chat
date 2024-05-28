@@ -1,26 +1,29 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
-import { routes } from "@/app/config/routes/routes";
-import { getCookie } from "@/shared/utils";
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
+import { routes } from '@/app/config/routes/routes'
+import { getCookie } from '@/shared/utils'
+import { useEffect } from 'react'
 
 const Layout = () => {
-  const token = getCookie("token");
-  const navigate = useNavigate();
+  const token = getCookie('token')
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (token && window.location.pathname === '/registration') {
+      navigate('/')
+    }
+  }, [token, navigate])
 
   return (
     <Routes>
-      {routes.map((route) => {
-        if (route.credentials) {
-          if (token) {
-            return <Route path={route.path} element={route.element} id={route.name} key={route.name} />;
-          } else {
-            navigate("/registration");
-          }
-        } else {
-          return <Route path={route.path} element={route.element} id={route.name} key={route.name} />;
-        }
-      })}
+      {routes.map((route) => (
+        <Route
+          key={route.name}
+          path={route.path}
+          element={route.credentials && !token ? <Navigate to={'/registration'} /> : route.element}
+        />
+      ))}
     </Routes>
-  );
-};
+  )
+}
 
-export { Layout };
+export { Layout }

@@ -1,7 +1,7 @@
-import { RegistrationForm } from "@/widgets/registration-form/registration-form";
+import { RegistrationForm } from '@/widgets/registration-form/registration-form'
 
 const Registration = () => {
-  return <RegistrationForm />;
-};
+  return <RegistrationForm />
+}
 
-export default Registration;
+export default Registration

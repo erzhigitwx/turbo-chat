@@ -71,9 +71,11 @@ $createdChat.watch(async (chat) => {
 })
 
 $chats.watch((chats) => {
-  chats.map((chat) => {
-    chat.messages = sortByDate(chat.messages, 'createdAt')
-  })
+  if (Array.isArray(chats)) {
+    chats.map((chat) => {
+      chat.messages = sortByDate(chat.messages, 'createdAt')
+    })
+  }
 })
 
 fetchChatsFx()
