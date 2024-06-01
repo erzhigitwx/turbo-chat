@@ -96,6 +96,10 @@
       flex-direction: column;
       gap: 4px;
     }
+
+    &::-webkit-scrollbar {
+      background-color: var(--block-bg) !important;
+    }
   }
 
   &Control {
