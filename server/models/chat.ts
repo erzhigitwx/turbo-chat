@@ -22,7 +22,7 @@ export async function createTextMessage(
     clearedFor: [],
     status: "send",
     type: attach ? "media" : "text",
-    attach,
+    ...(attach ? attach : null),
   };
   const newMessage = await addDoc(
     messagesCollection,
