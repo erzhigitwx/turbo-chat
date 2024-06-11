@@ -29,7 +29,10 @@ export type MessageType = 'file' | 'media' | 'voice' | 'text'
 
 export type ChatPopupType = 'delete' | 'clear' | 'media'
 
-export type AttachType = 'media' | 'file'
+export type AttachType = {
+  type: 'media' | 'file'
+  data: File[] | string[]
+}
 export interface Message {
   senderId: string
   messageId: string
@@ -41,6 +44,7 @@ export interface Message {
   reply: string // message id
   content: any
   status: 'send' | 'check'
+  attach?: AttachType
 }
 
 export interface Chat {
