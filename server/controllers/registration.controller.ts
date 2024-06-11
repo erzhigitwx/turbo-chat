@@ -18,9 +18,10 @@ class RegistrationController {
     const isAvailableLogin = !users.some(
       (user) => user.login === userData.login,
     );
-    const isValidPassword = /^(?=.*[0-9])(?=.*[a-zA-Z]).{6,16}$/.test(
-      userData.password,
-    );
+    const isValidPassword =
+      /^(?=.*[0-9])(?=.*[a-zA-Z])([A-Za-z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*)(?!.*[\u0400-\u04FF]).{6,16}$/.test(
+        userData.password,
+      );
     const isEmailExist = users.some((user) => user.email === userData.email);
 
     if (!isAvailableLogin) {
@@ -34,7 +35,7 @@ class RegistrationController {
         success: false,
         data: {
           password: {
-            text: "Password must contain at least one letter, one digit, and be between 6 to 16 characters long",
+            text: "Password must contain at least one letter, one digit, be between 6 to 16 characters long, and only contain Latin letters.",
             ok: false,
           },
         },
