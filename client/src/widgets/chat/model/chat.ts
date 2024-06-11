@@ -46,7 +46,10 @@ const $chats = createStore<Chat[]>([])
   .on(chatMessageAdded, (chats, newMessage: ChatMessageAddedPayload) => {
     return chats.map((chat) => {
       if (chat.id === newMessage.chatId) {
-        return { ...chat, messages: [...chat.messages, newMessage.message] }
+        return {
+          ...chat,
+          messages: [...chat.messages, newMessage.message],
+        }
       }
       return chat
     })

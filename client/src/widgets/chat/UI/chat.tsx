@@ -92,7 +92,7 @@ const Chat = () => {
     })
 
     return () => {
-      socket?.on('chat-deleted', async () => {
+      socket?.off('chat-deleted', async () => {
         navigate('/')
         selectedChatChanged(null)
         await refetchChats()

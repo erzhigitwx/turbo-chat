@@ -73,7 +73,9 @@ const ChatListItem = memo(
                     cl.chatListItemRowOpponentMsg,
                 )}
               >
-                {chat.messages[msgLength - 1].content}
+                {chat.messages[msgLength - 1].type === 'text' &&
+                  chat.messages[msgLength - 1].content}
+                {chat.messages[msgLength - 1].type === 'media' && 'Фотографии'}
               </p>
             ) : (
               <p>Новый чат</p>

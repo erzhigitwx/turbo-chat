@@ -1,0 +1,57 @@
+.attach {
+  padding: 0 20px 8px;
+
+  .media {
+    display: flex;
+    gap: 8px;
+
+    &Item {
+      position: relative;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+
+      &Img {
+        width: 92px;
+        height: 92px;
+        object-fit: cover;
+        border-radius: var(--radius);
+      }
+
+      &Hovered {
+        position: absolute;
+        right: 8px;
+        top: 8px;
+        backdrop-filter: blur(12px);
+        background: var(--grey-text);
+        padding: 2px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .attach {
+    .media {
+      gap: 4px;
+      &Item {
+        &Img {
+          width: 60px;
+          height: 60px;
+        }
+
+        &Hovered {
+          right: 2px;
+          top: 2px;
+          transform: scale(0.7);
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .attach {
+    padding: 0 10px 8px;
+  }
+}
