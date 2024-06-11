@@ -4,14 +4,20 @@ export interface Message {
   senderId: string;
   messageId: string;
   type: MessageType;
-  reactions: Array<string>;
   clearedFor: Array<string>;
   createdAt: number;
-  isForwarded: boolean;
-  reply: string; // message id
   content: any;
   status: "send" | "check";
+  reply?: string; // message id
+  isForwarded?: boolean;
+  reactions?: Array<string>;
+  attach?: AttachType;
 }
+
+export type AttachType = {
+  type: "media" | "file";
+  data: File[] | string[];
+};
 
 export interface Chat {
   id: string;

@@ -3,11 +3,9 @@ import { socketMiddlewareRouting } from "../middleware/socket-middleware-routing
 import socketMiddleware from "../middleware/middleware.js";
 import { UserData } from "../../types/user.js";
 import { userSocketRoomPrefix } from "../../constants/index.js";
-import { findRefById } from "../../models/firebase.js";
-import { chatsCollection } from "../../config/index.js";
-import { addDoc, collection, updateDoc } from "firebase/firestore";
 import { getChatById, uuid } from "../../utils/index.js";
-import { Message } from "../../types/chat.js";
+import { createAttachMessage, createTextMessage } from "../../models/chat.js";
+import { AttachType, Message } from "../../types/chat.js";
 
 interface ChatMemberBody {
   userData: UserData;
@@ -16,16 +14,12 @@ interface ChatMemberBody {
 
 function messageController(io: Server, socket: Socket) {
   socket.use(
-    socketMiddlewareRouting(socketMiddleware.verifyToken, [
-      "create-message",
-      "create-call",
-    ]),
+    socketMiddlewareRouting(socketMiddleware.verifyToken, ["create-message"]),
   );
 
   socket.use(
     socketMiddlewareRouting(socketMiddleware.verifyChatMember, [
       "create-message",
-      "create-call",
     ]),
   );
 
@@ -33,12 +27,9 @@ function messageController(io: Server, socket: Socket) {
 
   socket.on(
     "create-message",
-    async (body: ChatMemberBody & { message: string }) => {
-      const { userData, chatId, message } = body;
-
-      const chatRef = await findRefById(chatsCollection, "id", chatId);
-      const messagesCollection = collection(chatRef.ref, "messages");
-      const messageFormatted = {
+    async (body: ChatMemberBody & { message: string; attach: AttachType }) => {
+      const { userData, chatId, message, attach } = body;
+      const messageFormatted: Message = {
         senderId: userData.uid,
         createdAt: Date.now(),
         messageId: uuid(),
@@ -47,19 +38,30 @@ function messageController(io: Server, socket: Socket) {
         status: "send",
         type: "text",
       };
-      const newMessage = await addDoc(
-        messagesCollection,
-        messageFormatted as Message,
-      );
-      const chatRow = await getChatById(chatId);
-      if (!chatRow) return;
 
-      if (chatRow.deletedFor.length) {
-        await updateDoc(chatRef.ref, { deletedFor: [] });
+      if (attach && attach.data && attach.data.length > 0) {
+        const mediaMessage = await createAttachMessage(
+          userData,
+          chatId,
+          attach.data,
+        );
+        if (mediaMessage.success) {
+          messageFormatted.attach = {
+            type: attach.type,
+            data: mediaMessage.data as string[],
+          };
+        }
       }
 
-      if (newMessage) {
-        await updateDoc(chatRef.ref, { unread: chatRow.unread + 1 });
+      const newMessage = await createTextMessage(
+        userData,
+        chatId,
+        message,
+        messageFormatted.attach,
+      );
+      const chatRow = await getChatById(chatId);
+
+      if (newMessage.success || messageFormatted.attach) {
         io.to(userSocketRoomPrefix + chatRow.creatorId).emit(
           "incoming-message",
           {
@@ -74,8 +76,6 @@ function messageController(io: Server, socket: Socket) {
             message: messageFormatted,
           },
         );
-      } else {
-        return;
       }
     },
   );

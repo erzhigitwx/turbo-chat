@@ -24,6 +24,8 @@ function chatController(io: Server, socket: Socket) {
       "select-chat",
       "clear-chat",
       "delete-chat",
+      "typing-chat",
+      "stop-typing-chat",
     ]),
   );
 
@@ -32,6 +34,8 @@ function chatController(io: Server, socket: Socket) {
       "select-chat",
       "clear-chat",
       "delete-chat",
+      "typing-chat",
+      "stop-typing-chat",
     ]),
   );
 
@@ -92,6 +96,34 @@ function chatController(io: Server, socket: Socket) {
       });
     },
   );
+
+  socket.on("typing-chat", async (body: ChatMemberBody) => {
+    const { chatId, userData } = body;
+    const chatRow = await getChatById(chatId);
+    const receiverId =
+      chatRow.creatorId === userData.uid
+        ? chatRow.opponentId
+        : chatRow.creatorId;
+    if (!chatRow) return;
+
+    io.to(userSocketRoomPrefix + receiverId).emit("chat-typing-receive", {
+      chatId: chatId,
+    });
+  });
+
+  socket.on("stop-typing-chat", async (body: ChatMemberBody) => {
+    const { chatId, userData } = body;
+    const chatRow = await getChatById(chatId);
+    const receiverId =
+      chatRow.creatorId === userData.uid
+        ? chatRow.opponentId
+        : chatRow.creatorId;
+    if (!chatRow) return;
+
+    io.to(userSocketRoomPrefix + receiverId).emit("chat-typing-stop", {
+      chatId: chatId,
+    });
+  });
 }
 
 export default chatController;
