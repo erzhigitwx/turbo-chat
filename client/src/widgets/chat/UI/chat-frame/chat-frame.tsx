@@ -23,7 +23,13 @@ import { ChatMessage } from '@/entities'
 import { Message } from '@/shared/UI/message/message'
 import { ChatFrameAttach } from '@/widgets/chat/UI/chat-frame/chat-frame-attach/chat-frame-attach'
 
-const ChatFrame = ({ onlineUsers }: { onlineUsers: string[] }) => {
+const ChatFrame = ({
+  onlineUsers,
+  typingUsers,
+}: {
+  onlineUsers: string[]
+  typingUsers: string[]
+}) => {
   const popup = useUnit($popup)
   const opponent = useUnit($opponent)
   const selectedChat = useUnit($selectedChat)
@@ -38,7 +44,6 @@ const ChatFrame = ({ onlineUsers }: { onlineUsers: string[] }) => {
   const [message, setMessage] = useState('')
   const [prevMessage, setPrevMessage] = useState(message)
   const [textAreaHeight, setTextAreaHeight] = useState(50)
-  const [isOpponentTyping, setIsOpponentTyping] = useState(false)
   const mediaInputRef = useRef<HTMLInputElement | null>(null)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const attachLen = attach?.data.length
@@ -50,9 +55,10 @@ const ChatFrame = ({ onlineUsers }: { onlineUsers: string[] }) => {
       content: 'Фото или видео',
       onClick: () => {
         attachTypeChanged('media')
-        if (fileInputRef.current) {
-          fileInputRef.current.multiple = true
-          fileInputRef.current?.click()
+        if (mediaInputRef.current) {
+          mediaInputRef.current.accept = 'image/*,video/*'
+          mediaInputRef.current.multiple = true
+          mediaInputRef.current?.click()
         }
       },
       icon: ImageImg,
@@ -62,10 +68,9 @@ const ChatFrame = ({ onlineUsers }: { onlineUsers: string[] }) => {
       content: 'Файл',
       onClick: () => {
         // attachTypeChanged('file')
-        // if (mediaInputRef.current) {
-        //   mediaInputRef.current.accept = 'image/*,video/*'
-        //   mediaInputRef.current.multiple = true
-        //   mediaInputRef.current?.click()
+        // if (fileInputRef.current) {
+        //   fileInputRef.current.multiple = true
+        //   fileInputRef.current?.click()
         // }
       },
       icon: FileImg,
@@ -78,10 +83,10 @@ const ChatFrame = ({ onlineUsers }: { onlineUsers: string[] }) => {
     setTextAreaHeight(50)
 
     socket?.emit('create-message', {
-      token: getCookie('token'),
-      chatId: selectedChat?.id,
-      ...(attach?.data.length ? { attach: attach } : null),
       message: message,
+      chatId: selectedChat?.id,
+      token: getCookie('token'),
+      ...(attach?.data.length ? { attach: attach } : null),
     })
   }
 
@@ -110,24 +115,6 @@ const ChatFrame = ({ onlineUsers }: { onlineUsers: string[] }) => {
       chatBody.scrollTop = chatBody.scrollHeight
     }
   }, [selectedChat])
-
-  useEffect(() => {
-    socket?.on('chat-typing-receive', () => {
-      setIsOpponentTyping(true)
-    })
-    socket?.on('chat-typing-stop', () => {
-      setIsOpponentTyping(false)
-    })
-
-    return () => {
-      socket?.off('chat-typing-receive', () => {
-        setIsOpponentTyping(true)
-      })
-      socket?.off('chat-typing-stop', () => {
-        setIsOpponentTyping(false)
-      })
-    }
-  }, [])
 
   const handleMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value)
@@ -160,7 +147,7 @@ const ChatFrame = ({ onlineUsers }: { onlineUsers: string[] }) => {
                 <TextDivider text={formattedDate(group.day)} />
                 <div className={cl.chatFrameBodyMessages}>
                   {group?.messages.map((msg) => <ChatMessage message={msg} key={msg.messageId} />)}
-                  {isOpponentTyping && (
+                  {typingUsers.includes(selectedChat?.id as string) && (
                     <Message isOpponent extraClass={cl.chatFrameBodyTyping}>
                       <p>Печатает</p>
                       <span className={cl.chatFrameBodyTypingDots}>

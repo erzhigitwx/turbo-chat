@@ -18,6 +18,7 @@ const Chat = () => {
   const chatId = searchParams.get('chat')
   const socket = useContext(SocketContext)
   const onlineUsersRef = useRef<string[]>([])
+  const [typingUsers, setTypingUsers] = useState<string[]>([])
   const [isChatList, setIsChatList] = useState(false)
   const chatListRef = useRef(null)
   const width = useWindowWidth()
@@ -47,7 +48,7 @@ const Chat = () => {
   }
 
   useEffect(() => {
-    socket?.on('profile-owner-connect', ({ uid }) => {
+    socket?.on('profile-owner-connect', ({ uid }: { uid: string }) => {
       updateOnlineUsersRef(uid)
     })
     socket?.on('profile-owner-disconnect', ({ uid }) => {
@@ -100,6 +101,24 @@ const Chat = () => {
     }
   }, [])
 
+  useEffect(() => {
+    socket?.on('chat-typing-receive', (data: { chatId: string }) => {
+      setTypingUsers((prev) => [...prev, data.chatId])
+    })
+    socket?.on('chat-typing-stop', (data: { chatId: string }) => {
+      setTypingUsers((prev) => prev.filter((id) => id !== data.chatId))
+    })
+
+    return () => {
+      socket?.off('chat-typing-receive', (data: { chatId: string }) => {
+        setTypingUsers((prev) => [...prev, data.chatId])
+      })
+      socket?.off('chat-typing-stop', (data: { chatId: string }) => {
+        setTypingUsers((prev) => prev.filter((id) => id !== data.chatId))
+      })
+    }
+  }, [])
+
   const incomingMessageListener = async (data: { message: Message; chatId: string }) => {
     if (!data.message) return
     chatMessageAdded(data)
@@ -136,20 +155,20 @@ const Chat = () => {
         // if tablet, show either with chat-list or without it
         (isChatList && (
           <div className={cl.chatGroup}>
-            <ChatFrame onlineUsers={onlineUsersRef.current} />
-            <ChatList onlineUsers={onlineUsersRef.current} />
+            <ChatFrame onlineUsers={onlineUsersRef.current} typingUsers={typingUsers} />
+            <ChatList onlineUsers={onlineUsersRef.current} typingUsers={typingUsers} />
           </div>
-        )) || <ChatFrame onlineUsers={onlineUsersRef.current} />
+        )) || <ChatFrame onlineUsers={onlineUsersRef.current} typingUsers={typingUsers} />
       ) : isMobile ? (
         // if mobile, show either chat-list or chat-frame
-        (isChatList && <ChatList onlineUsers={onlineUsersRef.current} />) || (
-          <ChatFrame onlineUsers={onlineUsersRef.current} />
-        )
+        (isChatList && (
+          <ChatList onlineUsers={onlineUsersRef.current} typingUsers={typingUsers} />
+        )) || <ChatFrame onlineUsers={onlineUsersRef.current} typingUsers={typingUsers} />
       ) : (
         <>
           {/* show just chat-list and chat-frame(default) */}
-          <ChatList onlineUsers={onlineUsersRef.current} />
-          <ChatFrame onlineUsers={onlineUsersRef.current} />
+          <ChatList onlineUsers={onlineUsersRef.current} typingUsers={typingUsers} />
+          <ChatFrame onlineUsers={onlineUsersRef.current} typingUsers={typingUsers} />
         </>
       )}
     </div>

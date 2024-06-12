@@ -15,7 +15,17 @@ import { useUnit } from 'effector-react'
 import { $user } from '@/app/model'
 
 const ChatListItem = memo(
-  ({ chat, isActive, isOnline }: { chat: Chat; isActive?: boolean; isOnline: boolean }) => {
+  ({
+    chat,
+    isActive,
+    isOnline,
+    opponentTyping,
+  }: {
+    chat: Chat
+    isOnline: boolean
+    isActive?: boolean
+    opponentTyping?: boolean
+  }) => {
     const [opponent, setOpponent] = useState<UserData | null>(null)
     const socket = useContext(SocketContext)
     const msgLength = chat.messages.length
@@ -66,7 +76,16 @@ const ChatListItem = memo(
             </span>
           </div>
           <div className={cl.chatListItemRow}>
-            {msgLength ? (
+            {opponentTyping ? (
+              <div className={cl.opponentTyping}>
+                <p className={cl.opponentTypingText}>Печатает</p>
+                <span className={cl.opponentTypingDots}>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </span>
+              </div>
+            ) : msgLength ? (
               <p
                 className={clsx(
                   chat.messages[msgLength - 1].senderId !== user?.uid &&
@@ -80,7 +99,7 @@ const ChatListItem = memo(
             ) : (
               <p>Новый чат</p>
             )}
-            {msgLength ? (
+            {msgLength && !opponentTyping ? (
               <>
                 {chat.unread > 0 && chat.messages[msgLength - 1].senderId === opponent?.uid ? (
                   <span className={cl.chatListItemRowUnchecked}>{chat.unread}</span>

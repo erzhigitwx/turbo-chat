@@ -22,7 +22,13 @@ import { $chats } from '@/widgets/chat/model/chat'
 import { $selectedChat } from '@/widgets/chat/model/chat-frame'
 import { $user } from '@/app/model'
 
-const ChatList = ({ onlineUsers }: { onlineUsers: string[] }) => {
+const ChatList = ({
+  onlineUsers,
+  typingUsers,
+}: {
+  onlineUsers: string[]
+  typingUsers: string[]
+}) => {
   const chats: Chat[] = useUnit($chats)
   const user = useUnit($user)
   const isFetchingUsers = useUnit($isFetchingUsers)
@@ -120,6 +126,7 @@ const ChatList = ({ onlineUsers }: { onlineUsers: string[] }) => {
               <ChatListItem
                 key={chat.id}
                 chat={chat}
+                opponentTyping={typingUsers.includes(chat.id)}
                 isActive={selectedChat?.id === chat.id}
                 isOnline={onlineUsers.includes(
                   chat.creatorId === user?.uid ? chat.opponentId : chat.creatorId,
