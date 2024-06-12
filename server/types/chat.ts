@@ -11,7 +11,7 @@ export interface Message {
   reply?: string; // message id
   isForwarded?: boolean;
   reactions?: Array<string>;
-  attach?: AttachType;
+  attach?: AttachType["data"];
 }
 
 export type AttachType = {

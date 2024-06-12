@@ -29,6 +29,7 @@ function messageController(io: Server, socket: Socket) {
     "create-message",
     async (body: ChatMemberBody & { message: string; attach: AttachType }) => {
       const { userData, chatId, message, attach } = body;
+      const type = attach ? attach.type : "text";
       const messageFormatted: Message = {
         senderId: userData.uid,
         createdAt: Date.now(),
@@ -36,29 +37,14 @@ function messageController(io: Server, socket: Socket) {
         content: message,
         clearedFor: [],
         status: "send",
-        type: "text",
+        type,
       };
 
       if (attach && attach.data && attach.data.length > 0) {
-        const mediaMessage = await createAttachMessage(
-          userData,
-          chatId,
-          attach.data,
-        );
-        if (mediaMessage.success) {
-          messageFormatted.attach = {
-            type: attach.type,
-            data: mediaMessage.data as string[],
-          };
-        }
+        await createAttachMessage(chatId, attach.data, messageFormatted);
       }
 
-      const newMessage = await createTextMessage(
-        userData,
-        chatId,
-        message,
-        messageFormatted.attach,
-      );
+      const newMessage = await createTextMessage(chatId, messageFormatted);
       const chatRow = await getChatById(chatId);
 
       if (newMessage.success || messageFormatted.attach) {
