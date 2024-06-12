@@ -44,7 +44,7 @@ export interface Message {
   reply: string // message id
   content: any
   status: 'send' | 'check'
-  attach?: AttachType
+  attach?: AttachType['data']
 }
 
 export interface Chat {

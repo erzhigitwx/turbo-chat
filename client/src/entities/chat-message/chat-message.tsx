@@ -13,7 +13,7 @@ import { Popup } from '@/shared/UI'
 const ChatMessage = ({ message, ...rest }: ChatMessageProps) => {
   const user = useUnit($user)
   const [activePhoto, setActivePhoto] = useState<string | null>(null)
-  const attachLen = message.attach?.data.length as number
+  const attachLen = message.attach?.length as number
 
   if (message.type === 'text') {
     return (
@@ -29,8 +29,8 @@ const ChatMessage = ({ message, ...rest }: ChatMessageProps) => {
     return (
       <Message
         isOpponent={message.senderId !== user?.uid}
-        padding={'small'}
         extraClass={cl.chatMessageMedia}
+        padding={'small'}
         {...rest}
       >
         {activePhoto && (
@@ -53,8 +53,8 @@ const ChatMessage = ({ message, ...rest }: ChatMessageProps) => {
             attachLen === 5 && cl.mediaBoxFive,
           )}
         >
-          {message.attach?.type === 'media' &&
-            message.attach.data.map((img) => (
+          {message.type === 'media' &&
+            message.attach?.map((img) => (
               <div onClick={() => setActivePhoto(img as string)} key={img as string}>
                 <img className={cl.mediaBoxImg} src={img as string} alt={img as string} />
               </div>
