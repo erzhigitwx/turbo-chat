@@ -7,23 +7,11 @@ import { UserData } from "../types/user.js";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 export async function createTextMessage(
-  userData: UserData,
   chatId: string,
-  message: string,
-  attach?: AttachType,
+  messageFormatted: Message,
 ) {
   const chatRef = await findRefById(chatsCollection, "id", chatId);
   const messagesCollection = collection(chatRef.ref, "messages");
-  const messageFormatted: Message = {
-    senderId: userData.uid,
-    createdAt: Date.now(),
-    messageId: uuid(),
-    content: message,
-    clearedFor: [],
-    status: "send",
-    type: attach ? "media" : "text",
-    ...(attach ? attach : null),
-  };
   const newMessage = await addDoc(
     messagesCollection,
     messageFormatted as Message,
@@ -42,9 +30,9 @@ export async function createTextMessage(
 }
 
 export async function createAttachMessage(
-  userData: UserData,
   chatId: string,
   media: AttachType["data"],
+  messageFormatted: Message,
 ) {
   if (!media || media.length === 0) {
     return { success: false, data: "Files are missing" };
@@ -66,6 +54,7 @@ export async function createAttachMessage(
 
   try {
     const imageUrls = await Promise.all(uploadPromises);
+    messageFormatted.attach = imageUrls;
     return { success: true, data: imageUrls };
   } catch (error) {
     return { success: false, data: "Internal server error" };

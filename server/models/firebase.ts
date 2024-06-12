@@ -127,11 +127,9 @@ export async function updateDeleteChat(chatId: string, deleteFor: string[]) {
       // to fix
       const messagesCollectionRef = collection(chatRef.ref, "messages");
       const querySnapshot = await getDocs(messagesCollectionRef);
-      console.log(querySnapshot.docs);
+
       querySnapshot.forEach((doc) => {
         const messageImageUrls = doc.data().attach.data || [];
-        console.log("doc", doc);
-        console.log(messageImageUrls);
         messageImageUrls.forEach((url) => {
           const mediaRef = ref(storage, url);
           deleteImagePromises.push(deleteObject(mediaRef));
@@ -139,7 +137,6 @@ export async function updateDeleteChat(chatId: string, deleteFor: string[]) {
 
         deleteImagePromises.push(deleteDoc(doc.ref));
       });
-      console.log(deleteImagePromises);
 
       await Promise.all(deleteImagePromises);
       await deleteDoc(chatRef.ref);
