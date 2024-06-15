@@ -7,35 +7,37 @@ import { selectedChatChanged } from '@/widgets/chat/model/chat-frame'
 import { SocketContext } from '@/app/providers/socket-provider'
 import { chatMessageAdded, fetchChatsFx } from '@/widgets/chat/model/chat'
 import { Message } from '@/shared/types'
-import { useWindowWidth } from '@/shared/hooks/useWindowWidth'
+import { useWindowWidth } from '@/shared/hooks/use-window-width'
 import { ChatSidebar } from '@/widgets/chat/UI/chat-sidebar/chat-sidebar'
-import { useClickAway } from '@/shared/hooks/useClickAway'
+import { useClickAway } from '@/shared/hooks/use-click-away'
 import { getCookie } from '@/shared/utils'
+import { useSocketListener } from '@/shared/hooks/use-socket-listener'
+import { useUserData } from '@/shared/hooks/use-user-data'
 
 const Chat = () => {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
   const chatId = searchParams.get('chat')
+  const chatIdRef = useRef(chatId)
   const socket = useContext(SocketContext)
   const onlineUsersRef = useRef<string[]>([])
   const [typingUsers, setTypingUsers] = useState<string[]>([])
   const [isChatList, setIsChatList] = useState(false)
   const chatListRef = useRef(null)
+  const user = useUserData()
   const width = useWindowWidth()
   const isTablet = width <= 1000 && width > 500
   const isMobile = width <= 500
 
   if (chatId) {
     selectedChatChanged(chatId)
-    socket?.emit('select-chat', {
-      chatId,
-    })
   }
 
   useEffect(() => {
     if (chatId) {
       setIsChatList(false)
     }
+    chatIdRef.current = chatId
   }, [chatId])
 
   // SOCKET LISTENERS
@@ -47,82 +49,11 @@ const Chat = () => {
     onlineUsersRef.current = [...onlineUsersRef.current, uid]
   }
 
-  useEffect(() => {
-    socket?.on('profile-owner-connect', ({ uid }: { uid: string }) => {
-      updateOnlineUsersRef(uid)
-    })
-    socket?.on('profile-owner-disconnect', ({ uid }) => {
-      onlineUsersRef.current = onlineUsersRef.current.filter((userId) => userId !== uid)
-    })
-
-    return () => {
-      socket?.off('profile-owner-connect')
-      socket?.off('profile-owner-disconnect')
-    }
-  }, [socket])
-
-  useEffect(() => {
-    socket?.on('incoming-message', refetchChats)
-
-    return () => {
-      socket?.off('incoming-message', refetchChats)
-    }
-  }, [])
-
-  useEffect(() => {
-    socket?.on('chat-selected', refetchChats)
-
-    return () => {
-      socket?.off('chat-selected', refetchChats)
-    }
-  }, [])
-
-  useEffect(() => {
-    socket?.on('chat-cleared', refetchChats)
-
-    return () => {
-      socket?.off('chat-cleared', refetchChats)
-    }
-  }, [])
-
-  useEffect(() => {
-    socket?.on('chat-deleted', async () => {
-      navigate('/')
-      selectedChatChanged(null)
-      await refetchChats()
-    })
-
-    return () => {
-      socket?.off('chat-deleted', async () => {
-        navigate('/')
-        selectedChatChanged(null)
-        await refetchChats()
-      })
-    }
-  }, [])
-
-  useEffect(() => {
-    socket?.on('chat-typing-receive', (data: { chatId: string }) => {
-      setTypingUsers((prev) => [...prev, data.chatId])
-    })
-    socket?.on('chat-typing-stop', (data: { chatId: string }) => {
-      setTypingUsers((prev) => prev.filter((id) => id !== data.chatId))
-    })
-
-    return () => {
-      socket?.off('chat-typing-receive', (data: { chatId: string }) => {
-        setTypingUsers((prev) => [...prev, data.chatId])
-      })
-      socket?.off('chat-typing-stop', (data: { chatId: string }) => {
-        setTypingUsers((prev) => prev.filter((id) => id !== data.chatId))
-      })
-    }
-  }, [])
-
-  const incomingMessageListener = async (data: { message: Message; chatId: string }) => {
+  const incomingMessageListener = (data: { message: Message; chatId: string }) => {
     if (!data.message) return
     chatMessageAdded(data)
-    if (chatId === data.chatId) {
+
+    if (chatIdRef.current === data.chatId && user?.uid !== data.message.senderId) {
       socket?.emit('select-chat', {
         token: getCookie('token'),
         chatId,
@@ -130,13 +61,29 @@ const Chat = () => {
     }
   }
 
-  useEffect(() => {
-    socket?.on('incoming-message', incomingMessageListener)
-
-    return () => {
-      socket?.off('incoming-message', incomingMessageListener)
-    }
-  }, [incomingMessageListener])
+  useSocketListener('incoming-message', async (data: { message: Message; chatId: string }) => {
+    incomingMessageListener(data)
+    await refetchChats()
+  })
+  useSocketListener('profile-owner-connect', ({ uid }: { uid: string }) => {
+    updateOnlineUsersRef(uid)
+  })
+  useSocketListener('profile-owner-disconnect', ({ uid }: { uid: string }) => {
+    onlineUsersRef.current = onlineUsersRef.current.filter((userId) => userId !== uid)
+  })
+  useSocketListener('chat-selected', refetchChats)
+  useSocketListener('chat-cleared', refetchChats)
+  useSocketListener('chat-deleted', async () => {
+    navigate('/')
+    selectedChatChanged(null)
+    await refetchChats()
+  })
+  useSocketListener('chat-typing-receive', (data: { chatId: string }) => {
+    setTypingUsers((prev) => [...prev, data.chatId])
+  })
+  useSocketListener('chat-typing-stop', (data: { chatId: string }) => {
+    setTypingUsers((prev) => prev.filter((id) => id !== data.chatId))
+  })
   // SOCKET LISTENERS
 
   useClickAway(chatListRef, () => setIsChatList(false))

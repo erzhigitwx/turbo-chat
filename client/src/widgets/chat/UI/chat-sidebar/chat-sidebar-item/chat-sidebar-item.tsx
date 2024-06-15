@@ -10,7 +10,7 @@ import { SocketContext } from '@/app/providers/socket-provider'
 import { useUnit } from 'effector-react'
 import { $selectedChat } from '@/widgets/chat/model/chat-frame'
 import { Fetch } from '@/shared/utils/methods'
-import { $user } from '@/app/model'
+import { useUserData } from '@/shared/hooks/use-user-data'
 
 const ChatSidebarItem = ({
   onlineUsers,
@@ -21,7 +21,7 @@ const ChatSidebarItem = ({
   chat: Chat
   setIsChatList: Dispatch<SetStateAction<boolean>>
 }) => {
-  const user = useUnit($user)
+  const user = useUserData()
   const socket = useContext(SocketContext)
   const selectedChat = useUnit($selectedChat)
   const [opponent, setOpponent] = useState<UserData | null>(null)

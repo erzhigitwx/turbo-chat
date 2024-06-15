@@ -20,7 +20,7 @@ import {
 } from '@/widgets/chat/model/chat-list'
 import { $chats } from '@/widgets/chat/model/chat'
 import { $selectedChat } from '@/widgets/chat/model/chat-frame'
-import { $user } from '@/app/model'
+import { useUserData } from '@/shared/hooks/use-user-data'
 
 const ChatList = ({
   onlineUsers,
@@ -30,7 +30,7 @@ const ChatList = ({
   typingUsers: string[]
 }) => {
   const chats: Chat[] = useUnit($chats)
-  const user = useUnit($user)
+  const user = useUserData()
   const isFetchingUsers = useUnit($isFetchingUsers)
   const searchValue = useUnit($seachValue)
   const selectedChat = useUnit($selectedChat)

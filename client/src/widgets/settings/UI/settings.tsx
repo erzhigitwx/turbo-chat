@@ -1,15 +1,14 @@
 import { ChangeEvent, FormEvent, useRef, useState } from 'react'
 import cl from './settings.module.scss'
-import { useUnit } from 'effector-react'
-import { $user } from '@/app/model'
 import { handleSave } from '@/widgets/settings/utils'
 import { SettingsAvatar } from '@/entities'
 import { Button, LabeledInput } from '@/shared/UI'
 import { deleteCookie } from '@/shared/utils'
 import { Status } from '@/shared/types'
+import { useUserData } from '@/shared/hooks/use-user-data'
 
 const Settings = () => {
-  const user = useUnit($user)
+  const user = useUserData()
   const [status, setStatus] = useState<Status | null>(null)
   const [isSaving, setIsSaving] = useState(false)
   const [imageUrl, setImageUrl] = useState<string | null>(null)

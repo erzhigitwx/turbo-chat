@@ -3,7 +3,7 @@ import { Avatar } from '@/shared/UI'
 import PinImg from '@/assets/icons/pin.svg?react'
 import ToCheckImg from '@/assets/icons/toCheck.svg?react'
 import CheckedImg from '@/assets/icons/checked.svg?react'
-import { Link } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import { Chat, UserData } from '@/shared/types'
 import { memo, useContext, useEffect, useState } from 'react'
 import { formattedTime, getCookie } from '@/shared/utils'
@@ -11,8 +11,7 @@ import clsx from 'clsx'
 import { searchValueChanged } from '@/widgets/chat/model/chat-list'
 import { SocketContext } from '@/app/providers/socket-provider'
 import { Fetch } from '@/shared/utils/methods'
-import { useUnit } from 'effector-react'
-import { $user } from '@/app/model'
+import { useUserData } from '@/shared/hooks/use-user-data'
 
 const ChatListItem = memo(
   ({
@@ -27,9 +26,10 @@ const ChatListItem = memo(
     opponentTyping?: boolean
   }) => {
     const [opponent, setOpponent] = useState<UserData | null>(null)
+    const [_, setSearchParams] = useSearchParams()
     const socket = useContext(SocketContext)
     const msgLength = chat.messages.length
-    const user = useUnit($user)
+    const user = useUserData()
 
     useEffect(() => {
       const getOpponentData = async () => {
@@ -47,21 +47,23 @@ const ChatListItem = memo(
     }, [])
 
     const handleSelectChat = () => {
-      socket?.emit('select-chat', {
-        token: getCookie('token'),
-        chatId: chat.id,
-      })
+      if (user?.uid !== chat.messages[msgLength - 1].senderId) {
+        socket?.emit('select-chat', {
+          token: getCookie('token'),
+          chatId: chat.id,
+        })
+      }
     }
 
     return (
-      <Link
+      <div
         className={clsx(
           cl.chatListItem,
           isActive && cl.chatListItemActive,
           chat.isPinned && cl.chatListItemPinned,
         )}
-        to={`/?chat=${chat.id}`}
         onClick={() => {
+          setSearchParams({ chat: chat.id })
           handleSelectChat()
           searchValueChanged('')
         }}
@@ -112,7 +114,7 @@ const ChatListItem = memo(
             ) : null}
           </div>
         </div>
-      </Link>
+      </div>
     )
   },
 )

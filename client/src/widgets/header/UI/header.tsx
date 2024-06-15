@@ -1,17 +1,16 @@
 import cl from './header.module.scss'
 import { Link } from 'react-router-dom'
-import { useTheme } from '@/shared/hooks/useTheme'
-import { useAuth } from '@/shared/hooks/useAuth'
+import { useTheme } from '@/shared/hooks/use-theme'
+import { useAuth } from '@/shared/hooks/use-auth'
 import { Avatar, Toggler } from '@/shared/UI'
 import LogoImg from '@/assets/logo.svg?react'
 import { setCookie } from '@/shared/utils'
-import { useUnit } from 'effector-react'
-import { $user } from '@/app/model'
 import { ChatCount } from '@/entities'
+import { useUserData } from '@/shared/hooks/use-user-data'
 
 const Header = () => {
   const isAuth = useAuth()
-  const user = useUnit($user)
+  const user = useUserData()
   const { theme, setTheme } = useTheme()
 
   const toggleTheme = () => {

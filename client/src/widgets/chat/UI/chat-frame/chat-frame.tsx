@@ -16,8 +16,8 @@ import { ChatClearPopup } from '@/widgets/chat/UI/chat-frame/chat-clear-poup/cha
 import { ChatMediaPopup } from '@/widgets/chat/UI/chat-frame/chat-media-popup/chat-media-popup'
 import { ChatFrameHeader } from '@/widgets/chat/UI/chat-frame/chat-frame-header/chat-frame-header'
 import { Popup } from '@/shared/UI/popup/popup'
-import { useClickAway } from '@/shared/hooks/useClickAway'
-import { useWindowWidth } from '@/shared/hooks/useWindowWidth'
+import { useClickAway } from '@/shared/hooks/use-click-away'
+import { useWindowWidth } from '@/shared/hooks/use-window-width'
 import { DropdownMenuItem } from '@/shared/UI/dropdown-menu/dropdown-menu.props'
 import { ChatMessage } from '@/entities'
 import { Message } from '@/shared/UI/message/message'
@@ -81,6 +81,11 @@ const ChatFrame = ({
     if (!message.trim().length && !attachLen) return
     setMessage('')
     setTextAreaHeight(50)
+
+    socket?.emit('stop-typing-chat', {
+      token: getCookie('token'),
+      chatId: selectedChat?.id,
+    })
 
     socket?.emit('create-message', {
       message: message,
