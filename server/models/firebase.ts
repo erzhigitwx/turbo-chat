@@ -12,7 +12,7 @@ import {
 } from "firebase/firestore";
 import { UserData } from "../types/user.js";
 import { chatsCollection, storage } from "../config/index.js";
-import { ref, deleteObject } from "firebase/storage";
+import { ref, deleteObject, listAll } from "firebase/storage";
 
 export async function addToCollection(
   collection: CollectionReference<DocumentData>,
@@ -85,21 +85,17 @@ export async function updateClearChat(chatId: string, clearedFor: string[]) {
     const chatRef = await findRefById(chatsCollection, "id", chatId);
     const messagesCollectionRef = collection(chatRef.ref, "messages");
     const querySnapshot = await getDocs(messagesCollectionRef);
+    const mediaRef = ref(storage, `/media/${chatId}`);
+    const mediaFiles = await listAll(mediaRef);
+
     querySnapshot.forEach((doc) => {
       const currentClearedFor = doc.data().clearedFor || [];
-      const deleteImagePromises = [];
       const newClearedFor = [
         ...currentClearedFor,
         ...clearedFor.filter((id) => !currentClearedFor.includes(id)),
       ];
       if (newClearedFor.length > 1) {
-        // to fix
-        const imageUrls = doc.data().imageUrls || [];
-        imageUrls.forEach((url) => {
-          const mediaRef = ref(storage, url);
-          deleteImagePromises.push(deleteObject(mediaRef));
-        });
-
+        mediaFiles.items.map((fileRef) => deleteObject(fileRef));
         deleteDoc(doc.ref);
       } else {
         updateDoc(doc.ref, {
@@ -107,6 +103,7 @@ export async function updateClearChat(chatId: string, clearedFor: string[]) {
         });
       }
     });
+
     return { success: true, message: "Chat cleared successfully" };
   } catch (error) {
     console.error("Error updating message status:", error);
@@ -118,27 +115,11 @@ export async function updateDeleteChat(chatId: string, deleteFor: string[]) {
   try {
     const chatRef = await findRefById(chatsCollection, "id", chatId);
     const currentDeletedFor = chatRef.data().deletedFor || [];
-    const deleteImagePromises = [];
     const newClearedFor = [
       ...currentDeletedFor,
       ...deleteFor.filter((id) => !currentDeletedFor.includes(id)),
     ];
     if (newClearedFor.length > 1) {
-      // to fix
-      const messagesCollectionRef = collection(chatRef.ref, "messages");
-      const querySnapshot = await getDocs(messagesCollectionRef);
-
-      querySnapshot.forEach((doc) => {
-        const messageImageUrls = doc.data().attach.data || [];
-        messageImageUrls.forEach((url) => {
-          const mediaRef = ref(storage, url);
-          deleteImagePromises.push(deleteObject(mediaRef));
-        });
-
-        deleteImagePromises.push(deleteDoc(doc.ref));
-      });
-
-      await Promise.all(deleteImagePromises);
       await deleteDoc(chatRef.ref);
     } else {
       await updateDoc(chatRef.ref, {
