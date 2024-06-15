@@ -2,12 +2,12 @@ import clsx from 'clsx'
 import { FrameCount } from '@/shared/UI'
 import { useUnit } from 'effector-react'
 import { $chats } from '@/widgets/chat/model/chat'
-import { $user } from '@/app/model'
 import ChatImg from '@/assets/icons/chat.svg?react'
+import { useUserData } from '@/shared/hooks/use-user-data'
 
 const ChatCount = () => {
   const chats = useUnit($chats)
-  const user = useUnit($user)
+  const user = useUserData()
   const isHomePage = location.pathname === '/'
   const chatArray = Array.isArray(chats) ? chats : []
   const newMessagesAmount = chatArray.reduce((curr, chat) => {

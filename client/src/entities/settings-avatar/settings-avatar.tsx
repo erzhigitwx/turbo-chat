@@ -1,12 +1,11 @@
 import cl from '@/widgets/settings/UI/settings.module.scss'
 import { Avatar, Button } from '@/shared/UI'
-import { useUnit } from 'effector-react'
-import { $user } from '@/app/model'
 import ChangeImg from '@/assets/icons/change.svg?react'
 import { SettingsAvatarProps } from './settings-avatar.props'
+import { useUserData } from '@/shared/hooks/use-user-data'
 
 const SettingsAvatar = ({ imageUrl, handleTriggerInput, error }: SettingsAvatarProps) => {
-  const user = useUnit($user)
+  const user = useUserData()
 
   return (
     <div>
