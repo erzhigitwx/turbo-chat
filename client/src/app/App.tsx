@@ -1,12 +1,11 @@
 import { Layout } from '@/app/config/routes/layout'
 import { Header } from '@/widgets/header'
 import cl from './styles/app.module.scss'
-import { useTheme } from '@/shared/hooks/useTheme'
+import { useTheme } from '@/shared/hooks/use-theme'
 import { initializeApp } from 'firebase/app'
 import { useContext, useEffect } from 'react'
 import { getCookie } from '@/shared/utils'
 import { SocketContext } from '@/app/providers/socket-provider'
-import { fetchUserFx } from '@/app/model'
 import clsx from 'clsx'
 
 const firebaseConfig = {
@@ -33,10 +32,6 @@ function App() {
     function unloadFunction() {
       socket?.emit('user-disconnect', { token })
     }
-
-    ;(async function getUser() {
-      await fetchUserFx()
-    })()
 
     window.addEventListener('beforeunload', unloadFunction)
     return () => {
