@@ -142,6 +142,11 @@ a {
     background-color: #0969DA;
     border: 6px solid transparent;
     background-clip: content-box;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #63a4ff;
+    }
   }
 
   &::-webkit-scrollbar-track {

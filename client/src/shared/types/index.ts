@@ -55,7 +55,9 @@ export interface Chat {
   messages: Message[]
   deletedFor: Array<string>
   isPinned: boolean
-  note?: string
+  note?: {
+    [key: string]: string;
+  }
   theme?: string
 }
 
