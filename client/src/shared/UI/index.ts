@@ -9,3 +9,4 @@ export { TextArea } from './text-area/text-area'
 export { HiddenLabeledInput } from './hidden-labeled-input/hidden-labeled-input'
 export { DropdownMenu } from './dropdown-menu/dropdown-menu'
 export { Popup } from './popup/popup'
+export { Message } from "./message/message";

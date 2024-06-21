@@ -10,7 +10,7 @@ const attachDataChanged = createEvent<AttachType['data']>()
 const $selectedChat = createStore<Chat | null>(null).on(
   selectedChatChanged,
   (_, payload: string | null) => {
-    if (payload) return $chats.getState().find((chat) => chat.id === payload)
+    if (payload) return $chats.getState().find((chat) => chat.id === payload) || null
     return null
   },
 )

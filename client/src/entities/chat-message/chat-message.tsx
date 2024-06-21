@@ -1,12 +1,11 @@
-import cl from './chat-message.module.scss'
-import { ChatMessageProps } from './chat-message.props'
-import { Message } from '@/shared/UI/message/message'
-import { formattedTime } from '@/shared/utils'
-import ToCheckImg from '@/assets/icons/toCheck.svg?react'
-import CheckedImg from '@/assets/icons/checked.svg?react'
 import clsx from 'clsx'
 import { useState } from 'react'
-import { Popup } from '@/shared/UI'
+import cl from './chat-message.module.scss'
+import { ChatMessageProps } from './chat-message.props'
+import ToCheckImg from '@/assets/icons/toCheck.svg?react'
+import CheckedImg from '@/assets/icons/checked.svg?react'
+import { formattedTime } from '@/shared/utils'
+import {Message, Popup} from '@/shared/UI'
 import { useUserData } from '@/shared/hooks/use-user-data'
 
 const ChatMessage = ({ message, ...rest }: ChatMessageProps) => {

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="eb7bfe24-1d8d-419f-a9e9-f42cf024dabc" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/client/src/app/providers/user-provider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/providers/user-provider.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/entities/chat-message/chat-message.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/entities/chat-message/chat-message.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/shared/UI/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/shared/UI/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/shared/hooks/use-user-data.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/shared/hooks/use-user-data.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/widgets/chat/UI/chat-frame/chat-frame.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/widgets/chat/UI/chat-frame/chat-frame.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/widgets/chat/UI/chat.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/widgets/chat/UI/chat.tsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2bZWXctSLDPhNIkzQQX4oo8BqM0" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;code.cleanup.on.save&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/erjik/Desktop/web/projects/voshod&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\Users\\erjik\\AppData\\Roaming\\npm\\node_modules\\prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.prettier&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\erjik\\Desktop\\web\\projects\\turbo-chat\\server\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\erjik\Desktop\web\projects\turbo-chat\client\src\assets" />
+      <recent name="C:\Users\erjik\Desktop\web\projects\turbo-chat\client\src\assets\icons" />
+      <recent name="C:\Users\erjik\Desktop\web\projects\turbo-chat\client\public\icons" />
+      <recent name="C:\Users\erjik\Desktop\web\projects\turbo-chat\client\public" />
+      <recent name="C:\Users\erjik\Desktop\web\projects\turbo-chat\client\public\logos" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\erjik\Desktop\web\projects\turbo-chat" />
+      <recent name="C:\Users\erjik\Desktop\web\projects\turbo-chat\client\src\shared\UI\dropdown-menu" />
+      <recent name="C:\Users\erjik\Desktop\web\projects\turbo-chat\client\src\assets" />
+      <recent name="C:\Users\erjik\Desktop\web\projects\turbo-chat\client\src\shared\UI" />
+      <recent name="C:\Users\erjik\Desktop\web\projects\turbo-chat\client\src\widgets\chat\UI\chat-frame" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="eb7bfe24-1d8d-419f-a9e9-f42cf024dabc" name="Changes" comment="" />
+      <created>1706423121940</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1706423121940</updated>
+      <workItem from="1706423123037" duration="5676000" />
+      <workItem from="1706520821106" duration="6301000" />
+      <workItem from="1706609255485" duration="4267000" />
+      <workItem from="1706694908408" duration="3250000" />
+      <workItem from="1706698201828" duration="4961000" />
+      <workItem from="1706870753396" duration="3099000" />
+      <workItem from="1706874232103" duration="2580000" />
+      <workItem from="1707027178000" duration="5973000" />
+      <workItem from="1707123889882" duration="3563000" />
+      <workItem from="1707144769893" duration="2000" />
+      <workItem from="1707207837085" duration="590000" />
+      <workItem from="1707293856606" duration="592000" />
+      <workItem from="1707300056085" duration="329000" />
+      <workItem from="1707300399257" duration="13000" />
+      <workItem from="1707300771031" duration="337000" />
+      <workItem from="1707317526011" duration="590000" />
+      <workItem from="1707322580726" duration="12000" />
+      <workItem from="1707545416626" duration="8307000" />
+      <workItem from="1707646677898" duration="2000" />
+      <workItem from="1708512025645" duration="22000" />
+      <workItem from="1709623012276" duration="5402000" />
+      <workItem from="1709874217831" duration="43000" />
+      <workItem from="1709986910732" duration="21000" />
+      <workItem from="1710343104324" duration="693000" />
+      <workItem from="1710431054537" duration="2000" />
+      <workItem from="1710484033180" duration="14000" />
+      <workItem from="1710577497499" duration="10965000" />
+      <workItem from="1710593382416" duration="3000" />
+      <workItem from="1710594582911" duration="93000" />
+      <workItem from="1710600521227" duration="127000" />
+      <workItem from="1710667221267" duration="10000" />
+      <workItem from="1710669903610" duration="5508000" />
+      <workItem from="1711090890859" duration="3231000" />
+      <workItem from="1711177437659" duration="5524000" />
+      <workItem from="1711261772658" duration="8787000" />
+      <workItem from="1711282530815" duration="2000" />
+      <workItem from="1711285868051" duration="3000" />
+      <workItem from="1711285948975" duration="85000" />
+      <workItem from="1711440616069" duration="7511000" />
+      <workItem from="1711620018750" duration="5636000" />
+      <workItem from="1711692588513" duration="6359000" />
+      <workItem from="1711814549884" duration="481000" />
+      <workItem from="1711815133579" duration="825000" />
+      <workItem from="1711889501280" duration="4497000" />
+      <workItem from="1711960915524" duration="64000" />
+      <workItem from="1712059410511" duration="5995000" />
+      <workItem from="1712141893766" duration="6221000" />
+      <workItem from="1712385281814" duration="6082000" />
+      <workItem from="1712753721054" duration="6064000" />
+      <workItem from="1712847258548" duration="10000" />
+      <workItem from="1713247527770" duration="9570000" />
+      <workItem from="1713363817210" duration="5614000" />
+      <workItem from="1713433081702" duration="9891000" />
+      <workItem from="1713520422104" duration="10029000" />
+      <workItem from="1713691020730" duration="6183000" />
+      <workItem from="1713801112592" duration="1163000" />
+      <workItem from="1713968938194" duration="3369000" />
+      <workItem from="1714223595514" duration="2465000" />
+      <workItem from="1714226109394" duration="549000" />
+      <workItem from="1714227132650" duration="247000" />
+      <workItem from="1714242750739" duration="7000" />
+      <workItem from="1714286461130" duration="1770000" />
+      <workItem from="1714288882423" duration="373000" />
+      <workItem from="1714289317147" duration="1713000" />
+      <workItem from="1714291079505" duration="1090000" />
+      <workItem from="1714404059467" duration="5148000" />
+      <workItem from="1714479381242" duration="7257000" />
+      <workItem from="1714544944003" duration="8565000" />
+      <workItem from="1714567264460" duration="78000" />
+      <workItem from="1714567353624" duration="209000" />
+      <workItem from="1714738562560" duration="6581000" />
+      <workItem from="1714822888819" duration="3000" />
+      <workItem from="1714826930668" duration="4549000" />
+      <workItem from="1715409436987" duration="12833000" />
+      <workItem from="1715502197420" duration="5913000" />
+      <workItem from="1715612542895" duration="1270000" />
+      <workItem from="1715785378755" duration="49000" />
+      <workItem from="1716020635750" duration="3056000" />
+      <workItem from="1716109389806" duration="9529000" />
+      <workItem from="1716207243580" duration="6275000" />
+      <workItem from="1716214175882" duration="225000" />
+      <workItem from="1716214667252" duration="165000" />
+      <workItem from="1716291324603" duration="5789000" />
+      <workItem from="1716297293401" duration="7631000" />
+      <workItem from="1716442932737" duration="7058000" />
+      <workItem from="1716462013826" duration="9027000" />
+      <workItem from="1716631669263" duration="13290000" />
+      <workItem from="1716790977967" duration="10486000" />
+      <workItem from="1716814446539" duration="2865000" />
+      <workItem from="1716874982933" duration="21000" />
+      <workItem from="1716912799357" duration="1999000" />
+      <workItem from="1716964063443" duration="4000" />
+      <workItem from="1716967691993" duration="390000" />
+      <workItem from="1717255923136" duration="910000" />
+      <workItem from="1717764812383" duration="8209000" />
+      <workItem from="1717997195951" duration="8565000" />
+      <workItem from="1718032083569" duration="6990000" />
+      <workItem from="1718089043731" duration="10903000" />
+      <workItem from="1718100481423" duration="180000" />
+      <workItem from="1718183988202" duration="10227000" />
+      <workItem from="1718277818264" duration="11565000" />
+      <workItem from="1718363694491" duration="6462000" />
+      <workItem from="1718433993101" duration="3147000" />
+      <workItem from="1718613156406" duration="187000" />
+      <workItem from="1718707374887" duration="54000" />
+      <workItem from="1718779026779" duration="5540000" />
+      <workItem from="1718957289011" duration="2434000" />
+      <workItem from="1718959826334" duration="597000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
