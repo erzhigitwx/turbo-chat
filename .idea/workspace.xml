@@ -5,12 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eb7bfe24-1d8d-419f-a9e9-f42cf024dabc" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/app/providers/user-provider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/providers/user-provider.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/entities/chat-message/chat-message.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/entities/chat-message/chat-message.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/shared/UI/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/shared/UI/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/shared/UI/frame-count/frame-count.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/shared/UI/frame-count/frame-count.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/shared/hooks/use-user-data.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/shared/hooks/use-user-data.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/widgets/chat/UI/chat-frame/chat-frame.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/widgets/chat/UI/chat-frame/chat-frame.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/widgets/chat/UI/chat.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/widgets/chat/UI/chat.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/shared/types/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/shared/types/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/widgets/chat/UI/chat-frame/chat-frame-header/chat-frame-header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/widgets/chat/UI/chat-frame/chat-frame-header/chat-frame-header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/widgets/settings/UI/settings.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/widgets/settings/UI/settings.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/widgets/settings/UI/settings.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/widgets/settings/UI/settings.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/widgets/settings/utils/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/widgets/settings/utils/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/controllers/registration.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/controllers/registration.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/types/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/types/user.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -189,7 +195,8 @@
       <workItem from="1718707374887" duration="54000" />
       <workItem from="1718779026779" duration="5540000" />
       <workItem from="1718957289011" duration="2434000" />
-      <workItem from="1718959826334" duration="597000" />
+      <workItem from="1718959826334" duration="654000" />
+      <workItem from="1719118234616" duration="2513000" />
     </task>
     <servers />
   </component>

@@ -64,6 +64,7 @@ class RegistrationController {
       lastLoginAt: Date.now(),
       nickname: userData.nickname,
       method: userData.method,
+      showLastLogin: true,
       fullname: {},
       ...(userData.avatar && { avatar: userData.avatar }),
       uid: uuid(),

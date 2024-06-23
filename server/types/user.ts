@@ -4,6 +4,7 @@ export interface UserData {
   email: string;
   createdAt: number;
   lastLoginAt: number;
+  showLastLogin: boolean;
   avatar?: string;
   nickname?: string;
   password?: string;
