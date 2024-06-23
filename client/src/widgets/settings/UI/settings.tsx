@@ -2,16 +2,18 @@ import { ChangeEvent, FormEvent, useRef, useState } from 'react'
 import cl from './settings.module.scss'
 import { handleSave } from '@/widgets/settings/utils'
 import { SettingsAvatar } from '@/entities'
-import { Button, LabeledInput } from '@/shared/UI'
+import {Button, LabeledInput, TextDivider} from '@/shared/UI'
 import { deleteCookie } from '@/shared/utils'
 import { Status } from '@/shared/types'
 import { useUserData } from '@/shared/hooks/use-user-data'
+import clsx from "clsx";
 
 const Settings = () => {
   const user = useUserData()
   const [status, setStatus] = useState<Status | null>(null)
   const [isSaving, setIsSaving] = useState(false)
   const [imageUrl, setImageUrl] = useState<string | null>(null)
+  const [showLastLogin, setShowLastLogin] = useState(user?.showLastLogin);
   const [error, setError] = useState<string | null>(null)
   const refAvatar = useRef<HTMLInputElement | null>(null)
 
@@ -34,7 +36,7 @@ const Settings = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     if (!error) {
       setIsSaving(true)
-      await handleSave(e, setStatus)
+      await handleSave(e, showLastLogin || true, setStatus)
       setIsSaving(false)
     }
   }
@@ -66,19 +68,19 @@ const Settings = () => {
             name={'lastname'}
             label={'Фамилия'}
             status={status?.lastname}
-            defaultValue={user?.fullname?.lastname}
+            defaultValue={user?.fullname?.lastname || ""}
           />
           <LabeledInput
             name={'name'}
             label={'Имя'}
             status={status?.name}
-            defaultValue={user?.fullname?.name}
+            defaultValue={user?.fullname?.name || ""}
           />
           <LabeledInput
             name={'surname'}
             label={'Отчество'}
             status={status?.surname}
-            defaultValue={user?.fullname?.surname}
+            defaultValue={user?.fullname?.surname || ""}
           />
         </div>
       </div>
@@ -87,10 +89,25 @@ const Settings = () => {
           name={'login'}
           label={'Логин'}
           status={status?.login}
-          defaultValue={user?.login}
+          defaultValue={user?.login || ""}
         />
-        <LabeledInput label={'Почта'} value={user?.email} />
-        <LabeledInput label={'URL'} value={'turbo-chat/' + user?.login} />
+        <LabeledInput label={'Почта'} value={user?.email || ""} readOnly/>
+        <LabeledInput label={'URL'} value={'turbo-chat/' + user?.login || ""} readOnly/>
+      </div>
+      <TextDivider text={"Статус последнего входа"} />
+      <div className={cl.settingsSwitch}>
+        <div
+            className={clsx(showLastLogin && cl.settingsSwitchActive)}
+            onClick={() => setShowLastLogin(true)}
+        >
+          <p>Показывать</p>
+        </div>
+        <div
+            className={clsx(!showLastLogin && cl.settingsSwitchActive)}
+            onClick={() => setShowLastLogin(false)}
+        >
+          <p>Не показывать</p>
+        </div>
       </div>
       <div className={cl.settingsButtons}>
         <Button isBlue>{isSaving ? 'Сохраняем...' : 'Сохранить'}</Button>

@@ -60,6 +60,30 @@
   }
 }
 
+.settingsSwitch {
+  width: 100%;
+  min-height: 50px;
+  padding: 4px;
+  border-radius: 20px;
+  background-color: var(--shared-bg);
+  display: flex;
+  flex-direction: row;
+
+  > div {
+    width: 50%;
+    border-radius: 20px;
+    padding: 8px 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &Active {
+    background-color: var(--block-bg);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+  }
+}
+
 .settingsRow {
   display: flex;
   align-items: center;

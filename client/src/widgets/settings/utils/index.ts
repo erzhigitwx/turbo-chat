@@ -7,6 +7,7 @@ import { Status } from '@/shared/types'
 
 export const handleSave = async (
   e: FormEvent<HTMLFormElement>,
+  showLastLogin: boolean,
   setStatus: Dispatch<SetStateAction<Status | null>>,
 ) => {
   e.preventDefault()
@@ -49,6 +50,7 @@ export const handleSave = async (
         node: {
           login: login,
           ...(uploadRes.data && uploadRes.success && { avatar: uploadRes.data }),
+          showLastLogin,
           fullname: {
             lastname,
             name,

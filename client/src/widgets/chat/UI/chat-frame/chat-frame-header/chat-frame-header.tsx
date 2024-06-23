@@ -18,10 +18,12 @@ import {useRef, useState} from 'react'
 import {useUnit} from 'effector-react'
 import {FrameHeaderNote} from "./frame-header-note/frame-header-note";
 import {ChatFrameHeaderProps} from "./chat-frame-header.props";
+import {useUserData} from "@/shared/hooks/use-user-data";
 
 const ChatFrameHeader = ({onlineUsers}: ChatFrameHeaderProps) => {
     const [isControlPopup, setIsControlPopup] = useState(false)
     const [isNotePopup, setIsNotePopup] = useState(false)
+    const user = useUserData();
     const opponent = useUnit($opponent)
     const selectedChat = useUnit($selectedChat)
     const popupRef = useRef(null)
@@ -73,10 +75,12 @@ const ChatFrameHeader = ({onlineUsers}: ChatFrameHeaderProps) => {
                     <Avatar isActive={onlineUsers.includes(opponent.uid)} src={opponent.avatar}/>
                     <div>
                         <h6>{opponent.login}</h6>
-                        {opponent.uid && onlineUsers.includes(opponent.uid) ? (
-                            <p className={cl.chatFrameHeaderInfoOnline}>Онлайн</p>
-                        ) : (
-                            <p>{calculateDateDifference(opponent.lastLoginAt)}</p>
+                        {user?.showLastLogin && opponent.showLastLogin && (
+                            opponent.uid && onlineUsers.includes(opponent.uid) ? (
+                                <p className={cl.chatFrameHeaderInfoOnline}>Онлайн</p>
+                            ) : (
+                                <p>{calculateDateDifference(opponent.lastLoginAt)}</p>
+                            )
                         )}
                     </div>
                 </div>
