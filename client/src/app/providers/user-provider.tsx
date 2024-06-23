@@ -15,14 +15,10 @@ export const UserProvider = ({children}: { children: ReactNode }) => {
                 token: getCookie('token'),
             }),
         })
-            .then(({ data }) => {
-                setUserData(data);
-            });
+            .then((res) => {
+                if (res.success) setUserData(res.data);
+            })
     }, []);
-
-    if (userData === null) {
-        return <div>Loading...</div>;
-    }
 
     return <UserContext.Provider value={userData}>{children}</UserContext.Provider>;
 }
